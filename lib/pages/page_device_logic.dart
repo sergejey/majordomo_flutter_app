@@ -35,8 +35,8 @@ class DevicePageManager {
     _tickerSubscription?.cancel();
   }
 
-  void callObjectMethod(String object, String method) {
-    pageDeviceNotifier.callMethod(object, method);
+  void callObjectMethod(String object, String method, [Map<String , dynamic>? params]) {
+    pageDeviceNotifier.callMethod(object, method, params);
   }
 
 }

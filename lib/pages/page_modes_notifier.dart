@@ -45,8 +45,8 @@ class PageModesNotifier extends ValueNotifier<String> {
     });
   }
 
-  Future<void> callMethod(String object, String method) async {
-    await _dataService.callDeviceMethod(object, method);
+  Future<void> callMethod(String object, String method, [Map<String , dynamic>? params]) async {
+    await _dataService.callDeviceMethod(object, method, params);
     fetchModes();
   }
 

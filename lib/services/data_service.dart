@@ -15,7 +15,7 @@ abstract class DataService {
 
   Future<SimpleDevice> fetchMyDevice(String deviceId);
 
-  Future<void> callDeviceMethod(String objectName, String method);
+  Future<void> callDeviceMethod(String objectName, String method, [Map<String , dynamic>? params]);
 
   Future<List<HistoryRecord>> getPropertyHistory(String objectName, String property);
 

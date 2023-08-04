@@ -15,7 +15,8 @@ class DataServiceLocal extends DataService {
   static http.Client client = http.Client();
 
   @override
-  Future<List<HistoryRecord>> getPropertyHistory(String objectName, String property) async {
+  Future<List<HistoryRecord>> getPropertyHistory(
+      String objectName, String property) async {
     final baseURL = getBaseURL();
     if (baseURL == "") {
       dprint("Base URL is not set");
@@ -23,13 +24,16 @@ class DataServiceLocal extends DataService {
     }
 
     final apiURL = '$baseURL/api/history/$objectName.$property/1month';
-    dprint("Fetching operational modes data from $apiURL ${DateTime.now().toString()}");
+    dprint(
+        "Fetching operational modes data from $apiURL ${DateTime.now().toString()}");
     try {
       final response = await client.get(Uri.parse(apiURL));
       if (response.statusCode == 200) {
         final parsed =
-        jsonDecode(response.body)["result"].cast<Map<String, dynamic>>();
-        return parsed.map<HistoryRecord>((json) => HistoryRecord.fromJson(json)).toList();
+            jsonDecode(response.body)["result"].cast<Map<String, dynamic>>();
+        return parsed
+            .map<HistoryRecord>((json) => HistoryRecord.fromJson(json))
+            .toList();
       } else {
         dprint("Error loading $apiURL");
       }
@@ -47,13 +51,16 @@ class DataServiceLocal extends DataService {
       return [];
     }
     final apiURL = '$baseURL/api/objects/SystemStates';
-    dprint("Fetching system states data from $apiURL ${DateTime.now().toString()}");
+    dprint(
+        "Fetching system states data from $apiURL ${DateTime.now().toString()}");
     try {
       final response = await client.get(Uri.parse(apiURL));
       if (response.statusCode == 200) {
         final parsed =
-        jsonDecode(response.body)["objects"].cast<Map<String, dynamic>>();
-        return parsed.map<SystemState>((json) => SystemState.fromJson(json)).toList();
+            jsonDecode(response.body)["objects"].cast<Map<String, dynamic>>();
+        return parsed
+            .map<SystemState>((json) => SystemState.fromJson(json))
+            .toList();
       } else {
         dprint("Error loading $apiURL");
       }
@@ -63,7 +70,6 @@ class DataServiceLocal extends DataService {
     return [];
   }
 
-
   @override
   Future<List<OperationalMode>> fetchOperationalModes() async {
     final baseURL = getBaseURL();
@@ -72,13 +78,16 @@ class DataServiceLocal extends DataService {
       return [];
     }
     final apiURL = '$baseURL/api/objects/OperationalModes';
-    dprint("Fetching operational modes data from $apiURL ${DateTime.now().toString()}");
+    dprint(
+        "Fetching operational modes data from $apiURL ${DateTime.now().toString()}");
     try {
       final response = await client.get(Uri.parse(apiURL));
       if (response.statusCode == 200) {
         final parsed =
-        jsonDecode(response.body)["objects"].cast<Map<String, dynamic>>();
-        return parsed.map<OperationalMode>((json) => OperationalMode.fromJson(json)).toList();
+            jsonDecode(response.body)["objects"].cast<Map<String, dynamic>>();
+        return parsed
+            .map<OperationalMode>((json) => OperationalMode.fromJson(json))
+            .toList();
       } else {
         dprint("Error loading $apiURL");
       }
@@ -128,7 +137,8 @@ class DataServiceLocal extends DataService {
     }
     final apiURL = '$baseURL/api/devices/$deviceId';
 
-    dprint("Fetching my devices data from $apiURL ${DateTime.now().toString()}");
+    dprint(
+        "Fetching my devices data from $apiURL ${DateTime.now().toString()}");
     try {
       final response = await client.get(Uri.parse(apiURL));
       if (response.statusCode == 200) {
@@ -151,7 +161,8 @@ class DataServiceLocal extends DataService {
       return [];
     }
     final apiURL = '$baseURL/api/devices';
-    dprint("Fetching my devices data from $apiURL ${DateTime.now().toString()}");
+    dprint(
+        "Fetching my devices data from $apiURL ${DateTime.now().toString()}");
     try {
       final response = await client.get(Uri.parse(apiURL));
       if (response.statusCode == 200) {
@@ -170,13 +181,21 @@ class DataServiceLocal extends DataService {
   }
 
   @override
-  Future<void> callDeviceMethod(String objectName, String method) async {
+  Future<void> callDeviceMethod(String objectName, String method,
+      [Map<String, dynamic>? params]) async {
     final baseURL = getBaseURL();
     dprint("Calling $objectName . $method");
     if (baseURL == "") {
       dprint("Base URL is not set");
     } else {
-      await client.get(Uri.parse('$baseURL/api/method/$objectName.$method'));
+      String url = '$baseURL/api/method/$objectName.$method';
+      if (params != null) {
+        url += '?';
+        params.forEach((key, value) {
+          url += '$key=$value&';
+        });
+      }
+      await client.get(Uri.parse(url));
       //print("Response: ${response.body}");
     }
   }

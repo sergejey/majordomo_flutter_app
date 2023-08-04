@@ -7,6 +7,8 @@ import 'package:home_app/config.dart';
 
 import './device_generic.dart';
 import './device_relay.dart';
+import './device_dimmer.dart';
+import './device_thermostat.dart';
 import './device_motion.dart';
 import './device_openclose.dart';
 import './device_sensor_temphum.dart';
@@ -69,10 +71,23 @@ class DeviceWrapper extends StatelessWidget {
               },
               child: Builder(builder: (BuildContext context) {
                 if (type == 'relay' ||
-                    type == 'dimmer' ||
                     type == 'vacuum' ||
                     type == 'tv') {
                   return DeviceRelay(
+                    title: title,
+                    id: id,
+                    object: object,
+                    properties: properties,
+                  );
+                } else if (type == 'dimmer') {
+                  return DeviceDimmer(
+                    title: title,
+                    id: id,
+                    object: object,
+                    properties: properties,
+                  );
+                } else if (type == 'thermostat') {
+                  return DeviceThermostat(
                     title: title,
                     id: id,
                     object: object,

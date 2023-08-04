@@ -34,8 +34,8 @@ class PageDeviceNotifier extends ValueNotifier<String> {
     refreshDevice();
   }
 
-  Future<void> callMethod(String object, String method) async {
-    await _dataService.callDeviceMethod(object, method);
+  Future<void> callMethod(String object, String method, [Map<String , dynamic>? params]) async {
+    await _dataService.callDeviceMethod(object, method, params);
     fetchDevice();
   }
 
