@@ -82,7 +82,9 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
                     device.type == "tv") &&
                 device.properties["status"] == "1") ||
             (device.type == "openclose" &&
-                device.properties["status"] != "1")) {
+                device.properties["status"] != "1") ||
+            (device.type == "thermostat" &&
+                device.properties["relay_status"] == "1")) {
           return true;
         }
         return false;
@@ -92,8 +94,9 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
     _updatePageMainDevices(DateTime.now().toString());
   }
 
-  Future<void> callMethod(String object, String method) async {
-    await _dataService.callDeviceMethod(object, method);
+  Future<void> callMethod(String object, String method,
+      [Map<String, dynamic>? params]) async {
+    await _dataService.callDeviceMethod(object, method, params);
     fetchDevices();
   }
 

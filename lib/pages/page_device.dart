@@ -1,5 +1,7 @@
 import 'package:home_app/models/simple_device.dart';
 import 'package:home_app/deviceWidgets/device_relay_page.dart';
+import 'package:home_app/deviceWidgets/device_dimmer_page.dart';
+import 'package:home_app/deviceWidgets/device_thermostat_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:home_app/services/service_locator.dart';
@@ -36,8 +38,22 @@ class _DevicePageState extends State<PageDevice> {
             ),
             body: Builder(builder: (BuildContext context) {
               final SimpleDevice device = stateManager.pageDeviceNotifier.myDevice;
-              if (device.type=='relay' || device.type=='dimmer') {
+              if (device.type=='relay') {
                 return DeviceRelayPage(
+                  id: device.id,
+                  title: device.title,
+                  object: device.object,
+                  properties: device.properties,
+                );
+              } else if (device.type == 'dimmer') {
+                return DeviceDimmerPage(
+                  id: device.id,
+                  title: device.title,
+                  object: device.object,
+                  properties: device.properties,
+                );
+              } else if (device.type == 'thermostat') {
+                return DeviceThermostatPage(
                   id: device.id,
                   title: device.title,
                   object: device.object,
