@@ -33,37 +33,54 @@ class _DevicePageState extends State<PageDevice> {
         valueListenable: stateManager.pageDeviceNotifier,
         builder: (context, value, child) {
           return Scaffold(
-            appBar: AppBar(
-              title:Text(stateManager.pageDeviceNotifier.myDevice.title),
-            ),
-            body: Builder(builder: (BuildContext context) {
-              final SimpleDevice device = stateManager.pageDeviceNotifier.myDevice;
-              if (device.type=='relay') {
-                return DeviceRelayPage(
-                  id: device.id,
-                  title: device.title,
-                  object: device.object,
-                  properties: device.properties,
-                );
-              } else if (device.type == 'dimmer') {
-                return DeviceDimmerPage(
-                  id: device.id,
-                  title: device.title,
-                  object: device.object,
-                  properties: device.properties,
-                );
-              } else if (device.type == 'thermostat') {
-                return DeviceThermostatPage(
-                  id: device.id,
-                  title: device.title,
-                  object: device.object,
-                  properties: device.properties,
-                );
-              } else {
-                return const Text('Unknown device');
-              }
-            })
-          );
+              appBar: AppBar(
+                title: Text(stateManager.pageDeviceNotifier.myDevice.title),
+                actions: [
+                  Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Colors.blue,
+                        child: IconButton(
+                          icon: Icon(Icons.settings, color: Colors.white),
+                          tooltip: 'Config',
+                          onPressed: () {
+                            stateManager.deviceConfigClicked();
+                          },
+                        ),
+                      ))
+                ],
+              ),
+              body: Builder(builder: (BuildContext context) {
+                final SimpleDevice device =
+                    stateManager.pageDeviceNotifier.myDevice;
+                if (device.type == 'relay') {
+                  return DeviceRelayPage(
+                    id: device.id,
+                    title: device.title,
+                    object: device.object,
+                    properties: device.properties,
+                  );
+                } else if (device.type == 'dimmer') {
+                  return DeviceDimmerPage(
+                    id: device.id,
+                    title: device.title,
+                    object: device.object,
+                    properties: device.properties,
+                  );
+                } else if (device.type == 'thermostat') {
+                  return DeviceThermostatPage(
+                    id: device.id,
+                    title: device.title,
+                    object: device.object,
+                    properties: device.properties,
+                  );
+                } else {
+                  return const Center(
+                      child:
+                          Text('Sorry, device is not fully supported yet...'));
+                }
+              }));
         });
   }
 }

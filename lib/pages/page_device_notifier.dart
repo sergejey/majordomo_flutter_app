@@ -12,6 +12,7 @@ class PageDeviceNotifier extends ValueNotifier<String> {
   final _preferencesService = getIt<PreferencesService>();
 
   String deviceId = '';
+  String deviceConfigURL = '';
 
   SimpleDevice myDevice = const SimpleDevice(
       id: 'error',
@@ -26,6 +27,10 @@ class PageDeviceNotifier extends ValueNotifier<String> {
     await _preferencesService.readAllPreferences();
     _dataService.setBaseURL(
         _preferencesService.getPreference("serverAddressLocal") ?? "");
+
+    deviceConfigURL =
+        "${_dataService.getBaseURL()}/panel/devices/$deviceId.html?tab=settings";
+
     await fetchDevice();
   }
 
@@ -34,7 +39,8 @@ class PageDeviceNotifier extends ValueNotifier<String> {
     refreshDevice();
   }
 
-  Future<void> callMethod(String object, String method, [Map<String , dynamic>? params]) async {
+  Future<void> callMethod(String object, String method,
+      [Map<String, dynamic>? params]) async {
     await _dataService.callDeviceMethod(object, method, params);
     fetchDevice();
   }
