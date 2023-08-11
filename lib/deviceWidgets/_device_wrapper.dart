@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/pages/page_main_logic.dart';
 import 'package:home_app/pages/page_device.dart';
-import 'package:home_app/config.dart';
 
 import './device_generic.dart';
 import './device_relay.dart';
@@ -55,24 +54,20 @@ class DeviceWrapper extends StatelessWidget {
             child: GestureDetector(
               behavior: HitTestBehavior.translucent,
               onTap: () {
-                if (configDevicesWithPages.contains(type)) {
-                  final stateManager = getIt<MainPageManager>();
-                  stateManager.endPeriodicUpdate();
-                  Navigator.of(context)
-                      .push(
-                    MaterialPageRoute(
-                      builder: (context) => PageDevice(deviceId: id),
-                    ),
-                  )
-                      .then((value) {
-                    stateManager.reload();
-                  });
-                }
+                final stateManager = getIt<MainPageManager>();
+                stateManager.endPeriodicUpdate();
+                Navigator.of(context)
+                    .push(
+                  MaterialPageRoute(
+                    builder: (context) => PageDevice(deviceId: id),
+                  ),
+                )
+                    .then((value) {
+                  stateManager.reload();
+                });
               },
               child: Builder(builder: (BuildContext context) {
-                if (type == 'relay' ||
-                    type == 'vacuum' ||
-                    type == 'tv') {
+                if (type == 'relay' || type == 'vacuum' || type == 'tv') {
                   return DeviceRelay(
                     title: title,
                     id: id,

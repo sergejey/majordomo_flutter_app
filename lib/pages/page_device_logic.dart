@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:home_app/pages/page_device_notifier.dart';
 import 'package:home_app/utils/logging.dart';
 
@@ -18,9 +19,16 @@ class DevicePageManager {
     pageDeviceNotifier.dispose();
   }
 
+  Future<void> deviceConfigClicked() async {
+    final Uri _url = Uri.parse(pageDeviceNotifier.deviceConfigURL);
+    if (!await launchUrl(_url)) {
+      throw Exception('Could not launch $_url');
+    }
+  }
+
   void startPeriodicUpdate() {
     _tickerSubscription = _ticker.tick(ticks: 5).listen(
-          (duration) {
+      (duration) {
         dprint("Periodic device tick");
         if (!_fetchInProgress) {
           _fetchInProgress = true;
@@ -35,17 +43,17 @@ class DevicePageManager {
     _tickerSubscription?.cancel();
   }
 
-  void callObjectMethod(String object, String method, [Map<String , dynamic>? params]) {
+  void callObjectMethod(String object, String method,
+      [Map<String, dynamic>? params]) {
     pageDeviceNotifier.callMethod(object, method, params);
   }
-
 }
 
 class Ticker {
   Stream<int> tick({required int ticks}) {
     return Stream.periodic(
       const Duration(seconds: 5),
-          (x) => ticks - x - 1,
+      (x) => ticks - x - 1,
     ).takeWhile((element) => true);
   }
 }

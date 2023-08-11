@@ -14,12 +14,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'My SmartHome',
+      title: 'MajorDoMo NG',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const PageMain(title: 'My SmartHome'),
+      home: const PageMain(title: 'MajorDoMo NG'),
     );
   }
 }
