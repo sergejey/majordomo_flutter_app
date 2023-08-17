@@ -79,6 +79,7 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
                     device.type == "dimmer" ||
                     device.type == "motion" ||
                     device.type == "vacuum" ||
+                    device.type == "sensor_power" ||
                     device.type == "tv") &&
                 device.properties["status"] == "1") ||
             (device.type == "openclose" &&
