@@ -12,6 +12,7 @@ import './device_motion.dart';
 import './device_openclose.dart';
 import './device_sensor_temphum.dart';
 import './device_sensor_general.dart';
+import './device_sensor_power.dart';
 import './device_sensor_light.dart';
 
 class DeviceWrapper extends StatelessWidget {
@@ -52,7 +53,7 @@ class DeviceWrapper extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: GestureDetector(
-              behavior: HitTestBehavior.translucent,
+              behavior: HitTestBehavior.opaque,
               onTap: () {
                 final stateManager = getIt<MainPageManager>();
                 stateManager.endPeriodicUpdate();
@@ -118,6 +119,13 @@ class DeviceWrapper extends StatelessWidget {
                   );
                 } else if (type == 'sensor_general') {
                   return DeviceSensorGeneral(
+                    title: title,
+                    id: id,
+                    object: object,
+                    properties: properties,
+                  );
+                } else if (type == 'sensor_power') {
+                  return DeviceSensorPower(
                     title: title,
                     id: id,
                     object: object,
