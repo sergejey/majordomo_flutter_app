@@ -1,16 +1,8 @@
-# home_app
+# MajorDroid NG (next gen)
 
-A new Flutter project.
+Hi,
 
-## Getting Started
+This is a flutter based app to be used as a client for [MajorDoMo](https://github.com/sergejey/majordomo) home automation platform.
 
-This project is a starting point for a Flutter application.
+https://github.com/sergejey/majordomo_flutter_app/assets/412987/1c48ce95-5500-4264-976c-16a3de48c31b
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
