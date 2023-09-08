@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.majordomo.home_app">
-   <application
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application
         android:networkSecurityConfig="@xml/network_security_config"
         android:label="MajorDoMo NG"
         android:name="${applicationName}"
