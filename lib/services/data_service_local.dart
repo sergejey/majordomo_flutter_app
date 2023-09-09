@@ -15,6 +15,8 @@ class DataServiceLocal extends DataService {
   static http.Client client = http.Client();
 
   Future<String> getURL(String URL) async {
+    String goURL = URL;
+
     String basicAuth = '';
     String userName = getUsername();
     String password = getPassword();
@@ -25,18 +27,28 @@ class DataServiceLocal extends DataService {
       String encoded = stringToBase64.encode(credentials);
       basicAuth = 'Basic ' + encoded;
     }
-    final response;
+    final http.Response response;
+
+    if (goURL.contains('http://connect.smartliving.ru')) {
+      goURL = goURL.replaceFirst('http://', 'https://');
+    }
+
+    dprint('Fetching $goURL');
+
     if (basicAuth != '') {
-      response = await client.get(Uri.parse(URL),
-          headers: <String, String>{'authorization': basicAuth});
+      response = await client.get(Uri.parse(goURL), headers: <String, String>{
+        'Authorization': basicAuth
+      }).timeout(const Duration(seconds: 10));
     } else {
-      response = await client.get(Uri.parse(URL));
+      response = await client
+          .get(Uri.parse(goURL))
+          .timeout(const Duration(seconds: 10));
     }
 
     if (response.statusCode == 200) {
       return response.body;
     } else {
-      dprint("Error loading $URL");
+      dprint("Error loading $goURL (code: ${response.statusCode})");
       return '';
     }
   }
@@ -51,8 +63,6 @@ class DataServiceLocal extends DataService {
     }
 
     final apiURL = '$baseURL/api/history/$objectName.$property/1month';
-    dprint(
-        "Fetching operational modes data from $apiURL ${DateTime.now().toString()}");
     try {
       final response = await getURL(apiURL);
       if (response != '') {
@@ -76,8 +86,6 @@ class DataServiceLocal extends DataService {
       return [];
     }
     final apiURL = '$baseURL/api/objects/SystemStates';
-    dprint(
-        "Fetching system states data from $apiURL ${DateTime.now().toString()}");
     try {
       final response = await getURL(apiURL);
       if (response != '') {
@@ -101,8 +109,6 @@ class DataServiceLocal extends DataService {
       return [];
     }
     final apiURL = '$baseURL/api/objects/OperationalModes';
-    dprint(
-        "Fetching operational modes data from $apiURL ${DateTime.now().toString()}");
     try {
       final response = await getURL(apiURL);
       if (response != '') {
