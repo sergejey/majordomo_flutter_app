@@ -26,10 +26,10 @@ class MainPageManager {
     startPeriodicUpdate();
   }
 
-  void reload() {
+  void reload() async {
     dprint("Reloading main page logic");
     endPeriodicUpdate();
-    pageMainDevicesNotifier.initialize();
+    await pageMainDevicesNotifier.initialize();
     startPeriodicUpdate();
   }
 

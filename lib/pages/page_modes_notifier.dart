@@ -4,14 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:home_app/models/history_record.dart';
 import 'package:home_app/models/operational_mode.dart';
 import 'package:home_app/models/system_state.dart';
-import 'package:home_app/services/preferences_service.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/services/data_service.dart';
 
 class PageModesNotifier extends ValueNotifier<String> {
   PageModesNotifier() : super('');
   final _dataService = getIt<DataService>();
-  final _preferencesService = getIt<PreferencesService>();
 
   List<OperationalMode> opModes = [];
   List<SystemState> sysStates = [];
@@ -19,9 +17,9 @@ class PageModesNotifier extends ValueNotifier<String> {
   List<List<HistoryRecord>> opModesHistory = List.generate(10, (index) => []);
 
   Future<void> initialize() async {
-    await _preferencesService.readAllPreferences();
-    _dataService.setBaseURL(
-        _preferencesService.getPreference("serverAddressLocal") ?? "");
+
+    await _dataService.initialize();
+
     opModes = await _dataService.fetchOperationalModes();
     sysStates = await _dataService.fetchSystemStates();
     for (var i = 0; i < opModes.length; i++) {

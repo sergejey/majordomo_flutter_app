@@ -14,6 +14,33 @@ import 'package:http/http.dart' as http;
 class DataServiceLocal extends DataService {
   static http.Client client = http.Client();
 
+  Future<String> getURL(String URL) async {
+    String basicAuth = '';
+    String userName = getUsername();
+    String password = getPassword();
+
+    if (userName != '' && password != '') {
+      String credentials = "$userName:$password";
+      Codec<String, String> stringToBase64 = utf8.fuse(base64);
+      String encoded = stringToBase64.encode(credentials);
+      basicAuth = 'Basic ' + encoded;
+    }
+    final response;
+    if (basicAuth != '') {
+      response = await client.get(Uri.parse(URL),
+          headers: <String, String>{'authorization': basicAuth});
+    } else {
+      response = await client.get(Uri.parse(URL));
+    }
+
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      dprint("Error loading $URL");
+      return '';
+    }
+  }
+
   @override
   Future<List<HistoryRecord>> getPropertyHistory(
       String objectName, String property) async {
@@ -27,15 +54,13 @@ class DataServiceLocal extends DataService {
     dprint(
         "Fetching operational modes data from $apiURL ${DateTime.now().toString()}");
     try {
-      final response = await client.get(Uri.parse(apiURL));
-      if (response.statusCode == 200) {
+      final response = await getURL(apiURL);
+      if (response != '') {
         final parsed =
-            jsonDecode(response.body)["result"].cast<Map<String, dynamic>>();
+            jsonDecode(response)["result"].cast<Map<String, dynamic>>();
         return parsed
             .map<HistoryRecord>((json) => HistoryRecord.fromJson(json))
             .toList();
-      } else {
-        dprint("Error loading $apiURL");
       }
     } catch (e) {
       dprint('General Error: $e');
@@ -54,15 +79,13 @@ class DataServiceLocal extends DataService {
     dprint(
         "Fetching system states data from $apiURL ${DateTime.now().toString()}");
     try {
-      final response = await client.get(Uri.parse(apiURL));
-      if (response.statusCode == 200) {
+      final response = await getURL(apiURL);
+      if (response != '') {
         final parsed =
-            jsonDecode(response.body)["objects"].cast<Map<String, dynamic>>();
+            jsonDecode(response)["objects"].cast<Map<String, dynamic>>();
         return parsed
             .map<SystemState>((json) => SystemState.fromJson(json))
             .toList();
-      } else {
-        dprint("Error loading $apiURL");
       }
     } catch (e) {
       dprint('General Error: $e');
@@ -81,15 +104,13 @@ class DataServiceLocal extends DataService {
     dprint(
         "Fetching operational modes data from $apiURL ${DateTime.now().toString()}");
     try {
-      final response = await client.get(Uri.parse(apiURL));
-      if (response.statusCode == 200) {
+      final response = await getURL(apiURL);
+      if (response != '') {
         final parsed =
-            jsonDecode(response.body)["objects"].cast<Map<String, dynamic>>();
+            jsonDecode(response)["objects"].cast<Map<String, dynamic>>();
         return parsed
             .map<OperationalMode>((json) => OperationalMode.fromJson(json))
             .toList();
-      } else {
-        dprint("Error loading $apiURL");
       }
     } catch (e) {
       dprint('General Error: $e');
@@ -107,13 +128,11 @@ class DataServiceLocal extends DataService {
     final apiURL = '$baseURL/api/rooms';
     dprint("Fetching rooms data from $apiURL ${DateTime.now().toString()}");
     try {
-      final response = await client.get(Uri.parse(apiURL));
-      if (response.statusCode == 200) {
+      final response = await getURL(apiURL);
+      if (response != '') {
         final parsed =
-            jsonDecode(response.body)["rooms"].cast<Map<String, dynamic>>();
+            jsonDecode(response)["rooms"].cast<Map<String, dynamic>>();
         return parsed.map<Room>((json) => Room.fromJson(json)).toList();
-      } else {
-        dprint("Error loading $apiURL");
       }
     } catch (e) {
       dprint('General Error: $e');
@@ -140,12 +159,10 @@ class DataServiceLocal extends DataService {
     dprint(
         "Fetching my devices data from $apiURL ${DateTime.now().toString()}");
     try {
-      final response = await client.get(Uri.parse(apiURL));
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> parsed = jsonDecode(response.body)["device"];
+      final response = await getURL(apiURL);
+      if (response != '') {
+        final Map<String, dynamic> parsed = jsonDecode(response)["device"];
         return SimpleDevice.fromJson(parsed);
-      } else {
-        dprint("Error loading $apiURL");
       }
     } catch (e) {
       dprint('General Error: $e');
@@ -164,15 +181,13 @@ class DataServiceLocal extends DataService {
     dprint(
         "Fetching my devices data from $apiURL ${DateTime.now().toString()}");
     try {
-      final response = await client.get(Uri.parse(apiURL));
-      if (response.statusCode == 200) {
+      final response = await getURL(apiURL);
+      if (response != '') {
         final parsed =
-            jsonDecode(response.body)["devices"].cast<Map<String, dynamic>>();
+            jsonDecode(response)["devices"].cast<Map<String, dynamic>>();
         return parsed
             .map<SimpleDevice>((json) => SimpleDevice.fromJson(json))
             .toList();
-      } else {
-        dprint("Error loading $apiURL");
       }
     } catch (e) {
       dprint('General Error: $e');
@@ -195,8 +210,7 @@ class DataServiceLocal extends DataService {
           url += '$key=$value&';
         });
       }
-      await client.get(Uri.parse(url));
-      //print("Response: ${response.body}");
+      await getURL(url);
     }
   }
 }
