@@ -4,21 +4,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:home_app/models/operational_mode.dart';
 import 'package:home_app/models/simple_device.dart';
 import 'package:home_app/models/room.dart';
-import 'package:home_app/services/preferences_service.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/services/data_service.dart';
 
 class PageMainDevicesNotifier extends ValueNotifier<String> {
   PageMainDevicesNotifier() : super('');
   final _dataService = getIt<DataService>();
-  final _preferencesService = getIt<PreferencesService>();
 
   bool activeFilter = false;
   String roomFilter = '';
   String currentRoomTitle = '';
 
   List<Room> myRooms = [];
+
   List<OperationalMode> myOperationalModes = [];
+  List<OperationalMode> myOperationalModesFiltered = [];
+
   List<SimpleDevice> myDevices = [];
   List<SimpleDevice> myDevicesFullList = [];
 
@@ -46,10 +47,7 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
   }
 
   Future<void> initialize() async {
-    await _preferencesService.readAllPreferences();
-    _dataService.setBaseURL(
-        _preferencesService.getPreference("serverAddressLocal") ?? "");
-
+    await _dataService.initialize();
     await fetchDevices();
     myRooms = await _dataService.fetchRooms();
   }
@@ -57,6 +55,13 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
   Future<void> fetchDevices() async {
     myDevicesFullList = await _dataService.fetchMyDevices();
     myOperationalModes = await _dataService.fetchOperationalModes();
+    myOperationalModesFiltered.clear();
+    myOperationalModesFiltered.addAll(myOperationalModes);
+    myOperationalModesFiltered.retainWhere((OperationalMode opMode) {
+      if (['econommode', 'nobodyhomemode', 'nightmode','darknessmode', 'securityarmedmode']
+          .contains(opMode.object.toLowerCase())) return true;
+      return false;
+    });
     refreshDevices();
   }
 

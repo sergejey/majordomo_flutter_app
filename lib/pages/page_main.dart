@@ -15,6 +15,8 @@ import 'package:home_app/deviceWidgets/_device_wrapper.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
+import 'package:flutter_fgbg/flutter_fgbg.dart';
+
 class PageMain extends StatefulWidget {
   const PageMain({super.key, required this.title});
 
@@ -47,108 +49,115 @@ class _MyHomePageState extends State<PageMain> {
     return ValueListenableBuilder<String>(
       valueListenable: stateManager.pageMainDevicesNotifier,
       builder: (context, value, child) {
-        return Scaffold(
-          appBar: AppBar(
-            title: stateManager.pageMainDevicesNotifier.currentRoomTitle != ''
-                ? Text(stateManager.pageMainDevicesNotifier.currentRoomTitle)
-                : const Text(configAppDefaultTitle),
-            actions: <Widget>[
-              OperationalModesList(
-                  modes:
-                      stateManager.pageMainDevicesNotifier.myOperationalModes),
-              PopupMenuButton(
-                  icon: const Icon(Icons.menu),
-                  //don't specify icon if you want 3 dot menu
-                  color: Colors.white,
-                  itemBuilder: (context) => List.generate(
-                      stateManager.pageMainDevicesNotifier.myRooms.length,
-                      (index) => PopupMenuItem<int>(
-                            value: index + 1,
-                            child: Text(
-                              stateManager
-                                  .pageMainDevicesNotifier.myRooms[index].title,
-                              style: const TextStyle(color: Colors.blue),
-                            ),
-                          ))
-                    ..insert(
-                        0,
-                        const PopupMenuItem<int>(
-                            value: 0,
-                            child: Text(
-                              'All rooms',
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold),
-                            ))),
-                  onSelected: (item) => {
-                        //print(rooms[item].object)
-                        if (item > 0)
-                          {
-                            stateManager.setRoomFilter(
-                                stateManager.pageMainDevicesNotifier
-                                    .myRooms[item - 1].object,
-                                stateManager.pageMainDevicesNotifier
-                                    .myRooms[item - 1].title)
-                          }
-                        else
-                          {stateManager.resetRoomFilter()}
-                      }),
-              Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CircleAvatar(
-                    radius: 20,
-                    backgroundColor:
-                        stateManager.pageMainDevicesNotifier.activeFilter
-                            ? Colors.yellow
-                            : Colors.blue,
-                    child: IconButton(
-                      icon: Icon(Icons.filter_alt_outlined,
-                          color:
-                              (stateManager.pageMainDevicesNotifier.activeFilter
-                                  ? Colors.black
-                                  : Colors.white)),
-                      tooltip: 'Show SnackBar',
-                      onPressed: () {
-                        stateManager.toggleActiveFilter();
-                      },
-                    ),
-                  ))
-            ],
-          ),
-          body: DevicesList(
-              devices: stateManager.pageMainDevicesNotifier.myDevices),
-          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-          floatingActionButton: SpeedDial(
-              icon: Icons.add,
-              activeIcon: Icons.close,
-              spacing: 3,
-              childPadding: const EdgeInsets.all(5),
-              spaceBetweenChildren: 4,
-              openCloseDial: isDialOpen,
-              elevation: 8.0,
-              useRotationAnimation: true,
-              animationCurve: Curves.elasticInOut,
-              isOpenOnStart: false,
-              children: [
-                SpeedDialChild(
-                  child: const Icon(Icons.settings),
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.white,
-                  label: 'Settings',
-                  onTap: () {
-                    stateManager.endPeriodicUpdate();
-                    Navigator.of(context)
-                        .push(
-                      MaterialPageRoute(
-                        builder: (context) => const PageSettings(),
+        return FGBGNotifier(
+          onEvent: (event) {
+            if (event==FGBGType.foreground) {
+              stateManager.reload();
+            }
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              title: stateManager.pageMainDevicesNotifier.currentRoomTitle != ''
+                  ? Text(stateManager.pageMainDevicesNotifier.currentRoomTitle)
+                  : const Text(configAppDefaultTitle),
+              actions: <Widget>[
+                OperationalModesList(
+                    modes:
+                        stateManager.pageMainDevicesNotifier.myOperationalModesFiltered),
+                PopupMenuButton(
+                    icon: const Icon(Icons.menu),
+                    //don't specify icon if you want 3 dot menu
+                    color: Colors.white,
+                    itemBuilder: (context) => List.generate(
+                        stateManager.pageMainDevicesNotifier.myRooms.length,
+                        (index) => PopupMenuItem<int>(
+                              value: index + 1,
+                              child: Text(
+                                stateManager
+                                    .pageMainDevicesNotifier.myRooms[index].title,
+                                style: const TextStyle(color: Colors.blue),
+                              ),
+                            ))
+                      ..insert(
+                          0,
+                          const PopupMenuItem<int>(
+                              value: 0,
+                              child: Text(
+                                'All rooms',
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.bold),
+                              ))),
+                    onSelected: (item) => {
+                          //print(rooms[item].object)
+                          if (item > 0)
+                            {
+                              stateManager.setRoomFilter(
+                                  stateManager.pageMainDevicesNotifier
+                                      .myRooms[item - 1].object,
+                                  stateManager.pageMainDevicesNotifier
+                                      .myRooms[item - 1].title)
+                            }
+                          else
+                            {stateManager.resetRoomFilter()}
+                        }),
+                Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircleAvatar(
+                      radius: 20,
+                      backgroundColor:
+                          stateManager.pageMainDevicesNotifier.activeFilter
+                              ? Colors.yellow
+                              : Colors.blue,
+                      child: IconButton(
+                        icon: Icon(Icons.filter_alt_outlined,
+                            color:
+                                (stateManager.pageMainDevicesNotifier.activeFilter
+                                    ? Colors.black
+                                    : Colors.white)),
+                        tooltip: 'Show SnackBar',
+                        onPressed: () {
+                          stateManager.toggleActiveFilter();
+                        },
                       ),
-                    )
-                        .then((value) {
-                      stateManager.reload();
-                    });
-                  },
-                ),
-              ]),
+                    ))
+              ],
+            ),
+            body: DevicesList(
+                devices: stateManager.pageMainDevicesNotifier.myDevices),
+            floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+            floatingActionButton: SpeedDial(
+                icon: Icons.add,
+                activeIcon: Icons.close,
+                spacing: 3,
+                childPadding: const EdgeInsets.all(5),
+                spaceBetweenChildren: 4,
+                openCloseDial: isDialOpen,
+                elevation: 8.0,
+                useRotationAnimation: true,
+                animationCurve: Curves.elasticInOut,
+                isOpenOnStart: false,
+                children: [
+                  SpeedDialChild(
+                    child: const Icon(Icons.settings),
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                    label: 'Settings',
+                    onTap: () {
+                      stateManager.endPeriodicUpdate();
+                      Navigator.of(context)
+                          .push(
+                        MaterialPageRoute(
+                          builder: (context) => const PageSettings(),
+                        ),
+                      )
+                          .then((value) {
+                        stateManager.reload();
+                      });
+                    },
+                  ),
+                ]),
+          ),
         );
       },
     );
@@ -212,7 +221,7 @@ class OperationalModesList extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (context) => modes.length == 0
                                     ? PageSettings()
-                                    : PageModes(initialTab: index,),
+                                    : PageModes(initialTab: 0,),
                               ),
                             )
                                 .then((value) {

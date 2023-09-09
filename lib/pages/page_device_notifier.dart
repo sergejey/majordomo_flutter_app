@@ -2,14 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:home_app/models/simple_device.dart';
-import 'package:home_app/services/preferences_service.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/services/data_service.dart';
 
 class PageDeviceNotifier extends ValueNotifier<String> {
   PageDeviceNotifier() : super('');
   final _dataService = getIt<DataService>();
-  final _preferencesService = getIt<PreferencesService>();
 
   String deviceId = '';
   String deviceConfigURL = '';
@@ -24,10 +22,7 @@ class PageDeviceNotifier extends ValueNotifier<String> {
 
   Future<void> initialize(String initDeviceId) async {
     deviceId = initDeviceId;
-    await _preferencesService.readAllPreferences();
-    _dataService.setBaseURL(
-        _preferencesService.getPreference("serverAddressLocal") ?? "");
-
+    await _dataService.initialize();
     deviceConfigURL =
         "${_dataService.getBaseURL()}/panel/devices/$deviceId.html?tab=settings";
 
