@@ -52,12 +52,13 @@ class DeviceThermostatPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.white),
                     onPressed: properties['disabled'] == '1'
                         ? null
                         : () {
-                      stateManager.callObjectMethod(object, "tempUp");
-                    },
+                            stateManager.callObjectMethod(object, "tempUp");
+                          },
                     child: SizedBox.fromSize(
                       size: const Size.fromRadius(40),
                       child: const FittedBox(
@@ -69,17 +70,19 @@ class DeviceThermostatPage extends StatelessWidget {
                     height: 25,
                   ),
                   Text("${properties['currentTargetValue']} °C",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 55)),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 55)),
                   SizedBox(
                     height: 25,
                   ),
                   ElevatedButton(
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.white),
                     onPressed: properties['disabled'] == '1'
                         ? null
                         : () {
-                      stateManager.callObjectMethod(object, "tempDown");
-                    },
+                            stateManager.callObjectMethod(object, "tempDown");
+                          },
                     child: SizedBox.fromSize(
                       size: const Size.fromRadius(40),
                       child: const FittedBox(
@@ -87,7 +90,6 @@ class DeviceThermostatPage extends StatelessWidget {
                       ),
                     ),
                   ),
-
                 ],
               ),
             ],
@@ -104,7 +106,10 @@ class DeviceThermostatPage extends StatelessWidget {
                   stateManager.callObjectMethod(object, "disable");
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.white),
+                  backgroundColor: MaterialStateProperty.all(
+                      properties['disabled'] == '1'
+                          ? Colors.yellow
+                          : Colors.white),
                 ),
                 child:
                     const Text("Выкл", style: TextStyle(color: Colors.black)),
@@ -116,7 +121,11 @@ class DeviceThermostatPage extends StatelessWidget {
                   stateManager.callObjectMethod(object, "turnOn");
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.white),
+                  backgroundColor: MaterialStateProperty.all(
+                      (properties['disabled'] != '1' &&
+                              properties['status'] == '1')
+                          ? Colors.yellow
+                          : Colors.white),
                 ),
                 child:
                     const Text("Normal", style: TextStyle(color: Colors.black)),
@@ -128,7 +137,11 @@ class DeviceThermostatPage extends StatelessWidget {
                   stateManager.callObjectMethod(object, "turnOff");
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.white),
+                  backgroundColor: MaterialStateProperty.all(
+                      (properties['disabled'] != '1' &&
+                              properties['status'] != '1')
+                          ? Colors.yellow
+                          : Colors.white),
                 ),
                 child: const Text("ECO", style: TextStyle(color: Colors.black)),
               ),
