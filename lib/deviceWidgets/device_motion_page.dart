@@ -3,8 +3,8 @@ import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/pages/page_device_logic.dart';
 import 'package:home_app/utils/text_updated.dart';
 
-class DeviceRelayPage extends StatelessWidget {
-  const DeviceRelayPage(
+class DeviceMotionPage extends StatelessWidget {
+  const DeviceMotionPage(
       {super.key,
       required this.title,
       required this.id,
@@ -27,19 +27,18 @@ class DeviceRelayPage extends StatelessWidget {
             height: 20,
           ),
           Expanded(
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      properties['status'] == "1" ? Colors.yellow : Colors.white),
-              onPressed: () {
-                stateManager.callObjectMethod(object, "switch");
-              },
-              child: SizedBox.fromSize(
-                size: const Size.fromRadius(150),
-                child: const FittedBox(
-                  child: Icon(
-                    Icons.power_settings_new,
-                    color: Colors.black,
+            child: Center(
+              child: CircleAvatar(
+                radius: 150,
+                backgroundColor:
+                    properties['status'] == "1" ? Colors.yellow : Colors.white,
+                child: SizedBox.fromSize(
+                  size: const Size.fromRadius(130),
+                  child: const FittedBox(
+                    child: Icon(
+                      Icons.man,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ),
@@ -51,9 +50,7 @@ class DeviceRelayPage extends StatelessWidget {
           Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: TextUpdated(
-                updated: properties['updated']
-              ),
+              child: TextUpdated(updated: properties['updated']),
             ),
           )
         ],

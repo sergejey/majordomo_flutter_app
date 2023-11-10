@@ -26,6 +26,10 @@ class DeviceThermostatPage extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
+          Text("Текущая температура:"),
+          SizedBox(
+            height: 10,
+          ),
           Container(
             decoration: BoxDecoration(
               color: properties["relay_status"] == "1"
@@ -51,6 +55,10 @@ class DeviceThermostatPage extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Text("Целевая температура:"),
+                  SizedBox(
+                    height: 25,
+                  ),
                   ElevatedButton(
                     style:
                         ElevatedButton.styleFrom(backgroundColor: Colors.white),
@@ -96,6 +104,10 @@ class DeviceThermostatPage extends StatelessWidget {
           )),
           SizedBox(
             height: 20,
+          ),
+          Text("Режим работы:"),
+          SizedBox(
+            height: 10,
           ),
           /*3*/
           Row(
