@@ -10,6 +10,7 @@ import './device_dimmer.dart';
 import './device_thermostat.dart';
 import './device_motion.dart';
 import './device_openclose.dart';
+import './device_openable.dart';
 import './device_sensor_temphum.dart';
 import './device_sensor_general.dart';
 import './device_sensor_power.dart';
@@ -105,6 +106,13 @@ class DeviceWrapper extends StatelessWidget {
                   );
                 } else if (type == 'openclose') {
                   return DeviceOpenClose(
+                    title: title,
+                    id: id,
+                    object: object,
+                    properties: properties,
+                  );
+                } else if (type == 'openable') {
+                  return DeviceOpenable(
                     title: title,
                     id: id,
                     object: object,

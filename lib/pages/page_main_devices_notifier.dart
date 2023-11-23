@@ -87,7 +87,8 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
                     device.type == "sensor_power" ||
                     device.type == "tv") &&
                 device.properties["status"] == "1") ||
-            (device.type == "openclose" &&
+            ((device.type == "openclose" ||
+                device.type == "openable") &&
                 device.properties["status"] != "1") ||
             (device.type == "thermostat" &&
                 device.properties["relay_status"] == "1")) {
