@@ -54,6 +54,10 @@ abstract class DataService {
     String remoteURL =
         _preferencesService.getPreference("serverAddressRemote") ?? localURL;
 
+    if (localURL == '' && remoteURL!='') {
+      localURL = remoteURL;
+    }
+
     String loadURL = localURL;
 
     if (serverMode == 'auto') {
@@ -81,6 +85,13 @@ abstract class DataService {
     String serverPassword =
         _preferencesService.getPreference("serverPassword") ?? "";
 
+    String connectAccessToken =
+        _preferencesService.getPreference("connectAccessToken") ?? "";
+
+    if (loadURL == 'connect.smartliving.ru' && connectAccessToken!='') {
+      serverUsername = 'access_token';
+      serverPassword = connectAccessToken;
+    }
     setUsernamePassword(serverUsername, serverPassword);
   }
 
@@ -103,6 +114,8 @@ abstract class DataService {
 
   String getBaseURL() {
     String url = _baseURL;
+    if (url == '') return url;
+    if (url == 'connect.smartliving.ru') return 'https://connect.smartliving.ru';
     if (!url.startsWith('http:')) url = 'http://$url';
     return url;
   }

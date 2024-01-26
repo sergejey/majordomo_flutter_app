@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/pages/page_main.dart';
+import 'package:oauth_webauth/oauth_webauth.dart';
 
-void main() {
+void main() async {
   setupGetIt();
+  WidgetsFlutterBinding.ensureInitialized();
+  await OAuthWebAuth.instance.init();
   runApp(const MyApp());
 }
 

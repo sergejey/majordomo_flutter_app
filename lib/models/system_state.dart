@@ -1,4 +1,3 @@
-import 'package:home_app/utils/logging.dart';
 
 class SystemState {
   final String id;
