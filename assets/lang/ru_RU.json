@@ -1,0 +1,21 @@
+{
+    "home-title": "Настройки",
+    "connect": "Соединение",
+    "not-authorized": "Не авторизовано",
+    "authorized": "авторизовано",
+    "username": "Имя пользователя",
+    "password":"Пароль",
+    "remote-address": "Удаленный адрес",
+    "local-address": "Локальный адрес",
+    "mode": "Режим",
+    "select-profile": "Выбрать профиль",
+    "auto": "Авто",
+    "local": "Локальный",
+    "remote": "Удаленный",
+    "local-wifi-ssid": "Локальный WiFi SSID",
+    "reset-wifi-ssid": "Перезагрузка WiFi SSID",
+    "language": "Язык",
+    "select-language": "Выберите языка",
+    "english": "Английский",
+    "russian": "Русский"
+}
