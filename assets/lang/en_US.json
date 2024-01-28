@@ -1,0 +1,21 @@
+{
+    "home-title": "Settings",
+    "connect": "CONNECT",
+    "not-authorized": "Not authorized",
+    "authorized": "Authorized",
+    "username": "Username",
+    "password":"Password",
+    "remote-address": "Remote address",
+    "local-address": "Local address",
+    "mode": "Mode",
+    "select-profile": "Select profile",
+    "auto": "Auto",
+    "local": "Local",
+    "remote": "Remote",
+    "local-wifi-ssid": "Local WiFi SSID",
+    "reset-wifi-ssid": "Reset WiFi SSID",
+    "language": "Language",
+    "select-language": "Select language",
+    "english": "English",
+    "russian": "Russian"
+}

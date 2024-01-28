@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 import 'package:oauth_webauth/oauth_webauth.dart';
 import 'package:settings_ui/settings_ui.dart';
+import '../main.dart';
 import '../services/service_locator.dart';
 import './page_settings_logic.dart';
 import 'package:prompt_dialog/prompt_dialog.dart';
@@ -32,6 +34,7 @@ class _SettingsPageState extends State<PageSettings> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context);
     final stateManager = getIt<SettingsPageManager>();
     return ValueListenableBuilder<String>(
         valueListenable: stateManager.pageSettingsNotifier,
@@ -39,15 +42,15 @@ class _SettingsPageState extends State<PageSettings> {
           String connectAccessToken =
               stateManager.getAppSetting("connectAccessToken") ?? "";
           return Scaffold(
-              appBar: AppBar(title: const Text('Settings')),
+              appBar: AppBar(title: Text("home-title".i18n([locale.toString()]))),
               body: SettingsList(platform: DevicePlatform.android, sections: [
                 SettingsSection(tiles: [
                   SettingsTile(
-                      title: const Text('CONNECT'),
+                      title: Text("connect".i18n()),
                       leading: const Icon(Icons.verified_user),
                       value: connectAccessToken == ''
-                          ? const Text('Not authorized')
-                          : const Text('Authorized'),
+                          ? Text("not-authorized".i18n())
+                          : Text('authorized'.i18n()),
                       onPressed: (context) async {
                         if (connectAccessToken=='') {
                           loginV2();
@@ -56,7 +59,7 @@ class _SettingsPageState extends State<PageSettings> {
                             context: context,
                             builder: (BuildContext context) {
                               return SimpleDialog(
-                                title: Text("CONNECT"),
+                                title: Text("connect".i18n()),
                                 children: [
                                   SimpleDialogOption(
                                     child: Text("Re-login"),
@@ -86,7 +89,7 @@ class _SettingsPageState extends State<PageSettings> {
                         }
                       }),
                   SettingsTile(
-                    title: const Text('Mode'),
+                    title: Text('mode'.i18n()),
                     leading: const Icon(Icons.find_in_page_outlined),
                     value:
                         Text(stateManager.getAppSetting("serverMode") ?? "n/a"),
@@ -95,29 +98,29 @@ class _SettingsPageState extends State<PageSettings> {
                         context: context,
                         builder: (BuildContext context) {
                           return SimpleDialog(
-                            title: Text("Select profile"),
+                            title: Text("select-profile".i18n()),
                             children: [
                               SimpleDialogOption(
-                                child: Text("Auto"),
+                                child: Text("auto".i18n()),
                                 onPressed: () {
                                   stateManager.setAppSetting(
-                                      "serverMode", "auto");
+                                      "serverMode", "auto".i18n());
                                   Navigator.pop(context);
                                 },
                               ),
                               SimpleDialogOption(
-                                child: Text("Local"),
+                                child: Text("local".i18n()),
                                 onPressed: () {
                                   stateManager.setAppSetting(
-                                      "serverMode", "local");
+                                      "serverMode", "local".i18n());
                                   Navigator.pop(context);
                                 },
                               ),
                               SimpleDialogOption(
-                                child: Text("Remote"),
+                                child: Text("remote".i18n()),
                                 onPressed: () {
                                   stateManager.setAppSetting(
-                                      "serverMode", "remote");
+                                      "serverMode", "remote".i18n());
                                   Navigator.pop(context);
                                 },
                               ),
@@ -128,7 +131,7 @@ class _SettingsPageState extends State<PageSettings> {
                     },
                   ),
                   SettingsTile(
-                    title: const Text('Local address'),
+                    title: Text('local-address'.i18n()),
                     leading: const Icon(Icons.wifi),
                     value: Text(
                         stateManager.getAppSetting("serverAddressLocal") ??
@@ -145,7 +148,7 @@ class _SettingsPageState extends State<PageSettings> {
                     },
                   ),
                   SettingsTile(
-                    title: const Text('Remote address'),
+                    title: Text('remote-address'.i18n()),
                     leading: const Icon(Icons.network_cell),
                     value: Text(
                         stateManager.getAppSetting("serverAddressRemote") ??
@@ -162,7 +165,7 @@ class _SettingsPageState extends State<PageSettings> {
                     },
                   ),
                   SettingsTile(
-                    title: const Text('Local WiFi SSID'),
+                    title: Text('local-wifi-ssid'.i18n()),
                     leading: const Icon(Icons.wifi),
                     value: Text(
                         stateManager.getAppSetting("localWifiSSID") ?? "n/a"),
@@ -193,7 +196,7 @@ class _SettingsPageState extends State<PageSettings> {
                     },
                   ),
                   SettingsTile(
-                    title: const Text('Reset WiFi SSID'),
+                    title: Text('reset-wifi-ssid'.i18n()),
                     leading: const Icon(Icons.wifi_protected_setup),
                     onPressed: (context) async {
                       String currentWifiSSID = "";
@@ -212,7 +215,7 @@ class _SettingsPageState extends State<PageSettings> {
                     },
                   ),
                   SettingsTile(
-                    title: const Text('Username'),
+                    title: Text('username'.i18n()),
                     leading: const Icon(Icons.man),
                     value: Text(
                         stateManager.getAppSetting("serverUsername") ?? "n/a"),
@@ -228,7 +231,7 @@ class _SettingsPageState extends State<PageSettings> {
                     },
                   ),
                   SettingsTile(
-                    title: const Text('Password'),
+                    title: Text('password'.i18n()),
                     leading: const Icon(Icons.password),
                     value: Text(
                         (stateManager.getAppSetting("serverPassword") ?? "") !=
@@ -244,6 +247,44 @@ class _SettingsPageState extends State<PageSettings> {
                         stateManager.setAppSetting(
                             "serverPassword", newValue.toString());
                       }
+                    },
+                  ),
+                  SettingsTile(
+                    title: Text('language'.i18n()),
+                    leading: const Icon(Icons.language),
+                    value:
+                    Text(stateManager.getAppSetting("language") ?? "English"),
+                    onPressed: (context) async {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return SimpleDialog(
+                            title: Text("select-language".i18n()),
+                            children: [
+                              SimpleDialogOption(
+                                child: Text("english".i18n()),
+                                onPressed: () {
+                                  stateManager.setAppSetting(
+                                      "language", "english".i18n());
+                                  final myApp = context.findAncestorStateOfType<MyAppState>()!;
+                                  myApp.changeLocale(Locale('en', 'US'));
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              SimpleDialogOption(
+                                child: Text("russian".i18n()),
+                                onPressed: () {
+                                  stateManager.setAppSetting(
+                                      "language", "russian".i18n());
+                                  final myApp = context.findAncestorStateOfType<MyAppState>()!;
+                                  myApp.changeLocale(Locale('ru', 'RU'));
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     },
                   ),
                 ])
