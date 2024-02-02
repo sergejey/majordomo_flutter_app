@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 import 'package:oauth_webauth/oauth_webauth.dart';
@@ -9,6 +12,7 @@ import 'package:prompt_dialog/prompt_dialog.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 
 class PageSettings extends StatefulWidget {
   const PageSettings({super.key});
@@ -42,7 +46,8 @@ class _SettingsPageState extends State<PageSettings> {
           String connectAccessToken =
               stateManager.getAppSetting("connectAccessToken") ?? "";
           return Scaffold(
-              appBar: AppBar(title: Text("home-title".i18n([locale.toString()]))),
+              appBar:
+                  AppBar(title: Text("home-title".i18n([locale.toString()]))),
               body: SettingsList(platform: DevicePlatform.android, sections: [
                 SettingsSection(tiles: [
                   SettingsTile(
@@ -52,7 +57,7 @@ class _SettingsPageState extends State<PageSettings> {
                           ? Text("not-authorized".i18n())
                           : Text('authorized'.i18n()),
                       onPressed: (context) async {
-                        if (connectAccessToken=='') {
+                        if (connectAccessToken == '') {
                           loginV2();
                         } else {
                           showDialog(
@@ -252,8 +257,8 @@ class _SettingsPageState extends State<PageSettings> {
                   SettingsTile(
                     title: Text('language'.i18n()),
                     leading: const Icon(Icons.language),
-                    value:
-                    Text(stateManager.getAppSetting("language") ?? "English"),
+                    value: Text(
+                        stateManager.getAppSetting("language") ?? "English"),
                     onPressed: (context) async {
                       showDialog(
                         context: context,
@@ -266,7 +271,8 @@ class _SettingsPageState extends State<PageSettings> {
                                 onPressed: () {
                                   stateManager.setAppSetting(
                                       "language", "english".i18n());
-                                  final myApp = context.findAncestorStateOfType<MyAppState>()!;
+                                  final myApp = context
+                                      .findAncestorStateOfType<MyAppState>()!;
                                   myApp.changeLocale(Locale('en', 'US'));
                                   Navigator.pop(context);
                                 },
@@ -276,7 +282,8 @@ class _SettingsPageState extends State<PageSettings> {
                                 onPressed: () {
                                   stateManager.setAppSetting(
                                       "language", "russian".i18n());
-                                  final myApp = context.findAncestorStateOfType<MyAppState>()!;
+                                  final myApp = context
+                                      .findAncestorStateOfType<MyAppState>()!;
                                   myApp.changeLocale(Locale('ru', 'RU'));
                                   Navigator.pop(context);
                                 },
@@ -313,17 +320,37 @@ class _SettingsPageState extends State<PageSettings> {
           },
           refreshBtnVisible: false,
           clearCacheBtnVisible: false,
-          onSuccessAuth: (credentials) {
-            //print("Access token received: ");
-            //print(credentials.accessToken);
+          onSuccessAuth: (credentials) async {
             stateManager.setAppSetting(
                 "connectAccessToken", credentials.accessToken);
-
-            if ((stateManager.getAppSetting("serverAddressRemote") ?? "") == "") {
-              stateManager.setAppSetting("serverAddressRemote",'connect.smartliving.ru');
+            if ((stateManager.getAppSetting("serverAddressRemote") ?? "") ==
+                "") {
+              stateManager.setAppSetting(
+                  "serverAddressRemote", 'connect.smartliving.ru');
             }
             if ((stateManager.getAppSetting("serverMode") ?? "") == "") {
-              stateManager.setAppSetting("serverMode",'auto');
+              stateManager.setAppSetting("serverMode", 'auto');
+            }
+            //Send firebase token to server if available
+            FirebaseMessaging _fcm = FirebaseMessaging.instance;
+            String token = await _fcm.getToken() ?? '';
+            if (token != '') {
+              String goURL =
+                  'https://connect.smartliving.ru/register_push.php?token=' +
+                      token;
+              String userName = 'access_token';
+              String password = credentials.accessToken;
+              String basicCredentials = "$userName:$password";
+              Codec<String, String> stringToBase64 = utf8.fuse(base64);
+              String encoded = stringToBase64.encode(basicCredentials);
+              String basicAuth = 'Basic ' + encoded;
+              final http.Response response;
+              final http.Client client = http.Client();
+              response = await client.get(Uri.parse(goURL),
+                  headers: <String, String>{
+                    'Authorization': basicAuth
+                  }).timeout(const Duration(seconds: 10));
+              print("Token authorization response: " + response.body);
             }
           },
           onError: (error) {
