@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "582495230915",
+    "firebase_url": "https://majordomo-16c3d.firebaseio.com",
+    "project_id": "majordomo-16c3d",
+    "storage_bucket": "majordomo-16c3d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582495230915:android:29e6f39c02c0d74e73bb76",
+        "android_client_info": {
+          "package_name": "com.majordomo.home_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "582495230915-jvt2iv6eicfc3les1vrorvucd2khsjm7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgokOKt5FAmjC2vo7_iUW9zAOnGj7QZ1w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "582495230915-jvt2iv6eicfc3les1vrorvucd2khsjm7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582495230915:android:7879d28b4bf4c475",
+        "android_client_info": {
+          "package_name": "ru.smartliving.majordroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "582495230915-jvt2iv6eicfc3les1vrorvucd2khsjm7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgokOKt5FAmjC2vo7_iUW9zAOnGj7QZ1w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "582495230915-jvt2iv6eicfc3les1vrorvucd2khsjm7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
