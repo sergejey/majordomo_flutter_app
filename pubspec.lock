@@ -593,10 +593,10 @@ packages:
     dependency: "direct main"
     description:
       name: prompt_dialog
-      sha256: de171ecb5b7df70a7776657390e266a4638f4387e5a758065433e6c9e5211756
+      sha256: a35678e095b6b07ec2fd4e2e4a92c000f9b2fae40c5ad706d1928bf1f7c9b758
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.15"
+    version: "1.0.13"
   quiver:
     dependency: transitive
     description:
@@ -859,5 +859,5 @@ packages:
     source: hosted
     version: "3.1.2"
 sdks:
-  dart: ">=3.2.2 <4.0.0"
+  dart: ">=3.2.0 <4.0.0"
   flutter: ">=3.16.0"

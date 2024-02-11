@@ -36,8 +36,8 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace "com.majordomo.home_app"
-    compileSdkVersion localProperties.getProperty('flutter.compileSdkVersion')
-    ndkVersion localProperties.getProperty('flutter.ndkVersion')
+    compileSdkVersion 34
+    ndkVersion "25.1.8937393"
 
     compileOptions {
         coreLibraryDesugaringEnabled true
@@ -58,8 +58,8 @@ android {
         applicationId "com.majordomo.home_app"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion localProperties.getProperty('flutter.minSdkVersion').toInteger()
-        targetSdkVersion localProperties.getProperty('flutter.targetSdkVersion').toInteger()
+        minSdkVersion 21
+        targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
