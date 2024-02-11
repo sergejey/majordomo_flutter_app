@@ -97,7 +97,7 @@ class _SettingsPageState extends State<PageSettings> {
                     title: Text('mode'.i18n()),
                     leading: const Icon(Icons.find_in_page_outlined),
                     value:
-                        Text(stateManager.getAppSetting("serverMode") ?? "n/a"),
+                        Text(stateManager.getAppSetting("serverMode")?.i18n()?? "n/a"),
                     onPressed: (context) async {
                       showDialog(
                         context: context,
@@ -109,7 +109,7 @@ class _SettingsPageState extends State<PageSettings> {
                                 child: Text("auto".i18n()),
                                 onPressed: () {
                                   stateManager.setAppSetting(
-                                      "serverMode", "auto".i18n());
+                                      "serverMode", "auto");
                                   Navigator.pop(context);
                                 },
                               ),
@@ -117,7 +117,7 @@ class _SettingsPageState extends State<PageSettings> {
                                 child: Text("local".i18n()),
                                 onPressed: () {
                                   stateManager.setAppSetting(
-                                      "serverMode", "local".i18n());
+                                      "serverMode", "local");
                                   Navigator.pop(context);
                                 },
                               ),
@@ -125,7 +125,7 @@ class _SettingsPageState extends State<PageSettings> {
                                 child: Text("remote".i18n()),
                                 onPressed: () {
                                   stateManager.setAppSetting(
-                                      "serverMode", "remote".i18n());
+                                      "serverMode", "remote");
                                   Navigator.pop(context);
                                 },
                               ),
@@ -258,7 +258,7 @@ class _SettingsPageState extends State<PageSettings> {
                     title: Text('language'.i18n()),
                     leading: const Icon(Icons.language),
                     value: Text(
-                        stateManager.getAppSetting("language") ?? "English"),
+                        stateManager.getAppSetting("language")?.i18n() ?? "Русский"),
                     onPressed: (context) async {
                       showDialog(
                         context: context,
@@ -270,7 +270,7 @@ class _SettingsPageState extends State<PageSettings> {
                                 child: Text("english".i18n()),
                                 onPressed: () {
                                   stateManager.setAppSetting(
-                                      "language", "english".i18n());
+                                      "language", "english");
                                   final myApp = context
                                       .findAncestorStateOfType<MyAppState>()!;
                                   myApp.changeLocale(Locale('en', 'US'));
@@ -281,7 +281,7 @@ class _SettingsPageState extends State<PageSettings> {
                                 child: Text("russian".i18n()),
                                 onPressed: () {
                                   stateManager.setAppSetting(
-                                      "language", "russian".i18n());
+                                      "language", "russian");
                                   final myApp = context
                                       .findAncestorStateOfType<MyAppState>()!;
                                   myApp.changeLocale(Locale('ru', 'RU'));

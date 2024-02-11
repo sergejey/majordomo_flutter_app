@@ -45,11 +45,10 @@ class MyAppState extends State<MyApp> {
         if (supportedLocales.contains(locale)) {
           return locale;
         }
-
-        if (locale?.languageCode == 'en') {
-          return const Locale('en', 'US');
+        if (locale?.languageCode == 'ru') {
+          return const Locale('ru', 'RU');
         }
-        return const Locale('ru', 'RU');
+        return const Locale('en', 'US');
       },
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
