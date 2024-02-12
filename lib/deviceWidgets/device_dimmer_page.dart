@@ -61,8 +61,8 @@ class DeviceDimmerPage extends StatelessWidget {
             child: SizedBox.fromSize(
               size: const Size.fromRadius(50),
               child: const FittedBox(
-                child: Icon(
-                  Icons.power_settings_new,
+                child: const Icon(
+                  Icons.light_outlined,
                   color: Colors.black,
                 ),
               ),

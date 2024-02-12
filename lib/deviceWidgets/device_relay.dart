@@ -52,8 +52,8 @@ class DeviceRelay extends StatelessWidget {
             onPressed: () {
               stateManager.callObjectMethod(object, "switch");
             },
-            child: const Icon(
-              Icons.power_settings_new,
+            child: Icon(
+              properties['loadType']=='light'?Icons.light_outlined:Icons.power_settings_new,
               color: Colors.black,
             ),
           ),
