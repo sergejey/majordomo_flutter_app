@@ -60,7 +60,7 @@ class DeviceDimmer extends StatelessWidget {
             stateManager.callObjectMethod(object, "switch");
           },
           child: const Icon(
-            Icons.power_settings_new,
+            Icons.light_outlined,
             color: Colors.black,
           ),
         ),

@@ -36,9 +36,9 @@ class DeviceRelayPage extends StatelessWidget {
               },
               child: SizedBox.fromSize(
                 size: const Size.fromRadius(150),
-                child: const FittedBox(
+                child: FittedBox(
                   child: Icon(
-                    Icons.power_settings_new,
+                    properties['loadType']=='light'?Icons.light_outlined:Icons.power_settings_new,
                     color: Colors.black,
                   ),
                 ),
