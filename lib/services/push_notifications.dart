@@ -4,6 +4,12 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import '../firebase_options.dart';
 
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  final PushNotificationService _notificationService = PushNotificationService();
+  _notificationService.showFlutterNotification(message);
+}
+
 class PushNotificationService {
 
   late AndroidNotificationChannel channel;
@@ -68,19 +74,12 @@ class PushNotificationService {
       showFlutterNotification(message);
     });
 
-    FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
     isFlutterLocalNotificationsInitialized = true;
 
     await getToken();
 
-  }
-
-  @pragma('vm:entry-point')
-  Future<void> backgroundHandler(RemoteMessage message) async {
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-    print('Handling a background message ${message.messageId}');
-    showFlutterNotification(message);
   }
 
   Future<String?> getToken() async {
