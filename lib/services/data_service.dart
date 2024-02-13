@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:home_app/models/simple_device.dart';
 import 'package:home_app/models/room.dart';
 import 'package:home_app/models/operational_mode.dart';
@@ -20,6 +22,11 @@ abstract class DataService {
   String _baseURL = "";
   String _username = "";
   String _password = "";
+  String connectAccessToken = "";
+  bool _checkInProgress = false;
+
+  final WiFiTicker _ticker = WiFiTicker();
+  StreamSubscription<int>? _tickerSubscription;
 
   final _preferencesService = getIt<PreferencesService>();
 
@@ -40,6 +47,8 @@ abstract class DataService {
       String objectName, String property);
 
   Future<void> initialize() async {
+    dprint("DataService initialize");
+    endPeriodicUpdate();
     await _preferencesService.readAllPreferences();
 
     String prefMode = _preferencesService.getPreference("serverMode") ?? "";
@@ -54,7 +63,7 @@ abstract class DataService {
     String remoteURL =
         _preferencesService.getPreference("serverAddressRemote") ?? localURL;
 
-    if (localURL == '' && remoteURL!='') {
+    if (localURL == '' && remoteURL != '') {
       localURL = remoteURL;
     }
 
@@ -63,9 +72,10 @@ abstract class DataService {
     if (serverMode == 'auto') {
       currentWifiSSID = "";
       bool wifiFound = await checkWifiChange();
-      if (!wifiFound) {
-        loadURL = localURL;
-      }
+      //if (!wifiFound) {
+      //  loadURL = localURL;
+      //}
+      startPeriodicUpdate();
     } else {
       if (serverMode == 'remote') {
         loadURL = remoteURL;
@@ -77,22 +87,8 @@ abstract class DataService {
       } else {
         dprint('Loading remote URL');
       }
+      setBaseURL(loadURL);
     }
-    setBaseURL(loadURL);
-
-    String serverUsername =
-        _preferencesService.getPreference("serverUsername") ?? "";
-    String serverPassword =
-        _preferencesService.getPreference("serverPassword") ?? "";
-
-    String connectAccessToken =
-        _preferencesService.getPreference("connectAccessToken") ?? "";
-
-    if (loadURL == 'connect.smartliving.ru' && connectAccessToken!='') {
-      serverUsername = 'access_token';
-      serverPassword = connectAccessToken;
-    }
-    setUsernamePassword(serverUsername, serverPassword);
   }
 
   void setUsernamePassword(String username, String password) {
@@ -109,13 +105,29 @@ abstract class DataService {
   }
 
   void setBaseURL(String url) {
+    dprint("Setting baseURL to $url");
+    String serverUsername =
+        _preferencesService.getPreference("serverUsername") ?? "";
+    String serverPassword =
+        _preferencesService.getPreference("serverPassword") ?? "";
+
+    connectAccessToken =
+        _preferencesService.getPreference("connectAccessToken") ?? "";
+
+    if (url == 'connect.smartliving.ru' && connectAccessToken != '') {
+      serverUsername = 'access_token';
+      serverPassword = connectAccessToken;
+    }
+    setUsernamePassword(serverUsername, serverPassword);
+
     _baseURL = url;
   }
 
   String getBaseURL() {
     String url = _baseURL;
     if (url == '') return url;
-    if (url == 'connect.smartliving.ru') return 'https://connect.smartliving.ru';
+    if (url == 'connect.smartliving.ru')
+      return 'https://connect.smartliving.ru';
     if (!url.startsWith('http:')) url = 'http://$url';
     return url;
   }
@@ -166,5 +178,30 @@ abstract class DataService {
     }
 
     return urlFound;
+  }
+
+  void startPeriodicUpdate() {
+    _tickerSubscription = _ticker.tick(ticks: 15).listen(
+      (duration) async {
+        if (!_checkInProgress) {
+          _checkInProgress = true;
+          bool urlFound = await checkWifiChange();
+          _checkInProgress = false;
+        }
+      },
+    );
+  }
+
+  void endPeriodicUpdate() {
+    _tickerSubscription?.cancel();
+  }
+}
+
+class WiFiTicker {
+  Stream<int> tick({required int ticks}) {
+    return Stream.periodic(
+      const Duration(seconds: 5),
+      (x) => ticks - x - 1,
+    ).takeWhile((element) => true);
   }
 }
