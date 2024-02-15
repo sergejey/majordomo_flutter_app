@@ -128,14 +128,14 @@ class _MyHomePageState extends State<PageMain> {
                 devices: stateManager.pageMainDevicesNotifier.myDevices),
             floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
             floatingActionButton: SpeedDial(
-                icon: Icons.add,
-                activeIcon: Icons.close,
+                icon: Icons.info_outline,
+                activeIcon: Icons.info_outline,
                 spacing: 3,
                 childPadding: const EdgeInsets.all(5),
                 spaceBetweenChildren: 4,
                 openCloseDial: isDialOpen,
                 elevation: 8.0,
-                useRotationAnimation: true,
+                useRotationAnimation: false,
                 animationCurve: Curves.elasticInOut,
                 isOpenOnStart: false,
                 children: [

@@ -13,6 +13,7 @@ import 'package:network_info_plus/network_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:package_info_plus/package_info_plus.dart';
 
 class PageSettings extends StatefulWidget {
   const PageSettings({super.key});
@@ -24,10 +25,27 @@ class PageSettings extends StatefulWidget {
 class _SettingsPageState extends State<PageSettings> {
   final stateManager = getIt<SettingsPageManager>();
 
+  PackageInfo _packageInfo = PackageInfo(
+    appName: 'Unknown',
+    packageName: 'Unknown',
+    version: 'Unknown',
+    buildNumber: 'Unknown',
+    buildSignature: 'Unknown',
+    installerStore: 'Unknown',
+  );
+
   @override
   void initState() {
     stateManager.initSettingsPageState();
     super.initState();
+    _initPackageInfo();
+  }
+
+  Future<void> _initPackageInfo() async {
+    final info = await PackageInfo.fromPlatform();
+    setState(() {
+      _packageInfo = info;
+    });
   }
 
   @override
@@ -45,6 +63,7 @@ class _SettingsPageState extends State<PageSettings> {
         builder: (context, value, child) {
           String connectAccessToken =
               stateManager.getAppSetting("connectAccessToken") ?? "";
+
           return Scaffold(
               appBar:
                   AppBar(title: Text("nav_settings".i18n([locale.toString()]))),
@@ -294,7 +313,12 @@ class _SettingsPageState extends State<PageSettings> {
                       );
                     },
                   ),
-                ])
+                  SettingsTile(
+                    title: Text('about_app'.i18n()),
+                    leading: const Icon(Icons.info_outline),
+                    value: Text('app_version'.i18n()+' '+_packageInfo.version+' '+'app_build'.i18n()+' '+_packageInfo.buildNumber)
+                  ),
+                ]),
               ]));
         });
   }
