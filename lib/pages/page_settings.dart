@@ -47,7 +47,7 @@ class _SettingsPageState extends State<PageSettings> {
               stateManager.getAppSetting("connectAccessToken") ?? "";
           return Scaffold(
               appBar:
-                  AppBar(title: Text("home-title".i18n([locale.toString()]))),
+                  AppBar(title: Text("nav_settings".i18n([locale.toString()]))),
               body: SettingsList(platform: DevicePlatform.android, sections: [
                 SettingsSection(tiles: [
                   SettingsTile(

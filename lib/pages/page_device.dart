@@ -9,6 +9,7 @@ import 'package:home_app/deviceWidgets/device_openable_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:home_app/services/service_locator.dart';
+import 'package:localization/localization.dart';
 
 import './page_device_logic.dart';
 
@@ -108,9 +109,9 @@ class _DevicePageState extends State<PageDevice> {
                     properties: device.properties,
                   );
                 } else {
-                  return const Center(
+                  return Center(
                       child:
-                          Text('Sorry, device is not fully supported yet...'));
+                          Text('device_not_supported'.i18n()));
                 }
               }));
         });
