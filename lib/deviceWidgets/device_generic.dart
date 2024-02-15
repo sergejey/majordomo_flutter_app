@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class DeviceGeneric extends StatelessWidget {
   const DeviceGeneric(
@@ -32,7 +33,7 @@ class DeviceGeneric extends StatelessWidget {
                 ),
               ),
               Text(
-                "Type: ${properties["type"]}",
+                'device_type'.i18n()+": ${properties["type"]}",
                 style: Theme.of(context).textTheme.bodySmall,
                 overflow: TextOverflow.ellipsis,
               ),

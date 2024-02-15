@@ -5,6 +5,7 @@ import 'package:home_app/models/history_record.dart';
 import 'package:flutter/material.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/commonWidgets/object_history.dart';
+import 'package:localization/localization.dart';
 
 import './page_modes_logic.dart';
 
@@ -40,7 +41,7 @@ class _ModesPageState extends State<PageModes> {
             length: stateManager.pageModesNotifier.opModes.length + 1,
             child: Scaffold(
               appBar: AppBar(
-                title: const Text('Режимы работы'),
+                title: Text("nav_work_modes".i18n()),
                 bottom: TabBar(
                   isScrollable: true,
                   tabs: List.generate(
@@ -74,7 +75,7 @@ class _ModesPageState extends State<PageModes> {
                   })
                     ..add(Tab(
                         icon: const Icon(Icons.health_and_safety_outlined),
-                        text: 'Система')),
+                        text: 'mode_system'.i18n())),
                 ),
               ),
               body: TabBarView(
@@ -187,8 +188,8 @@ class OpModeView extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: opMode.active
-                    ? const Text('Режим активен')
-                    : const Text('Режим не активен'),
+                    ? Text('mode_is_active'.i18n())
+                    : Text('mode_is_inactive'.i18n()),
               )),
           const SizedBox(height: 15),
           Row(
@@ -205,7 +206,7 @@ class OpModeView extends StatelessWidget {
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.white),
                 ),
-                child: const Text("Активировать",
+                child: Text("mode_activate".i18n(),
                     style: TextStyle(color: Colors.black)),
               ),
               const SizedBox(width: 15),
@@ -220,7 +221,7 @@ class OpModeView extends StatelessWidget {
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.white),
                 ),
-                child: const Text("Деактивировать",
+                child: Text("mode_deactivate".i18n(),
                     style: TextStyle(color: Colors.black)),
               ),
             ],

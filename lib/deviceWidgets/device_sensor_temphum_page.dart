@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/pages/page_device_logic.dart';
 import 'package:home_app/utils/text_updated.dart';
+import 'package:localization/localization.dart';
 
 class DeviceSensorTempHumPage extends StatelessWidget {
   const DeviceSensorTempHumPage(
@@ -33,7 +34,7 @@ class DeviceSensorTempHumPage extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Температура:"),
+                  Text('device_temperature'.i18n()+":"),
                   SizedBox(
                     height: 10,
                   ),
@@ -43,7 +44,7 @@ class DeviceSensorTempHumPage extends StatelessWidget {
                   SizedBox(
                     height: 25,
                   ),
-                  Text("Влажность:"),
+                  Text('device_humidity'.i18n()+":"),
                   SizedBox(
                     height: 10,
                   ),

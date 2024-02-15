@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localization/localization.dart';
 
 class TextUpdated extends StatelessWidget {
   const TextUpdated({
@@ -18,21 +19,21 @@ class TextUpdated extends StatelessWidget {
       if (timePassed<0) timePassed = 0;
       if (timePassed >= 24 * 60 * 60) {
         int days = (timePassed/(24*60*60)).round();
-        updatedText = "${days.toString()} day(s) ago";
+        updatedText = "${days.toString()}"+"time_d".i18n()+" "+"time_go".i18n();
       } else if (timePassed >= 12 *60 * 60) {
         int hours = (timePassed/(60*60)).round();
-        updatedText = "${hours.toString()}h ago";
+        updatedText = "${hours.toString()}"+"time_h".i18n()+" "+"time_go".i18n();
       } else if (timePassed >= 60 * 60) {
         int hours = (timePassed/(60*60)).floor();
         int minutes = ((timePassed - hours * 60 *60)/60).round();
-        updatedText = "${hours.toString()}h ${minutes.toString()}m ago";
+        updatedText = "${hours.toString()}"+"time_h".i18n()+" ${minutes.toString()}"+"time_m".i18n()+" "+"time_go".i18n();
       } else if (timePassed >= 60) {
         int minutes = (timePassed/60).round();
-        updatedText = "${minutes.toString()}m ago";
+        updatedText = "${minutes.toString()}"+"time_m".i18n()+" "+"time_go".i18n();
       } else if (timePassed < 5) {
-        updatedText = "now";
+        updatedText = "time_Now".i18n();
       } else {
-        updatedText = "${timePassed.toString()}s ago";
+        updatedText = "${timePassed.toString()}"+"time_s".i18n()+" "+"time_go".i18n();
       }
     }
     return Text(

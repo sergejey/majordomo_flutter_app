@@ -29,7 +29,6 @@ class DevicePageManager {
   void startPeriodicUpdate() {
     _tickerSubscription = _ticker.tick(ticks: 5).listen(
       (duration) {
-        dprint("Periodic device tick");
         if (!_fetchInProgress) {
           _fetchInProgress = true;
           pageDeviceNotifier.fetchDevice();

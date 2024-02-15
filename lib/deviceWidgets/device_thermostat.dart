@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_app/utils/text_updated.dart';
+import 'package:localization/localization.dart';
 
 class DeviceThermostat extends StatelessWidget {
   const DeviceThermostat(
@@ -56,7 +57,7 @@ class DeviceThermostat extends StatelessWidget {
                 ),
                 Text(
                     properties["disabled"] == "1"
-                        ? 'off'
+                        ? 'is_off'.i18n()
                         : properties["status"] == "1"
                             ? 'normal → ${properties["currentTargetValue"]}°C'
                             : 'eco → ${properties["currentTargetValue"]}°C',

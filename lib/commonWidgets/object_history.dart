@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:home_app/models/history_record.dart';
+import 'package:localization/localization.dart';
 
 class ObjectHistory extends StatelessWidget {
   const ObjectHistory({super.key, required this.records, this.valueType = ''});
@@ -12,17 +13,17 @@ class ObjectHistory extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: records.length == 0
-          ? Center(child: const Text('Нет записей'))
+          ? Center(child: Text('no_records'.i18n()))
           : SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: DataTable(
                 border: TableBorder.all(width: 1),
-                columns: const <DataColumn>[
+                columns: <DataColumn>[
                   DataColumn(
-                    label: const Text('Время'),
+                    label: Text('timestamp'.i18n()),
                   ),
                   DataColumn(
-                    label: Text('Значение'),
+                    label: Text('value'.i18n()),
                     numeric: true,
                   )
                 ],
@@ -32,8 +33,8 @@ class ObjectHistory extends StatelessWidget {
                         DataCell(Text(DateFormat.yMd().add_jm().format(item.data_tm))),
                         DataCell(valueType == 'onoff'
                             ? Text(item.data_value == '1'
-                                ? 'Включено'
-                                : 'Выключено')
+                                ? 'is_on'.i18n()
+                                : 'is_off'.i18n())
                             : Text(item.data_value)),
                       ]),
                     )

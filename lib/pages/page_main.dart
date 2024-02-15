@@ -12,6 +12,7 @@ import 'package:home_app/pages/page_settings.dart';
 import 'package:home_app/pages/page_modes.dart';
 
 import 'package:home_app/deviceWidgets/_device_wrapper.dart';
+import 'package:localization/localization.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
@@ -142,7 +143,7 @@ class _MyHomePageState extends State<PageMain> {
                     child: const Icon(Icons.settings),
                     backgroundColor: Colors.blue,
                     foregroundColor: Colors.white,
-                    label: 'Settings',
+                    label: "nav_settings".i18n(),
                     onTap: () {
                       stateManager.endPeriodicUpdate();
                       Navigator.of(context)

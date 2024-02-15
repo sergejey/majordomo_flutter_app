@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/pages/page_device_logic.dart';
 import 'package:home_app/utils/text_updated.dart';
+import 'package:localization/localization.dart';
 
 class DeviceThermostatPage extends StatelessWidget {
   const DeviceThermostatPage(
@@ -26,7 +27,7 @@ class DeviceThermostatPage extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          Text("Текущая температура:"),
+          Text('device_current_temperature'.i18n()+":"),
           SizedBox(
             height: 10,
           ),
@@ -55,7 +56,7 @@ class DeviceThermostatPage extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Целевая температура:"),
+                  Text('device_target_temperature'.i18n()+":"),
                   SizedBox(
                     height: 25,
                   ),
@@ -105,7 +106,7 @@ class DeviceThermostatPage extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          Text("Режим работы:"),
+          Text('device_mode'.i18n()+":"),
           SizedBox(
             height: 10,
           ),
@@ -124,7 +125,7 @@ class DeviceThermostatPage extends StatelessWidget {
                           : Colors.white),
                 ),
                 child:
-                    const Text("Выкл", style: TextStyle(color: Colors.black)),
+                    Text('is_off'.i18n(), style: TextStyle(color: Colors.black)),
               ),
               const SizedBox(width: 15),
               ElevatedButton(
@@ -140,7 +141,7 @@ class DeviceThermostatPage extends StatelessWidget {
                           : Colors.white),
                 ),
                 child:
-                    const Text("Normal", style: TextStyle(color: Colors.black)),
+                    Text("device_mode_normal".i18n(), style: TextStyle(color: Colors.black)),
               ),
               const SizedBox(width: 15),
               ElevatedButton(
@@ -155,7 +156,7 @@ class DeviceThermostatPage extends StatelessWidget {
                           ? Colors.yellow
                           : Colors.white),
                 ),
-                child: const Text("ECO", style: TextStyle(color: Colors.black)),
+                child: Text("device_mode_eco".i18n(), style: TextStyle(color: Colors.black)),
               ),
             ],
           ),
