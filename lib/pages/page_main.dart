@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:home_app/models/room.dart';
 import 'package:home_app/models/simple_device.dart';
 import 'package:home_app/models/operational_mode.dart';
 
@@ -12,6 +13,7 @@ import 'package:home_app/pages/page_settings.dart';
 import 'package:home_app/pages/page_modes.dart';
 
 import 'package:home_app/deviceWidgets/_device_wrapper.dart';
+import 'package:home_app/commonWidgets/_room_wrapper.dart';
 import 'package:localization/localization.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -52,7 +54,7 @@ class _MyHomePageState extends State<PageMain> {
       builder: (context, value, child) {
         return FGBGNotifier(
           onEvent: (event) {
-            if (event==FGBGType.foreground) {
+            if (event == FGBGType.foreground) {
               stateManager.reload();
             }
           },
@@ -63,8 +65,9 @@ class _MyHomePageState extends State<PageMain> {
                   : const Text(configAppDefaultTitle),
               actions: <Widget>[
                 OperationalModesList(
-                    modes:
-                        stateManager.pageMainDevicesNotifier.myOperationalModesFiltered),
+                    modes: stateManager
+                        .pageMainDevicesNotifier.myOperationalModesFiltered),
+                /*
                 PopupMenuButton(
                     icon: const Icon(Icons.menu),
                     //don't specify icon if you want 3 dot menu
@@ -74,8 +77,8 @@ class _MyHomePageState extends State<PageMain> {
                         (index) => PopupMenuItem<int>(
                               value: index + 1,
                               child: Text(
-                                stateManager
-                                    .pageMainDevicesNotifier.myRooms[index].title,
+                                stateManager.pageMainDevicesNotifier
+                                    .myRooms[index].title,
                                 style: const TextStyle(color: Colors.blue),
                               ),
                             ))
@@ -102,6 +105,28 @@ class _MyHomePageState extends State<PageMain> {
                           else
                             {stateManager.resetRoomFilter()}
                         }),
+
+                 */
+                Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircleAvatar(
+                      radius: 20,
+                      backgroundColor:
+                      stateManager.pageMainDevicesNotifier.roomView
+                          ? Colors.yellow
+                          : Colors.blue,
+                      child: IconButton(
+                        icon: Icon(Icons.roofing,
+                            color: (stateManager
+                                .pageMainDevicesNotifier.roomView
+                                ? Colors.black
+                                : Colors.white)),
+                        tooltip: 'Room view',
+                        onPressed: () {
+                          stateManager.pageMainDevicesNotifier.toggleRoomView();
+                        },
+                      ),
+                    )),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: CircleAvatar(
@@ -112,11 +137,11 @@ class _MyHomePageState extends State<PageMain> {
                               : Colors.blue,
                       child: IconButton(
                         icon: Icon(Icons.filter_alt_outlined,
-                            color:
-                                (stateManager.pageMainDevicesNotifier.activeFilter
-                                    ? Colors.black
-                                    : Colors.white)),
-                        tooltip: 'Show SnackBar',
+                            color: (stateManager
+                                    .pageMainDevicesNotifier.activeFilter
+                                ? Colors.black
+                                : Colors.white)),
+                        tooltip: 'Active devices',
                         onPressed: () {
                           stateManager.toggleActiveFilter();
                         },
@@ -124,8 +149,10 @@ class _MyHomePageState extends State<PageMain> {
                     ))
               ],
             ),
-            body: DevicesList(
-                devices: stateManager.pageMainDevicesNotifier.myDevices),
+            body: stateManager.pageMainDevicesNotifier.roomView
+                ? RoomsList(rooms: stateManager.pageMainDevicesNotifier.myRooms)
+                : DevicesList(
+                    devices: stateManager.pageMainDevicesNotifier.myDevices),
             floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
             floatingActionButton: SpeedDial(
                 icon: Icons.info_outline,
@@ -222,7 +249,9 @@ class OperationalModesList extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (context) => modes.length == 0
                                     ? PageSettings()
-                                    : PageModes(initialTab: 0,),
+                                    : PageModes(
+                                        initialTab: 0,
+                                      ),
                               ),
                             )
                                 .then((value) {
@@ -276,5 +305,35 @@ class EmptyDevicesList extends StatelessWidget {
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       Text("No devices."),
     ]));
+  }
+}
+
+class RoomsList extends StatelessWidget {
+  const RoomsList({super.key, required this.rooms});
+
+  final List<Room> rooms;
+
+  @override
+  Widget build(BuildContext context) {
+    if (rooms.isEmpty) {
+      return const EmptyDevicesList();
+    } else {
+      return ResponsiveGridList(
+        horizontalGridSpacing: 8,
+        verticalGridSpacing: 8,
+        horizontalGridMargin: 4,
+        verticalGridMargin: 4,
+        minItemWidth: 300,
+        minItemsPerRow: 2,
+        children: List.generate(
+            rooms.length,
+            (index) => RoomWrapper(
+                  title: rooms[index].title,
+                  id: rooms[index].id,
+                  object: rooms[index].object,
+                  properties: rooms[index].properties,
+                )), // Options that are getting passed to the ListView.builder() function
+      );
+    }
   }
 }
