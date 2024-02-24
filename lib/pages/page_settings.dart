@@ -116,7 +116,7 @@ class _SettingsPageState extends State<PageSettings> {
                     title: Text('mode'.i18n()),
                     leading: const Icon(Icons.find_in_page_outlined),
                     value:
-                        Text(stateManager.getAppSetting("serverMode")?.i18n()?? "n/a"),
+                        Text(stateManager.getAppSetting("serverMode")?.i18n()?? "auto"),
                     onPressed: (context) async {
                       showDialog(
                         context: context,

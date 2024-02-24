@@ -51,7 +51,7 @@ abstract class DataService {
     endPeriodicUpdate();
     await _preferencesService.readAllPreferences();
 
-    String prefMode = _preferencesService.getPreference("serverMode") ?? "";
+    String prefMode = _preferencesService.getPreference("serverMode") ?? 'auto';
     if (prefMode != '') {
       serverMode = prefMode;
     } else {
@@ -173,6 +173,9 @@ abstract class DataService {
             urlFound = true;
             setBaseURL(loadURL);
           }
+        } else {
+          dprint('(auto) Local wifi is not set or cannot get it\'s name. Loading remote URL');
+          setBaseURL(remoteURL);
         }
       }
     }
