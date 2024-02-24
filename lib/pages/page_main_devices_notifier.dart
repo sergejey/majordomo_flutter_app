@@ -69,24 +69,36 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
         return false;
       }).toList();
       int totalDevices = roomDevices.length;
+      bool foundLightOn = false;
+      bool foundMotionOn = false;
+      bool foundMotionUpdated = false;
+      bool foundTemperature = false;
       for (int iD = 0; iD < totalDevices; iD++) {
         if (((roomDevices[iD].type == 'relay' &&
                     roomDevices[iD].properties['loadType'] == 'light') ||
                 roomDevices[iD].type == 'dimmer') &&
             roomDevices[iD].properties['status'] == '1') {
           myRooms[i].properties['lightOn'] = '1';
+          foundLightOn = true;
         }
         if (roomDevices[iD].type == 'motion' &&
             roomDevices[iD].properties['status'] == '1') {
           myRooms[i].properties['motionOn'] = '1';
+          foundMotionOn = true;
         }
         if (roomDevices[iD].type == 'motion') {
           myRooms[i].properties['motionUpdated'] = roomDevices[iD].properties['updated'];
+          foundMotionUpdated = true;
         }
         if (roomDevices[iD].type == 'sensor_temphum') {
           myRooms[i].properties['temperature'] = roomDevices[iD].properties['value'];
+          foundTemperature = true;
         }
       }
+      if (!foundLightOn) myRooms[i].properties.remove('lightOn');
+      if (!foundMotionOn) myRooms[i].properties.remove('motionOn');
+      if (!foundMotionUpdated) myRooms[i].properties.remove('motionUpdated');
+      if (!foundTemperature) myRooms[i].properties.remove('temperature');
     }
   }
 
