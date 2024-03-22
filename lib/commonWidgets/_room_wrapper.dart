@@ -100,6 +100,30 @@ class RoomWrapper extends StatelessWidget {
                               size: 16
                             )),
                       ),
+                    if (properties.containsKey("powerOn"))
+                      Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: CircleAvatar(
+                            radius: 12,
+                            backgroundColor: Colors.yellow,
+                            child: const Icon(
+                                Icons.power_settings_new,
+                                color: Colors.black,
+                                size: 16
+                            )),
+                      ),
+                    if (properties.containsKey("isOpen"))
+                      Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: CircleAvatar(
+                            radius: 12,
+                            backgroundColor: Colors.yellow,
+                            child: const Icon(
+                                Icons.door_back_door_outlined,
+                                color: Colors.black,
+                                size: 16
+                            )),
+                      ),
                   ],
                 );
               }),
