@@ -13,14 +13,12 @@ class BatteryLevel extends StatelessWidget {
   Widget build(BuildContext context) {
     int intLevel = int.tryParse(this.level) ?? 0;
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8.0,0,8.0,0),
+      padding: const EdgeInsets.fromLTRB(8.0,0,0.0,0),
       child: BasedBatteryIndicator(
         status: BasedBatteryStatus(
           value: intLevel,
           type: intLevel<30?BasedBatteryStatusType.low:BasedBatteryStatusType.normal,
         ),
-        trackHeight: 10.0,
-        trackAspectRatio: 2.0,
         curve: Curves.ease,
         duration: const Duration(seconds: 1),
       ),
