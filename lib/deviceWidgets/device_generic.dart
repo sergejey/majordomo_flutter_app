@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 
+import '../utils/battery_level.dart';
+import '../utils/text_updated.dart';
+
 class DeviceGeneric extends StatelessWidget {
   const DeviceGeneric(
       {super.key,
@@ -32,10 +35,17 @@ class DeviceGeneric extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              Text(
-                'device_type'.i18n()+": ${properties["type"]}",
-                style: Theme.of(context).textTheme.bodySmall,
-                overflow: TextOverflow.ellipsis,
+              Row(
+                children: [
+                  Text(
+                    'device_type'.i18n()+": ${properties["type"]}; ",
+                    style: Theme.of(context).textTheme.bodySmall,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  TextUpdated(updated: properties["updated"] ?? ""),
+                  if (properties["batteryOperated"]=='1')
+                    BatteryLevel(level: properties["batteryLevel"] ?? "")
+                ],
               ),
             ],
           ),

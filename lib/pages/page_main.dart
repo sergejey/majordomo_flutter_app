@@ -67,84 +67,52 @@ class _MyHomePageState extends State<PageMain> {
                 OperationalModesList(
                     modes: stateManager
                         .pageMainDevicesNotifier.myOperationalModesFiltered),
-                /*
-                PopupMenuButton(
-                    icon: const Icon(Icons.menu),
-                    //don't specify icon if you want 3 dot menu
-                    color: Colors.white,
-                    itemBuilder: (context) => List.generate(
-                        stateManager.pageMainDevicesNotifier.myRooms.length,
-                        (index) => PopupMenuItem<int>(
-                              value: index + 1,
-                              child: Text(
-                                stateManager.pageMainDevicesNotifier
-                                    .myRooms[index].title,
-                                style: const TextStyle(color: Colors.blue),
-                              ),
-                            ))
-                      ..insert(
-                          0,
-                          const PopupMenuItem<int>(
-                              value: 0,
-                              child: Text(
-                                'All rooms',
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.bold),
-                              ))),
-                    onSelected: (item) => {
-                          //print(rooms[item].object)
-                          if (item > 0)
-                            {
-                              stateManager.setRoomFilter(
-                                  stateManager.pageMainDevicesNotifier
-                                      .myRooms[item - 1].object,
-                                  stateManager.pageMainDevicesNotifier
-                                      .myRooms[item - 1].title)
-                            }
-                          else
-                            {stateManager.resetRoomFilter()}
-                        }),
-
-                 */
                 Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: CircleAvatar(
-                      radius: 20,
-                      backgroundColor:
-                      stateManager.pageMainDevicesNotifier.roomView
-                          ? Colors.yellow
-                          : Colors.blue,
-                      child: IconButton(
-                        icon: Icon(Icons.roofing,
-                            color: (stateManager
-                                .pageMainDevicesNotifier.roomView
-                                ? Colors.black
-                                : Colors.white)),
-                        tooltip: 'Room view',
-                        onPressed: () {
-                          stateManager.pageMainDevicesNotifier.toggleRoomView();
-                        },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        boxShadow: [BoxShadow(blurRadius: 0, color: Colors.black12, spreadRadius: 1)],
+                      ),
+                      child: CircleAvatar(
+                        radius: 20,
+                        backgroundColor:
+                        stateManager.pageMainDevicesNotifier.roomView
+                            ? Colors.yellow
+                            : Colors.white,
+                        child: IconButton(
+                          icon: const Icon(Icons.roofing,
+                              color: Colors.black),
+                          tooltip: 'Room view',
+                          onPressed: () {
+                            stateManager.pageMainDevicesNotifier.toggleRoomView();
+                          },
+                        ),
                       ),
                     )),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: CircleAvatar(
-                      radius: 20,
-                      backgroundColor:
-                          stateManager.pageMainDevicesNotifier.activeFilter
-                              ? Colors.yellow
-                              : Colors.blue,
-                      child: IconButton(
-                        icon: Icon(Icons.filter_alt_outlined,
-                            color: (stateManager
-                                    .pageMainDevicesNotifier.activeFilter
-                                ? Colors.black
-                                : Colors.white)),
-                        tooltip: 'Active devices',
-                        onPressed: () {
-                          stateManager.toggleActiveFilter();
-                        },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        boxShadow: [BoxShadow(blurRadius: 0, color: Colors.black12, spreadRadius: 1)],
+                      ),
+                      child: CircleAvatar(
+                        radius: 20,
+                        backgroundColor:
+                            stateManager.pageMainDevicesNotifier.activeFilter
+                                ? Colors.yellow
+                                : Colors.white,
+                        child: IconButton(
+                          icon: const Icon(Icons.filter_alt_outlined,
+                              color: Colors.black),
+                          tooltip: 'Active devices',
+                          onPressed: () {
+                            stateManager.toggleActiveFilter();
+                          },
+                        ),
                       ),
                     ))
               ],
@@ -204,7 +172,9 @@ class OperationalModesList extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(20))),
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              boxShadow: [BoxShadow(blurRadius: 0, color: Colors.black12, spreadRadius: 1)],
+          ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: modes.length == 0

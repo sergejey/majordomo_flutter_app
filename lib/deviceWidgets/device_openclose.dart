@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:home_app/utils/text_updated.dart';
 
+import '../utils/battery_level.dart';
+
 class DeviceOpenClose extends StatelessWidget {
   const DeviceOpenClose(
       {super.key,
@@ -32,7 +34,13 @@ class DeviceOpenClose extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              TextUpdated(updated: properties["updated"] ?? ""),
+              Row(
+                children: [
+                  TextUpdated(updated: properties["updated"] ?? ""),
+                  if (properties["batteryOperated"]=='1')
+                    BatteryLevel(level: properties["batteryLevel"] ?? "")
+                ],
+              ),
             ],
           ),
         ),

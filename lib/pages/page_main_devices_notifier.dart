@@ -70,9 +70,11 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
       }).toList();
       int totalDevices = roomDevices.length;
       bool foundLightOn = false;
+      bool foundPowerOn = false;
       bool foundMotionOn = false;
       bool foundMotionUpdated = false;
       bool foundTemperature = false;
+      bool foundOpen = false;
       for (int iD = 0; iD < totalDevices; iD++) {
         if (((roomDevices[iD].type == 'relay' &&
                     roomDevices[iD].properties['loadType'] == 'light') ||
@@ -81,24 +83,45 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
           myRooms[i].properties['lightOn'] = '1';
           foundLightOn = true;
         }
+        if (roomDevices[iD].type == 'relay' &&
+            roomDevices[iD].properties['loadType'] != 'light' &&
+            roomDevices[iD].properties['status'] == '1') {
+          myRooms[i].properties['powerOn'] = '1';
+          foundPowerOn = true;
+        }
         if (roomDevices[iD].type == 'motion' &&
             roomDevices[iD].properties['status'] == '1') {
           myRooms[i].properties['motionOn'] = '1';
           foundMotionOn = true;
         }
         if (roomDevices[iD].type == 'motion') {
-          myRooms[i].properties['motionUpdated'] = roomDevices[iD].properties['updated'];
+          myRooms[i].properties['motionUpdated'] =
+              roomDevices[iD].properties['updated'];
           foundMotionUpdated = true;
         }
-        if (roomDevices[iD].type == 'sensor_temphum') {
-          myRooms[i].properties['temperature'] = roomDevices[iD].properties['value'];
+        if (roomDevices[iD].type == 'sensor_temp') {
+          myRooms[i].properties['temperature'] =
+              roomDevices[iD].properties['value'];
           foundTemperature = true;
+        }
+        if (roomDevices[iD].type == 'sensor_temphum') {
+          myRooms[i].properties['temperature'] =
+              roomDevices[iD].properties['value'];
+          foundTemperature = true;
+        }
+        if ((roomDevices[iD].type == 'openable' ||
+                roomDevices[iD].type == 'openclose') &&
+            roomDevices[iD].properties['status'] != '1') {
+          myRooms[i].properties['isOpen'] = '1';
+          foundOpen = true;
         }
       }
       if (!foundLightOn) myRooms[i].properties.remove('lightOn');
+      if (!foundPowerOn) myRooms[i].properties.remove('powerOn');
       if (!foundMotionOn) myRooms[i].properties.remove('motionOn');
       if (!foundMotionUpdated) myRooms[i].properties.remove('motionUpdated');
       if (!foundTemperature) myRooms[i].properties.remove('temperature');
+      if (!foundOpen) myRooms[i].properties.remove('isOpen');
     }
   }
 
