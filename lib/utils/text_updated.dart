@@ -36,10 +36,15 @@ class TextUpdated extends StatelessWidget {
         updatedText = "${timePassed.toString()}"+"time_s".i18n()+" "+"time_go".i18n();
       }
     }
-    return Text(
-      updatedText,
-      style: Theme.of(context).textTheme.bodySmall,
-      overflow: TextOverflow.ellipsis,
+    return Flexible(
+      fit: FlexFit.loose,
+
+      child: Text(
+        updatedText,
+        style: Theme.of(context).textTheme.bodySmall,
+        overflow: TextOverflow.fade,
+        softWrap: false,
+      ),
     );
   }
 }

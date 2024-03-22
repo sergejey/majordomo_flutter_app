@@ -25,33 +25,44 @@ class DeviceSensorTempHum extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /*2*/
-              Container(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Text(
-                  title,
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
+              /*1*/
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: Text(
+                        title,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                        overflow: TextOverflow.fade,
+                        softWrap: false,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Text(
+                      properties["value"] + "°C",
+                      style: Theme.of(context).textTheme.headlineMedium,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+              /*2*/
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   TextUpdated(updated: properties["updated"] ?? ""),
-                  if (properties["batteryOperated"]=='1')
+                  if (properties["batteryOperated"] == '1')
                     BatteryLevel(level: properties["batteryLevel"] ?? "")
                 ],
               ),
             ],
           ),
         ),
-        /*3*/
-        Container(
-          padding: const EdgeInsets.only(bottom: 8),
-          child: Text(
-            properties["value"] + "°C",
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-        ),
+
       ],
     );
   }
