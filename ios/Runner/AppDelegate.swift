@@ -9,14 +9,11 @@ import Firebase
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
-    if (@available(iOS 10.0, *)) {
-      [UNUserNotificationCenter currentNotificationCenter].delegate = (id<UNUserNotificationCenterDelegate>) self;
-    }
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
   func application(application: UIApplication,
-              didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-                Messaging.messaging().apnsToken = deviceToken
-              }
-
+            didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+              Messaging.messaging().apnsToken = deviceToken
+            }
+   
 }
