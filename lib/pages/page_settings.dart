@@ -115,8 +115,9 @@ class _SettingsPageState extends State<PageSettings> {
                   SettingsTile(
                     title: Text('mode'.i18n()),
                     leading: const Icon(Icons.find_in_page_outlined),
-                    value:
-                        Text(stateManager.getAppSetting("serverMode")?.i18n()?? "auto"),
+                    value: Text(
+                        stateManager.getAppSetting("serverMode")?.i18n() ??
+                            "auto"),
                     onPressed: (context) async {
                       showDialog(
                         context: context,
@@ -277,7 +278,8 @@ class _SettingsPageState extends State<PageSettings> {
                     title: Text('language'.i18n()),
                     leading: const Icon(Icons.language),
                     value: Text(
-                        stateManager.getAppSetting("language")?.i18n() ?? "Русский"),
+                        stateManager.getAppSetting("language")?.i18n() ??
+                            "Русский"),
                     onPressed: (context) async {
                       showDialog(
                         context: context,
@@ -314,10 +316,15 @@ class _SettingsPageState extends State<PageSettings> {
                     },
                   ),
                   SettingsTile(
-                    title: Text('about_app'.i18n()),
-                    leading: const Icon(Icons.info_outline),
-                    value: Text('app_version'.i18n()+' '+_packageInfo.version+' '+'app_build'.i18n()+' '+_packageInfo.buildNumber)
-                  ),
+                      title: Text('about_app'.i18n()),
+                      leading: const Icon(Icons.info_outline),
+                      value: Text('app_version'.i18n() +
+                          ' ' +
+                          _packageInfo.version +
+                          ' ' +
+                          'app_build'.i18n() +
+                          ' ' +
+                          _packageInfo.buildNumber)),
                 ]),
               ]));
         });
@@ -375,6 +382,30 @@ class _SettingsPageState extends State<PageSettings> {
                     'Authorization': basicAuth
                   }).timeout(const Duration(seconds: 10));
               print("Token authorization response: " + response.body);
+
+              var platform = Theme.of(context).platform;
+              if (platform == TargetPlatform.iOS) {
+                FirebaseMessaging messaging = FirebaseMessaging.instance;
+                NotificationSettings settings =
+                    await messaging.requestPermission(
+                  alert: true,
+                  announcement: false,
+                  badge: true,
+                  carPlay: false,
+                  criticalAlert: false,
+                  provisional: false,
+                  sound: true,
+                );
+                if (settings.authorizationStatus ==
+                    AuthorizationStatus.authorized) {
+                  print('User granted permission');
+                } else if (settings.authorizationStatus ==
+                    AuthorizationStatus.provisional) {
+                  print('User granted provisional permission');
+                } else {
+                  print('User declined or has not accepted permission');
+                }
+              }
             }
           },
           onError: (error) {
