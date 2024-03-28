@@ -11,16 +11,24 @@ class BatteryLevel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int intLevel = int.tryParse(this.level) ?? 0;
+    int intLevel = 0;
+    try {
+      intLevel = double.parse(this.level).round();
+    } catch (e) {
+      print('Invalid input string: '+this.level);
+    }
     return Padding(
       padding: const EdgeInsets.fromLTRB(8.0,0,0.0,0),
-      child: BasedBatteryIndicator(
-        status: BasedBatteryStatus(
-          value: intLevel,
-          type: intLevel<30?BasedBatteryStatusType.low:BasedBatteryStatusType.normal,
+      child: Tooltip(
+        message: this.level + '%',
+        child: BasedBatteryIndicator(
+          status: BasedBatteryStatus(
+            value: intLevel,
+            type: intLevel<30?BasedBatteryStatusType.low:BasedBatteryStatusType.normal,
+          ),
+          curve: Curves.ease,
+          duration: const Duration(seconds: 1),
         ),
-        curve: Curves.ease,
-        duration: const Duration(seconds: 1),
       ),
     );
   }

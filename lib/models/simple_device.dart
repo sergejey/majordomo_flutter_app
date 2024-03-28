@@ -18,10 +18,10 @@ class SimpleDevice {
   factory SimpleDevice.fromJson(Map<String, dynamic> json) {
     return SimpleDevice(
       id: json['id'] as String,
-      title: json['title'] as String,
-      object: json['object'] as String,
-      type: json['type'] as String,
-      linkedRoom: json['linkedRoom'] as String,
+      title: json['title']??'Unknown',
+      object: json['object']??'',
+      type: json['type']??'',
+      linkedRoom: json['linkedRoom']??'',
       properties: json,
     );
   }

@@ -1,4 +1,6 @@
 import 'package:home_app/deviceWidgets/device_sensor_temphum_page.dart';
+import 'package:home_app/deviceWidgets/device_sensor_temp_page.dart';
+import 'package:home_app/deviceWidgets/device_sensor_humidity_page.dart';
 import 'package:home_app/models/simple_device.dart';
 import 'package:home_app/deviceWidgets/device_relay_page.dart';
 import 'package:home_app/deviceWidgets/device_dimmer_page.dart';
@@ -96,6 +98,20 @@ class _DevicePageState extends State<PageDevice> {
                   );
                 } else if (device.type == 'sensor_temphum') {
                   return DeviceSensorTempHumPage(
+                    id: device.id,
+                    title: device.title,
+                    object: device.object,
+                    properties: device.properties,
+                  );
+                } else if (device.type == 'sensor_temp') {
+                  return DeviceSensorTempPage(
+                    id: device.id,
+                    title: device.title,
+                    object: device.object,
+                    properties: device.properties,
+                  );
+                } else if (device.type == 'sensor_humidity') {
+                  return DeviceSensorHumidityPage(
                     id: device.id,
                     title: device.title,
                     object: device.object,

@@ -43,7 +43,7 @@ class DeviceSensorGeneral extends StatelessWidget {
           Container(
             padding: const EdgeInsets.only(bottom: 8),
             child: Text(
-              properties["value"] + " " + properties["unit"],
+              properties["value"]??'' + " " + properties["unit"]??'',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ),

@@ -11,6 +11,8 @@ import './device_thermostat.dart';
 import './device_motion.dart';
 import './device_openclose.dart';
 import './device_openable.dart';
+import './device_sensor_temp.dart';
+import './device_sensor_humidity.dart';
 import './device_sensor_temphum.dart';
 import './device_sensor_general.dart';
 import './device_sensor_power.dart';
@@ -97,6 +99,20 @@ class DeviceWrapper extends StatelessWidget {
                     object: object,
                     properties: properties,
                   );
+                } else if (type == 'sensor_temp') {
+                  return DeviceSensorTemp(
+                    title: title,
+                    id: id,
+                    object: object,
+                    properties: properties,
+                  );
+                } else if (type == 'sensor_humidity') {
+                  return DeviceSensorHumidity(
+                    title: title,
+                    id: id,
+                    object: object,
+                    properties: properties,
+                  );
                 } else if (type == 'motion') {
                   return DeviceMotion(
                     title: title,
@@ -125,15 +141,15 @@ class DeviceWrapper extends StatelessWidget {
                     object: object,
                     properties: properties,
                   );
-                } else if (type == 'sensor_general') {
-                  return DeviceSensorGeneral(
+                } else if (type == 'sensor_power') {
+                  return DeviceSensorPower(
                     title: title,
                     id: id,
                     object: object,
                     properties: properties,
                   );
-                } else if (type == 'sensor_power') {
-                  return DeviceSensorPower(
+                } else if (type.startsWith('sensor_')) {
+                  return DeviceSensorGeneral(
                     title: title,
                     id: id,
                     object: object,

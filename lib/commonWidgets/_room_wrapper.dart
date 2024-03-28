@@ -25,7 +25,7 @@ class RoomWrapper extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(
-                color: const Color(0x8F000000),
+                color: Colors.blue,
                 width: 1.0,
                 style: BorderStyle.solid), //Border.all
             borderRadius: const BorderRadius.all(
