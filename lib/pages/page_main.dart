@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:home_app/models/room.dart';
 import 'package:home_app/models/simple_device.dart';
 import 'package:home_app/models/operational_mode.dart';
+import 'package:home_app/models/device_group.dart';
+
+import 'package:home_app/commonWidgets/group_widget.dart';
 
 import 'package:home_app/config.dart';
 
@@ -73,20 +76,25 @@ class _MyHomePageState extends State<PageMain> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         shape: BoxShape.circle,
-                        boxShadow: [BoxShadow(blurRadius: 0, color: Colors.black12, spreadRadius: 1)],
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 0,
+                              color: Colors.black12,
+                              spreadRadius: 1)
+                        ],
                       ),
                       child: CircleAvatar(
                         radius: 20,
                         backgroundColor:
-                        stateManager.pageMainDevicesNotifier.roomView
-                            ? Colors.yellow
-                            : Colors.white,
+                            stateManager.pageMainDevicesNotifier.roomView
+                                ? Colors.yellow
+                                : Colors.white,
                         child: IconButton(
-                          icon: const Icon(Icons.roofing,
-                              color: Colors.black),
+                          icon: const Icon(Icons.roofing, color: Colors.black),
                           tooltip: 'Room view',
                           onPressed: () {
-                            stateManager.pageMainDevicesNotifier.toggleRoomView();
+                            stateManager.pageMainDevicesNotifier
+                                .toggleRoomView();
                           },
                         ),
                       ),
@@ -97,7 +105,12 @@ class _MyHomePageState extends State<PageMain> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         shape: BoxShape.circle,
-                        boxShadow: [BoxShadow(blurRadius: 0, color: Colors.black12, spreadRadius: 1)],
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 0,
+                              color: Colors.black12,
+                              spreadRadius: 1)
+                        ],
                       ),
                       child: CircleAvatar(
                         radius: 20,
@@ -119,8 +132,17 @@ class _MyHomePageState extends State<PageMain> {
             ),
             body: stateManager.pageMainDevicesNotifier.roomView
                 ? RoomsList(rooms: stateManager.pageMainDevicesNotifier.myRooms)
-                : DevicesList(
-                    devices: stateManager.pageMainDevicesNotifier.myDevices),
+                : Column(children: [
+                    stateManager.pageMainDevicesNotifier.currentRoomTitle == ''
+                        ? GroupsList(
+                            groups:
+                                stateManager.pageMainDevicesNotifier.myGroups)
+                        : const SizedBox(),
+                    Expanded(
+                        child: DevicesList(
+                            devices:
+                                stateManager.pageMainDevicesNotifier.myDevices))
+                  ]),
             floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
             floatingActionButton: SpeedDial(
                 icon: Icons.info_outline,
@@ -171,9 +193,11 @@ class OperationalModesList extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Container(
           decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-              boxShadow: [BoxShadow(blurRadius: 0, color: Colors.black12, spreadRadius: 1)],
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            boxShadow: [
+              BoxShadow(blurRadius: 0, color: Colors.black12, spreadRadius: 1)
+            ],
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -232,6 +256,43 @@ class OperationalModesList extends StatelessWidget {
                     })),
           ),
         ));
+  }
+}
+
+class GroupsList extends StatelessWidget {
+  const GroupsList({super.key, required this.groups});
+
+  final List<DeviceGroup> groups;
+
+  @override
+  Widget build(BuildContext context) {
+    final stateManager = getIt<MainPageManager>();
+    if (groups.isEmpty) {
+      return const Text('No groups');
+    } else {
+      //return Text(groups.length.toString());
+      return Container(
+          height: 60,
+          padding: const EdgeInsets.all(5.0),
+          child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: List.generate(groups.length, (index) {
+                return groups[index].devicesTotal > 0
+                    ? GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          stateManager.pageMainDevicesNotifier.toggleGroupFilter(groups[index].name);
+                        },
+                        child: GroupWidget(
+                          name: groups[index].name,
+                          title: groups[index].title,
+                          devicesTotal: groups[index].devicesTotal,
+                          selected: stateManager.pageMainDevicesNotifier.groupFilter==groups[index].name,
+                        ),
+                      )
+                    : SizedBox();
+              })));
+    }
   }
 }
 

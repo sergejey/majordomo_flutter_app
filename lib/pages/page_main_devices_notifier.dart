@@ -4,8 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:home_app/models/operational_mode.dart';
 import 'package:home_app/models/simple_device.dart';
 import 'package:home_app/models/room.dart';
+import 'package:home_app/models/device_group.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/services/data_service.dart';
+import 'package:localization/localization.dart';
 
 class PageMainDevicesNotifier extends ValueNotifier<String> {
   PageMainDevicesNotifier() : super('');
@@ -15,9 +17,22 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
   bool roomView = false;
 
   String roomFilter = '';
+  String groupFilter = '';
   String currentRoomTitle = '';
 
   List<Room> myRooms = [];
+  List<DeviceGroup> myGroups = [
+    DeviceGroup(name: 'light', title: 'group_light'.i18n(), devicesTotal: 0),
+    DeviceGroup(name: 'outlet', title: 'group_outlet'.i18n(), devicesTotal: 0),
+    DeviceGroup(
+        name: 'openable', title: 'group_openable'.i18n(), devicesTotal: 0),
+    DeviceGroup(name: 'sensor', title: 'group_sensor'.i18n(), devicesTotal: 0),
+    DeviceGroup(name: 'motion', title: 'group_motion'.i18n(), devicesTotal: 0),
+    DeviceGroup(
+        name: 'climate', title: 'group_climate'.i18n(), devicesTotal: 0),
+    DeviceGroup(
+        name: 'other', title: 'group_other'.i18n(), devicesTotal: 0),
+  ];
 
   List<OperationalMode> myOperationalModes = [];
   List<OperationalMode> myOperationalModesFiltered = [];
@@ -55,6 +70,45 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
     await _dataService.initialize();
     myRooms = await _dataService.fetchRooms();
     await fetchDevices();
+  }
+
+  bool checkDeviceAgainstFilter(SimpleDevice device, filter_name) {
+    if (filter_name == 'light' &&
+        ((device.type == 'relay' && device.properties['loadType'] == 'light') ||
+            device.type == 'dimmer' ||
+            device.type == 'rgb')) {
+      return true;
+    } else if (filter_name == 'outlet' &&
+        (device.type == 'relay' || device.type == 'tv' || device.type == 'vacuum') &&
+        device.properties['loadType'] != 'light') {
+      return true;
+    } else if (filter_name == 'openable' &&
+        (device.type == 'openable' || device.type == 'openclose')) {
+      return true;
+    } else if (filter_name == 'motion' && device.type == 'motion') {
+      return true;
+    } else if (filter_name == 'climate' &&
+        (device.type == 'thermostat' || device.type == 'ac')) {
+      return true;
+    } else if (filter_name == 'sensor' && (device.type.contains('sensor') || device.type == 'leak')) {
+      return true;
+    } else if (filter_name == 'other') {
+      if (!(device.type.contains('sensor') || (['relay','rgb','dimmer','openable','openclose','motion','thermostat','ac','leak','tv','vacuum']).contains(device.type))) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  void updateGroupsDataByDevices() {
+    int totalGroups = myGroups.length;
+    for (int i = 0; i < totalGroups; i++) {
+      List<SimpleDevice> groupDevices =
+          myDevicesFullList.where((SimpleDevice device) {
+        return checkDeviceAgainstFilter(device, myGroups[i].name);
+      }).toList();
+      myGroups[i].devicesTotal = groupDevices.length;
+    }
   }
 
   void updateRoomsDataByDevices() {
@@ -128,6 +182,7 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
   Future<void> fetchDevices() async {
     myDevicesFullList = await _dataService.fetchMyDevices();
     updateRoomsDataByDevices();
+    updateGroupsDataByDevices();
     myOperationalModes = await _dataService.fetchOperationalModes();
     myOperationalModesFiltered.clear();
     myOperationalModesFiltered.addAll(myOperationalModes);
@@ -147,6 +202,12 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
   refreshDevices() {
     myDevices.clear();
     myDevices.addAll(myDevicesFullList);
+
+    if (groupFilter != '') {
+      myDevices.retainWhere((SimpleDevice device) {
+        return checkDeviceAgainstFilter(device, groupFilter);
+      });
+    }
 
     if (roomFilter != '') {
       myDevices.retainWhere((SimpleDevice device) {
@@ -185,7 +246,17 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
     fetchDevices();
   }
 
+  void toggleGroupFilter(String group_name) {
+    if (groupFilter == group_name) {
+      groupFilter = '';
+    } else {
+      groupFilter = group_name;
+    }
+    refreshDevices();
+  }
+
   void toggleRoomView() {
+    groupFilter = '';
     if (roomView) {
       resetRoomFilter();
     } else {

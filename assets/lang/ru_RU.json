@@ -48,5 +48,12 @@
   "device_mode": "Режим работы",
   "device_mode_normal": "Обычный",
   "device_mode_eco": "ЭКО",
-  "device_type": "Тип"
+  "device_type": "Тип",
+  "group_light": "Свет",
+  "group_outlet": "Розетки",
+  "group_openable": "Открываемое",
+  "group_sensor": "Датчики",
+  "group_motion": "Движение",
+  "group_climate": "Климат",
+  "group_other": "Другое"
 }

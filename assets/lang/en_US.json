@@ -48,5 +48,12 @@
   "device_mode": "Work mode",
   "device_mode_normal": "Normal",
   "device_mode_eco": "ECO",
-  "device_type": "Type"
+  "device_type": "Type",
+  "group_light": "Lights",
+  "group_outlet": "Outlets",
+  "group_openable": "Openable",
+  "group_sensor": "Sensors",
+  "group_motion": "Motion",
+  "group_climate": "Climate",
+  "group_other": "Other"
 }

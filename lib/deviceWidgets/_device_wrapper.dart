@@ -48,10 +48,6 @@ class DeviceWrapper extends StatelessWidget {
             borderRadius: const BorderRadius.all(
               Radius.circular(6),
             ),
-            /*
-            boxShadow: const [
-              BoxShadow(blurRadius: 8),
-            ],*/
           ),
           child: Padding(
             padding: const EdgeInsets.all(12),
