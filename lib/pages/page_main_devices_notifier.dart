@@ -5,7 +5,9 @@ import 'package:home_app/models/operational_mode.dart';
 import 'package:home_app/models/simple_device.dart';
 import 'package:home_app/models/room.dart';
 import 'package:home_app/models/device_group.dart';
+import 'package:home_app/models/profile.dart';
 import 'package:home_app/services/service_locator.dart';
+import 'package:home_app/services/preferences_service.dart';
 import 'package:home_app/services/data_service.dart';
 import 'package:localization/localization.dart';
 
@@ -20,6 +22,10 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
   String groupFilter = '';
   String currentRoomTitle = '';
 
+  String currentProfileId = "";
+  List<Profile> profiles = [];
+  final _preferencesService = getIt<PreferencesService>();
+
   List<Room> myRooms = [];
   List<DeviceGroup> myGroups = [
     DeviceGroup(name: 'light', title: 'group_light'.i18n(), devicesTotal: 0),
@@ -28,6 +34,7 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
         name: 'openable', title: 'group_openable'.i18n(), devicesTotal: 0),
     DeviceGroup(name: 'sensor', title: 'group_sensor'.i18n(), devicesTotal: 0),
     DeviceGroup(name: 'motion', title: 'group_motion'.i18n(), devicesTotal: 0),
+    DeviceGroup(name: 'camera', title: 'group_camera'.i18n(), devicesTotal: 0),
     DeviceGroup(
         name: 'climate', title: 'group_climate'.i18n(), devicesTotal: 0),
     DeviceGroup(
@@ -66,10 +73,24 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
     refreshDevices();
   }
 
+  void resetAllFilters() {
+    groupFilter = '';
+    resetRoomFilter();
+  }
+
   Future<void> initialize() async {
+    await _preferencesService.readAllPreferences();
+    profiles = await _preferencesService.getProfiles();
+    currentProfileId = _preferencesService.getProfileId();
     await _dataService.initialize();
     myRooms = await _dataService.fetchRooms();
     await fetchDevices();
+    resetAllFilters();
+  }
+
+  Future<void> switchProfile(String profileId) async {
+    _preferencesService.setProfileId(profileId);
+    initialize();
   }
 
   bool checkDeviceAgainstFilter(SimpleDevice device, filter_name) {
@@ -87,13 +108,15 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
       return true;
     } else if (filter_name == 'motion' && device.type == 'motion') {
       return true;
+    } else if (filter_name == 'camera' && device.type == 'camera') {
+      return true;
     } else if (filter_name == 'climate' &&
         (device.type == 'thermostat' || device.type == 'ac')) {
       return true;
     } else if (filter_name == 'sensor' && (device.type.contains('sensor') || device.type == 'leak')) {
       return true;
     } else if (filter_name == 'other') {
-      if (!(device.type.contains('sensor') || (['relay','rgb','dimmer','openable','openclose','motion','thermostat','ac','leak','tv','vacuum']).contains(device.type))) {
+      if (!(device.type.contains('sensor') || (['relay','rgb','dimmer','openable','openclose','motion','camera','thermostat','ac','leak','tv','vacuum']).contains(device.type))) {
         return true;
       }
     }

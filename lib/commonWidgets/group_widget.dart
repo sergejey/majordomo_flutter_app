@@ -20,7 +20,7 @@ class GroupWidget extends StatelessWidget {
       groupIcon = const Icon(Icons.light_outlined, color: Colors.green);
     }
     if (name == 'outlet') {
-      groupIcon = const Icon(Icons.outlet_outlined, color: Colors.green);
+      groupIcon = const Icon(Icons.power_settings_new, color: Colors.green);
     }
     if (name == 'openable') {
       groupIcon = const Icon(Icons.lock_open_rounded, color: Colors.green);
@@ -30,6 +30,9 @@ class GroupWidget extends StatelessWidget {
     }
     if (name == 'motion') {
       groupIcon = const Icon(Icons.man, color: Colors.green);
+    }
+    if (name == 'camera') {
+      groupIcon = const Icon(Icons.video_camera_back_outlined, color: Colors.green);
     }
     if (name == 'climate') {
       groupIcon = const Icon(Icons.ac_unit_outlined, color: Colors.green);

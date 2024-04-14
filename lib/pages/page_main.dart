@@ -20,6 +20,7 @@ import 'package:home_app/commonWidgets/_room_wrapper.dart';
 import 'package:localization/localization.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:flutter_fgbg/flutter_fgbg.dart';
 
@@ -174,7 +175,40 @@ class _MyHomePageState extends State<PageMain> {
                       });
                     },
                   ),
-                ]),
+                ]..addAll(stateManager
+                    .pageMainDevicesNotifier.profiles.length <=
+                    1
+                    ? []
+                    : List.generate(
+                    stateManager.pageMainDevicesNotifier.profiles.length,
+                        (index) {
+                      int len = stateManager
+                          .pageMainDevicesNotifier.profiles.length;
+                      int addIndex = len - index - 1;
+                      return SpeedDialChild(
+                        child: const Icon(Icons.home),
+                        backgroundColor: stateManager
+                            .pageMainDevicesNotifier
+                            .profiles[addIndex]
+                            .id ==
+                            stateManager.pageMainDevicesNotifier
+                                .currentProfileId
+                            ? Colors.green
+                            : Colors.blue,
+                        foregroundColor: Colors.white,
+                        label: stateManager.pageMainDevicesNotifier
+                            .profiles[addIndex].title,
+                        onTap: () {
+                          Fluttertoast.showToast(
+                              msg:
+                              '${"profiles_switching_to".i18n()} ${stateManager.pageMainDevicesNotifier.profiles[addIndex].title}');
+                          stateManager.pageMainDevicesNotifier.switchProfile(stateManager
+                              .pageMainDevicesNotifier
+                              .profiles[addIndex]
+                              .id);
+                        },
+                      );
+                    }))),
           ),
         );
       },

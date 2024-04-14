@@ -54,6 +54,19 @@
   "group_openable": "Openable",
   "group_sensor": "Sensors",
   "group_motion": "Motion",
+  "group_camera": "Cameras",
   "group_climate": "Climate",
-  "group_other": "Other"
+  "group_other": "Other",
+  "profiles": "Profiles",
+  "profiles_switching_to": "Switching to profile",
+  "profiles_default": "Default profile",
+  "profiles_current": "Current profile",
+  "profiles_select": "Select profile",
+  "profiles_change_title": "Change profile's title",
+  "profiles_add": "Add new profile",
+  "profiles_delete": "Delete profile",
+  "dialog_confirmation": "Confirmation",
+  "dialog_are_you_sure": "Are you sure? Please confirm.",
+  "dialog_ok": "OK",
+  "dialog_cancel": "Cancel"
 }

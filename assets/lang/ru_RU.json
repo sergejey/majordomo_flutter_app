@@ -54,6 +54,19 @@
   "group_openable": "Открываемое",
   "group_sensor": "Датчики",
   "group_motion": "Движение",
+  "group_camera": "Камеры",
   "group_climate": "Климат",
-  "group_other": "Другое"
+  "group_other": "Другое",
+  "profiles": "Профили",
+  "profiles_switching_to": "Переключение на профиль",
+  "profiles_default": "Профиль по-умолчанию",
+  "profiles_current": "Текущий профиль",
+  "profiles_select": "Выберите профиль",
+  "profiles_change_title": "Изменение название профиля",
+  "profiles_add": "Добавление профиля",
+  "profiles_delete": "Удаление профиля",
+  "dialog_confirmation": "Подтверждение операции",
+  "dialog_are_you_sure": "Вы уверены? Подтвердите операцию.",
+  "dialog_ok": "Продолжить",
+  "dialog_cancel": "Отмена"
 }

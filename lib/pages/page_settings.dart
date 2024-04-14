@@ -8,6 +8,7 @@ import 'package:settings_ui/settings_ui.dart';
 import '../main.dart';
 import '../services/service_locator.dart';
 import './page_settings_logic.dart';
+import './page_profiles.dart';
 import 'package:prompt_dialog/prompt_dialog.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -69,6 +70,22 @@ class _SettingsPageState extends State<PageSettings> {
                   AppBar(title: Text("nav_settings".i18n([locale.toString()]))),
               body: SettingsList(platform: DevicePlatform.android, sections: [
                 SettingsSection(tiles: [
+                  SettingsTile.navigation(
+                    title: Text('profiles'.i18n()),
+                    value: Text(stateManager.pageSettingsNotifier.currentProfileTitle),
+                    leading: const Icon(Icons.house_rounded),
+                    onPressed: (context) {
+                      Navigator.of(context)
+                          .push(
+                        MaterialPageRoute(
+                          builder: (context) => const PageProfiles(),
+                        ),
+                      )
+                          .then((value) {
+                        stateManager.initSettingsPageState();
+                      });
+                    },
+                  ),
                   SettingsTile(
                       title: Text("connect".i18n()),
                       leading: const Icon(Icons.verified_user),
