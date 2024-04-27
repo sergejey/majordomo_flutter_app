@@ -28,6 +28,7 @@
   "mode_activate": "Активировать",
   "mode_deactivate": "Деактивировать",
   "no_records": "Нет записей",
+  "no_devices": "Нет устройств",
   "is_on": "Включено",
   "is_off": "Выключено",
   "timestamp": "Время",

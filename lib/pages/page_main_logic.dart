@@ -54,6 +54,12 @@ class MainPageManager {
     _tickerSubscription?.cancel();
   }
 
+  void resumePeriodicUpdate() {
+    endPeriodicUpdate();
+    pageMainDevicesNotifier.fetchDevices();
+    startPeriodicUpdate();
+  }
+
   void callObjectMethod(String object, String method) {
     pageMainDevicesNotifier.callMethod(object, method);
   }

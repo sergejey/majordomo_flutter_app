@@ -21,6 +21,7 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
   String roomFilter = '';
   String groupFilter = '';
   String currentRoomTitle = '';
+  String currentDataMode = '';
 
   String currentProfileId = "";
   List<Profile> profiles = [];
@@ -46,6 +47,7 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
 
   List<SimpleDevice> myDevices = [];
   List<SimpleDevice> myDevicesFullList = [];
+  List<SimpleDevice> myDevicesBackupList = [];
 
   void resetRoomFilter() {
     roomFilter = '';
@@ -79,11 +81,20 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
   }
 
   Future<void> initialize() async {
+    myDevices.clear();
+    myDevicesFullList.clear();
+    myDevicesBackupList.clear();
+    myOperationalModes.clear();
+    myOperationalModesFiltered.clear();
+    updateGroupsDataByDevices();
+    _updatePageMainDevices(DateTime.now().toString()+'_clear');
+
     await _preferencesService.readAllPreferences();
     profiles = await _preferencesService.getProfiles();
     currentProfileId = _preferencesService.getProfileId();
     await _dataService.initialize();
     myRooms = await _dataService.fetchRooms();
+    currentDataMode = _dataService.currentMode;
     await fetchDevices();
     resetAllFilters();
   }
@@ -203,9 +214,9 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
   }
 
   Future<void> fetchDevices() async {
+
+    currentDataMode = _dataService.currentMode;
     myDevicesFullList = await _dataService.fetchMyDevices();
-    updateRoomsDataByDevices();
-    updateGroupsDataByDevices();
     myOperationalModes = await _dataService.fetchOperationalModes();
     myOperationalModesFiltered.clear();
     myOperationalModesFiltered.addAll(myOperationalModes);
@@ -219,6 +230,19 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
       ].contains(opMode.object.toLowerCase())) return true;
       return false;
     });
+    if (currentDataMode == 'local') {
+      myOperationalModesFiltered.insert(0, OperationalMode(id: '0', title: 'Connection', object: 'connectionLocal', active: (myDevicesFullList.length>0), properties: {}));
+    } else {
+      myOperationalModesFiltered.insert(0, OperationalMode(id: '0', title: 'Connection', object: 'connectionRemote', active: (myDevicesFullList.length>0), properties: {}));
+    }
+    if (myDevicesFullList.length>0) {
+      myDevicesBackupList = myDevicesFullList;
+    } else {
+      myDevicesFullList = myDevicesBackupList;
+    }
+
+    updateRoomsDataByDevices();
+    updateGroupsDataByDevices();
     refreshDevices();
   }
 

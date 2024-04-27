@@ -28,6 +28,7 @@
   "mode_activate": "Activate",
   "mode_deactivate": "Deactivate",
   "no_records": "No records",
+  "no_devices": "No devices",
   "is_on": "On",
   "is_off": "Off",
   "timestamp": "Time",

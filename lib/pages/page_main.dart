@@ -176,39 +176,36 @@ class _MyHomePageState extends State<PageMain> {
                     },
                   ),
                 ]..addAll(stateManager
-                    .pageMainDevicesNotifier.profiles.length <=
-                    1
+                            .pageMainDevicesNotifier.profiles.length <=
+                        1
                     ? []
                     : List.generate(
-                    stateManager.pageMainDevicesNotifier.profiles.length,
+                        stateManager.pageMainDevicesNotifier.profiles.length,
                         (index) {
-                      int len = stateManager
-                          .pageMainDevicesNotifier.profiles.length;
-                      int addIndex = len - index - 1;
-                      return SpeedDialChild(
-                        child: const Icon(Icons.home),
-                        backgroundColor: stateManager
-                            .pageMainDevicesNotifier
-                            .profiles[addIndex]
-                            .id ==
-                            stateManager.pageMainDevicesNotifier
-                                .currentProfileId
-                            ? Colors.green
-                            : Colors.blue,
-                        foregroundColor: Colors.white,
-                        label: stateManager.pageMainDevicesNotifier
-                            .profiles[addIndex].title,
-                        onTap: () {
-                          Fluttertoast.showToast(
-                              msg:
-                              '${"profiles_switching_to".i18n()} ${stateManager.pageMainDevicesNotifier.profiles[addIndex].title}');
-                          stateManager.pageMainDevicesNotifier.switchProfile(stateManager
-                              .pageMainDevicesNotifier
-                              .profiles[addIndex]
-                              .id);
-                        },
-                      );
-                    }))),
+                        int len = stateManager
+                            .pageMainDevicesNotifier.profiles.length;
+                        int addIndex = len - index - 1;
+                        return SpeedDialChild(
+                          child: const Icon(Icons.home),
+                          backgroundColor: stateManager.pageMainDevicesNotifier
+                                      .profiles[addIndex].id ==
+                                  stateManager
+                                      .pageMainDevicesNotifier.currentProfileId
+                              ? Colors.green
+                              : Colors.blue,
+                          foregroundColor: Colors.white,
+                          label: stateManager
+                              .pageMainDevicesNotifier.profiles[addIndex].title,
+                          onTap: () {
+                            Fluttertoast.showToast(
+                                msg:
+                                    '${"profiles_switching_to".i18n()} ${stateManager.pageMainDevicesNotifier.profiles[addIndex].title}');
+                            stateManager.pageMainDevicesNotifier.switchProfile(
+                                stateManager.pageMainDevicesNotifier
+                                    .profiles[addIndex].id);
+                          },
+                        );
+                      }))),
           ),
         );
       },
@@ -267,6 +264,14 @@ class OperationalModesList extends StatelessWidget {
                         modeIcon = modes[index].active
                             ? Icon(Icons.bed, color: Colors.green)
                             : Icon(Icons.bed, color: Colors.grey);
+                      } else if (modes[index].object == 'connectionLocal') {
+                        modeIcon = modes[index].active
+                            ? Icon(Icons.wifi, color: Colors.green)
+                            : Icon(Icons.wifi, color: Colors.grey);
+                      } else if (modes[index].object == 'connectionRemote') {
+                        modeIcon = modes[index].active
+                            ? Icon(Icons.network_cell, color: Colors.green)
+                            : Icon(Icons.network_cell, color: Colors.grey);
                       }
                       return GestureDetector(
                           onTap: () {
@@ -315,13 +320,16 @@ class GroupsList extends StatelessWidget {
                     ? GestureDetector(
                         behavior: HitTestBehavior.opaque,
                         onTap: () {
-                          stateManager.pageMainDevicesNotifier.toggleGroupFilter(groups[index].name);
+                          stateManager.pageMainDevicesNotifier
+                              .toggleGroupFilter(groups[index].name);
                         },
                         child: GroupWidget(
                           name: groups[index].name,
                           title: groups[index].title,
                           devicesTotal: groups[index].devicesTotal,
-                          selected: stateManager.pageMainDevicesNotifier.groupFilter==groups[index].name,
+                          selected: stateManager
+                                  .pageMainDevicesNotifier.groupFilter ==
+                              groups[index].name,
                         ),
                       )
                     : SizedBox();
@@ -366,9 +374,9 @@ class EmptyDevicesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Text("No devices."),
+      Text('no_devices'.i18n()),
     ]));
   }
 }

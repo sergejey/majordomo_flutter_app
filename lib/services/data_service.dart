@@ -17,6 +17,7 @@ import '../utils/logging.dart';
 
 abstract class DataService {
   String serverMode = 'auto';
+  String currentMode = 'unknown';
   String currentWifiSSID = "";
 
   String _baseURL = "";
@@ -77,6 +78,7 @@ abstract class DataService {
       //}
       startPeriodicUpdate();
     } else {
+      currentMode = serverMode;
       if (serverMode == 'remote') {
         loadURL = remoteURL;
       } else if (serverMode == 'local') {
@@ -147,6 +149,7 @@ abstract class DataService {
 
       if (_connectionStatus != ConnectivityResult.wifi) {
         dprint('(auto) No WiFi. Loading remote URL');
+        currentMode = 'remote';
         setBaseURL(remoteURL);
       } else {
         String localWifiSSID =
@@ -164,6 +167,9 @@ abstract class DataService {
             currentWifiSSID = newWifiSSID;
             if (localWifiSSID != currentWifiSSID) {
               loadURL = remoteURL;
+              currentMode = 'remote';
+            } else {
+              currentMode = 'local';
             }
             if (loadURL == localURL) {
               dprint('(auto) Loading local URL');
@@ -175,6 +181,7 @@ abstract class DataService {
           }
         } else {
           dprint('(auto) Local wifi is not set or cannot get it\'s name. Loading remote URL');
+          currentMode = 'remote';
           setBaseURL(remoteURL);
         }
       }
