@@ -6,9 +6,9 @@ This is a flutter based app to be used as a client for [MajorDoMo](https://githu
 
 **Please use [Issues section](https://github.com/sergejey/majordomo_flutter_app/issues) to post ideas/bugs.**
 
-See [Releases](https://github.com/sergejey/majordomo_flutter_app/releases) section for APK file.
+Join testing groups for [Android](https://play.google.com/apps/testing/com.majordomo.home_app)/[iOS](https://testflight.apple.com/join/uqMxtRuT).
 
-Click [here](https://play.google.com/apps/internaltest/4701492694019903281) to join internal testing program on Google Play
+See [Releases](https://github.com/sergejey/majordomo_flutter_app/releases) section for APK file.
 
 Use this [link](https://t.me/majordroidng_dev) to join app development chat in Telegram.
 
