@@ -26,6 +26,10 @@ class DevicePageManager {
     }
   }
 
+  void toggleFavorite() {
+    pageDeviceNotifier.toggleFavorite();
+  }
+
   void startPeriodicUpdate() {
     _tickerSubscription = _ticker.tick(ticks: 5).listen(
       (duration) {

@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:home_app/deviceWidgets/device_counter.dart';
 
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/pages/page_main_logic.dart';
@@ -26,152 +29,191 @@ class DeviceWrapper extends StatelessWidget {
       required this.id,
       required this.type,
       required this.object,
-      required this.properties});
+      required this.roomTitle,
+      required this.properties,
+      this.insideDevice = false});
 
   final String title;
   final String id;
   final String type;
   final String object;
+  final String roomTitle;
+  final bool insideDevice;
   final Map<String, dynamic> properties;
 
   @override
   Widget build(BuildContext context) {
     bool deviceOffline = false;
-    if ((properties['alive'] ?? '') == '0' && type!='relay') deviceOffline = true;
+    if ((properties['alive'] ?? '') == '0' && type != 'relay')
+      deviceOffline = true;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(3.0),
         child: Opacity(
           opacity: deviceOffline ? 0.5 : 1,
           child: Container(
+            height: 125,
             decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(
-                  color: const Color(0x8F000000),
-                  width: 1.0,
-                  style: BorderStyle.solid), //Border.all
-              borderRadius: const BorderRadius.all(
-                Radius.circular(6),
-              ),
-            ),
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(20),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xffb9cbe8).withOpacity(0.6),
+                    blurRadius: 11,
+                    offset: Offset(0, 4), // Shadow position
+                  ),
+                ]),
             child: Padding(
               padding: const EdgeInsets.all(12),
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () {
-                  final stateManager = getIt<MainPageManager>();
-                  stateManager.endPeriodicUpdate();
-                  Navigator.of(context)
-                      .push(
-                    MaterialPageRoute(
-                      builder: (context) => PageDevice(deviceId: id),
-                    ),
-                  )
-                      .then((value) {
-                    stateManager.resumePeriodicUpdate();
-                  });
-                },
-                child: Builder(builder: (BuildContext context) {
-                  if (type == 'relay' || type == 'vacuum' || type == 'tv') {
-                    return DeviceRelay(
-                      title: title,
-                      id: id,
-                      object: object,
-                      properties: properties,
-                    );
-                  } else if (type == 'dimmer') {
-                    return DeviceDimmer(
-                      title: title,
-                      id: id,
-                      object: object,
-                      properties: properties,
-                    );
-                  } else if (type == 'rgb') {
-                    return DeviceRGB(
-                      title: title,
-                      id: id,
-                      object: object,
-                      properties: properties,
-                    );
-                  } else if (type == 'thermostat') {
-                    return DeviceThermostat(
-                      title: title,
-                      id: id,
-                      object: object,
-                      properties: properties,
-                    );
-                  } else if (type == 'sensor_temphum') {
-                    return DeviceSensorTempHum(
-                      title: title,
-                      id: id,
-                      object: object,
-                      properties: properties,
-                    );
-                  } else if (type == 'sensor_temp') {
-                    return DeviceSensorTemp(
-                      title: title,
-                      id: id,
-                      object: object,
-                      properties: properties,
-                    );
-                  } else if (type == 'sensor_humidity') {
-                    return DeviceSensorHumidity(
-                      title: title,
-                      id: id,
-                      object: object,
-                      properties: properties,
-                    );
-                  } else if (type == 'motion') {
-                    return DeviceMotion(
-                      title: title,
-                      id: id,
-                      object: object,
-                      properties: properties,
-                    );
-                  } else if (type == 'openclose') {
-                    return DeviceOpenClose(
-                      title: title,
-                      id: id,
-                      object: object,
-                      properties: properties,
-                    );
-                  } else if (type == 'openable') {
-                    return DeviceOpenable(
-                      title: title,
-                      id: id,
-                      object: object,
-                      properties: properties,
-                    );
-                  } else if (type == 'sensor_light') {
-                    return DeviceSensorLight(
-                      title: title,
-                      id: id,
-                      object: object,
-                      properties: properties,
-                    );
-                  } else if (type == 'sensor_power') {
-                    return DeviceSensorPower(
-                      title: title,
-                      id: id,
-                      object: object,
-                      properties: properties,
-                    );
-                  } else if (type.startsWith('sensor_')) {
-                    return DeviceSensorGeneral(
-                      title: title,
-                      id: id,
-                      object: object,
-                      properties: properties,
-                    );
-                  } else {
-                    return DeviceGeneric(
-                      title: title,
-                      id: id,
-                      object: object,
-                      properties: properties,
-                    );
+                  if (!insideDevice) {
+                    final stateManager = getIt<MainPageManager>();
+                    stateManager.endPeriodicUpdate();
+                    Navigator.of(context)
+                        .push(
+                      MaterialPageRoute(
+                        builder: (context) => PageDevice(deviceId: id),
+                      ),
+                    )
+                        .then((value) {
+                      stateManager.resumePeriodicUpdate();
+                    });
                   }
-                }),
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 46,
+                      child: Builder(builder: (BuildContext context) {
+                        if (type == 'relay' || type == 'vacuum' || type == 'tv') {
+                          return DeviceRelay(
+                            title: title,
+                            id: id,
+                            object: object,
+                            properties: properties,
+                          );
+                        } else if (type == 'dimmer') {
+                          return DeviceDimmer(
+                            title: title,
+                            id: id,
+                            object: object,
+                            properties: properties,
+                          );
+                        } else if (type == 'rgb') {
+                          return DeviceRGB(
+                            title: title,
+                            id: id,
+                            object: object,
+                            properties: properties,
+                          );
+                        } else if (type == 'thermostat') {
+                          return DeviceThermostat(
+                            title: title,
+                            id: id,
+                            object: object,
+                            properties: properties,
+                          );
+                        } else if (type == 'sensor_temphum') {
+                          return DeviceSensorTempHum(
+                            title: title,
+                            id: id,
+                            object: object,
+                            properties: properties,
+                          );
+                        } else if (type == 'sensor_temp') {
+                          return DeviceSensorTemp(
+                            title: title,
+                            id: id,
+                            object: object,
+                            properties: properties,
+                          );
+                        } else if (type == 'sensor_humidity') {
+                          return DeviceSensorHumidity(
+                            title: title,
+                            id: id,
+                            object: object,
+                            properties: properties,
+                          );
+                        } else if (type == 'motion') {
+                          return DeviceMotion(
+                            title: title,
+                            id: id,
+                            object: object,
+                            properties: properties,
+                          );
+                        } else if (type == 'openclose') {
+                          return DeviceOpenClose(
+                            title: title,
+                            id: id,
+                            object: object,
+                            properties: properties,
+                          );
+                        } else if (type == 'openable') {
+                          return DeviceOpenable(
+                            title: title,
+                            id: id,
+                            object: object,
+                            properties: properties,
+                          );
+                        } else if (type == 'sensor_light') {
+                          return DeviceSensorLight(
+                            title: title,
+                            id: id,
+                            object: object,
+                            properties: properties,
+                          );
+                        } else if (type == 'sensor_power') {
+                          return DeviceSensorPower(
+                            title: title,
+                            id: id,
+                            object: object,
+                            properties: properties,
+                          );
+                        } else if (type == 'counter') {
+                          return DeviceCounter(
+                            title: title,
+                            id: id,
+                            object: object,
+                            properties: properties,
+                          );
+                        } else if (type.startsWith('sensor_')) {
+                          return DeviceSensorGeneral(
+                            title: title,
+                            type: type,
+                            id: id,
+                            object: object,
+                            properties: properties,
+                          );
+                        } else {
+                          return DeviceGeneric(
+                            title: title,
+                            type: type,
+                            id: id,
+                            object: object,
+                            properties: properties,
+                          );
+                        }
+                      }),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(title,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyMedium),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(roomTitle,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodySmall),
+                  ],
+                ),
               ),
             ),
           ),

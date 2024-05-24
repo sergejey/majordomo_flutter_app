@@ -1,4 +1,8 @@
 {
+  "bar_home": "Home",
+  "bar_favorites": "Favorites",
+  "bar_rooms": "Rooms",
+  "bar_active": "Active",
   "connect": "CONNECT service",
   "not-authorized": "Not authorized",
   "authorized": "Authorized",
@@ -69,5 +73,6 @@
   "dialog_confirmation": "Confirmation",
   "dialog_are_you_sure": "Are you sure? Please confirm.",
   "dialog_ok": "OK",
-  "dialog_cancel": "Cancel"
+  "dialog_cancel": "Cancel",
+  "confirm_exit": "Press again to exit..."
 }

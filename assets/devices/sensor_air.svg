@@ -1,0 +1,27 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d_287_939)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10.4156 30.5401L10.5906 31.3025C10.9905 33.0451 12.7395 34.5 15 34.5C16.1311 34.5 17.1494 34.1301 17.9281 33.5352L18.7924 32.8751L19.6885 33.4912C20.6034 34.1202 21.747 34.5 23 34.5C24.9955 34.5 26.707 33.538 27.6652 32.1478L28.123 31.4835L28.9296 31.4993C28.953 31.4998 28.9765 31.5 29 31.5C30.933 31.5 32.5 29.933 32.5 28C32.5 26.4383 31.4761 25.1118 30.0592 24.6627L29.422 24.4607L29.1461 23.8518C28.5165 22.4619 27.119 21.5 25.5 21.5C24.8784 21.5 24.294 21.6407 23.773 21.8906L22.7504 22.3811L21.9998 21.531C20.8982 20.2833 19.2915 19.5 17.5 19.5C15.1991 19.5 13.1982 20.7947 12.1904 22.7024L11.7808 23.4779L10.9041 23.5013C9.01588 23.5517 7.5 25.099 7.5 27C7.5 28.4674 8.40357 29.7275 9.69033 30.2472L10.4156 30.5401ZM10.8641 22.0018C8.1655 22.0738 6 24.284 6 27C6 29.0997 7.29429 30.8972 9.12859 31.638C9.70043 34.1295 12.1119 36 15 36C16.4601 36 17.7983 35.5219 18.8387 34.7273C20.0019 35.527 21.4415 36 23 36C25.4787 36 27.6564 34.8037 28.9003 32.999C28.9334 32.9997 28.9667 33 29 33C31.7614 33 34 30.7614 34 28C34 25.7658 32.5346 23.8738 30.5125 23.2328C29.6488 21.3263 27.7293 20 25.5 20C24.6491 20 23.8434 20.1932 23.1242 20.5382C21.75 18.9817 19.7396 18 17.5 18C14.6212 18 12.1213 19.6219 10.8641 22.0018Z" fill="#2B5EAE"/>
+<circle cx="11.75" cy="26.75" r="0.75" fill="#2B5EAE"/>
+<circle cx="26.75" cy="25.75" r="0.75" fill="#2B5EAE"/>
+<circle cx="17.75" cy="22.75" r="0.75" fill="#2B5EAE"/>
+<circle cx="23.75" cy="30.75" r="0.75" fill="#2B5EAE"/>
+<circle cx="16.75" cy="29.75" r="0.75" fill="#2B5EAE"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M7.5 4.5V8C7.5 8.82843 8.17157 9.5 9 9.5H31C31.8284 9.5 32.5 8.82843 32.5 8V4.5H7.5ZM7 3C6.44772 3 6 3.44772 6 4V8C6 9.65685 7.34315 11 9 11H31C32.6569 11 34 9.65685 34 8V4C34 3.44772 33.5523 3 33 3H7Z" fill="#2B5EAE"/>
+<path d="M10 10.5V12.5C10 13.6046 10.8954 14.5 12 14.5H28C29.1046 14.5 30 13.6046 30 12.5V10.5" stroke="#2B5EAE" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M20 4V7" stroke="#2B5EAE" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M26 4V7" stroke="#2B5EAE" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M14 4V7" stroke="#2B5EAE" stroke-width="1.5" stroke-linecap="round"/>
+</g>
+<defs>
+<filter id="filter0_d_287_939" x="3" y="1" width="34" height="39" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="1"/>
+<feGaussianBlur stdDeviation="1.5"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.0705903 0 0 0 0 0.16166 0 0 0 0 0.395833 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_287_939"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_287_939" result="shape"/>
+</filter>
+</defs>
+</svg>

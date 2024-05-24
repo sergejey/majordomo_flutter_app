@@ -1,0 +1,22 @@
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M32 33H47.5" stroke="#2B5EAE" stroke-linecap="round"/>
+<path d="M35 22H37" stroke="#2B5EAE" stroke-linecap="round"/>
+<path d="M10.6946 48.1135C10.6777 48.051 10.7257 48 10.7754 48H54.1479C54.1741 48 54.2073 48.0117 54.2376 48.0529C54.2695 48.0961 54.2801 48.1496 54.2693 48.1954C53.9199 49.674 53.7061 52.0415 53.5727 54.3987C53.3347 58.6059 49.9469 62 45.7692 62H19.8956C15.9014 62 12.5779 58.8845 12.0108 54.8859C11.6915 52.6352 11.2612 50.206 10.6946 48.1135Z" stroke="#2B5EAE"/>
+<path d="M26 51L53.5 51" stroke="#2B5EAE" stroke-linecap="round"/>
+<path d="M17 51.5C17.2761 51.5 17.5 51.2761 17.5 51C17.5 50.7239 17.2761 50.5 17 50.5L17 51.5ZM11 51.5L17 51.5L17 50.5L11 50.5L11 51.5Z" fill="#2B5EAE"/>
+<path d="M13.5 48V23.0439C13.5 23.0439 13.5 20.1675 16.3846 19.5923C19.2692 19.0171 21 21.3183 21 21.3183" stroke="#2B5EAE" stroke-linecap="round"/>
+<rect x="16.6351" y="23.3109" width="9.5" height="2.5" rx="0.653846" transform="rotate(-18.915 16.6351 23.3109)" stroke="#2B5EAE"/>
+<path d="M16 65.5L18 62" stroke="#2B5EAE" stroke-linecap="round"/>
+<path d="M49 65.5L47 62" stroke="#2B5EAE" stroke-linecap="round"/>
+<path d="M33.5 26C33.5 25.1716 34.1716 24.5 35 24.5H36C36.8284 24.5 37.5 25.1716 37.5 26V32C37.5 32.2761 37.2761 32.5 37 32.5H34C33.7239 32.5 33.5 32.2761 33.5 32V26Z" stroke="#2B5EAE"/>
+<path d="M40.5 29C40.5 28.1716 41.1716 27.5 42 27.5H43C43.8284 27.5 44.5 28.1716 44.5 29V32C44.5 32.2761 44.2761 32.5 44 32.5H41C40.7239 32.5 40.5 32.2761 40.5 32V29Z" stroke="#2B5EAE"/>
+<path d="M35.5 24V22" stroke="#2B5EAE" stroke-linecap="round"/>
+<path d="M42 25H44" stroke="#2B5EAE" stroke-linecap="round"/>
+<path d="M42.5 27V25" stroke="#2B5EAE" stroke-linecap="round"/>
+<rect x="54.5" y="15.5" width="13" height="21" rx="0.5" stroke="#2B5EAE"/>
+<path d="M52.5789 19H52C51.7239 19 51.5 18.7761 51.5 18.5V16.5C51.5 16.2239 51.7239 16 52 16H54.5" stroke="#2B5EAE" stroke-linecap="round"/>
+<path d="M69.4211 19H70C70.2761 19 70.5 18.7761 70.5 18.5V16.5C70.5 16.2239 70.2761 16 70 16H67.5" stroke="#2B5EAE" stroke-linecap="round"/>
+<path d="M54.5 33H67" stroke="#2B5EAE" stroke-linecap="round"/>
+<path d="M14 38H16" stroke="#2B5EAE" stroke-linecap="round"/>
+<path d="M16.5 35.5V39.5" stroke="#2B5EAE" stroke-linecap="round"/>
+</svg>

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:home_app/commonWidgets/device_icon.dart';
+import 'package:home_app/commonWidgets/room_icon.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/pages/page_main_logic.dart';
 
@@ -22,20 +24,19 @@ class RoomWrapper extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(3.0),
         child: Container(
+          height: 102,
           decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(
-                color: Colors.blue,
-                width: 1.0,
-                style: BorderStyle.solid), //Border.all
-            borderRadius: const BorderRadius.all(
-              Radius.circular(6),
-            ),
-            /*
-            boxShadow: const [
-              BoxShadow(blurRadius: 8),
-            ],*/
-          ),
+              color: Colors.white,
+              borderRadius: const BorderRadius.all(
+                Radius.circular(20),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xffb9cbe8).withOpacity(0.6),
+                  blurRadius: 11,
+                  offset: Offset(0, 4), // Shadow position
+                ),
+              ]),
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: GestureDetector(
@@ -46,84 +47,103 @@ class RoomWrapper extends StatelessWidget {
               child: Builder(builder: (BuildContext context) {
                 return Row(
                   children: [
+                    Container(
+                        decoration: BoxDecoration(
+                          border:
+                              Border.all(color: const Color(0xffb9cbe8).withOpacity(0.6)),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: RoomIcon(roomTitle: title)),
+                    SizedBox(width: 25),
                     Expanded(
-                      /*1*/
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          /*2*/
-                          Container(
-                            padding: const EdgeInsets.only(bottom: 8),
-                            child: Text(
-                              title,
-                              style: Theme.of(context).textTheme.bodyLarge,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  padding: const EdgeInsets.only(bottom: 8),
+                                  child: Text(
+                                    title,
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ),
+                              if (properties.containsKey("temperature"))
+                                Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: Container(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(12, 5, 12, 5),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color:
+                                              Theme.of(context).primaryColor),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                    ),
+                                    child: Text(
+                                      properties["temperature"] + "°C",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                    ),
+                                  ),
+                                ),
+                            ],
                           ),
+                          Expanded(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                    child: SizedBox(
+                                  width: 5,
+                                )),
+                                if (properties.containsKey("motionOn"))
+                                  Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: DeviceIcon(
+                                      deviceType: 'motion',
+                                      iconSize: 32,
+                                    ),
+                                  ),
+                                if (properties.containsKey("lightOn"))
+                                  Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: DeviceIcon(
+                                      deviceType: 'relay',
+                                      deviceSubType: 'light',
+                                      deviceState: '1',
+                                      iconSize: 32,
+                                    ),
+                                  ),
+                                if (properties.containsKey("powerOn"))
+                                  Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: DeviceIcon(
+                                      deviceType: 'relay',
+                                      iconSize: 32,
+                                    ),
+                                  ),
+                                if (properties.containsKey("isOpen"))
+                                  Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: DeviceIcon(
+                                      deviceType: 'openable',
+                                      iconSize: 32,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     ),
-
-                    if (properties.containsKey("temperature"))
-                      Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: Container(
-                          child: Text(
-                            properties["temperature"] + "°C",
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ),
-                      ),
-                    if (properties.containsKey("motionOn"))
-                      Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: CircleAvatar(
-                            radius: 12,
-                            backgroundColor: properties['motionOn'] == "1"
-                                ? Colors.yellow
-                                : Colors.white,
-                            child: const Icon(
-                              Icons.man,
-                              color: Colors.black,
-                              size: 16,
-                            )),
-                      ),
-                    if (properties.containsKey("lightOn"))
-                      Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: CircleAvatar(
-                            radius: 12,
-                            backgroundColor: Colors.yellow,
-                            child: const Icon(
-                              Icons.light_outlined,
-                              color: Colors.black,
-                              size: 16
-                            )),
-                      ),
-                    if (properties.containsKey("powerOn"))
-                      Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: CircleAvatar(
-                            radius: 12,
-                            backgroundColor: Colors.yellow,
-                            child: const Icon(
-                                Icons.power_settings_new,
-                                color: Colors.black,
-                                size: 16
-                            )),
-                      ),
-                    if (properties.containsKey("isOpen"))
-                      Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: CircleAvatar(
-                            radius: 12,
-                            backgroundColor: Colors.yellow,
-                            child: const Icon(
-                                Icons.door_back_door_outlined,
-                                color: Colors.black,
-                                size: 16
-                            )),
-                      ),
                   ],
                 );
               }),

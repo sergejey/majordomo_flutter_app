@@ -27,25 +27,9 @@ class DeviceMotionPage extends StatelessWidget {
             height: 20,
           ),
           Expanded(
-            child: Center(
-              child: CircleAvatar(
-                radius: 150,
-                backgroundColor:
-                    properties['status'] == "1" ? Colors.yellow : Colors.white,
-                child: SizedBox.fromSize(
-                  size: const Size.fromRadius(130),
-                  child: const FittedBox(
-                    child: Icon(
-                      Icons.man,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
+            child: SizedBox(
+              height: 20,
             ),
-          ),
-          SizedBox(
-            height: 20,
           ),
           Center(
             child: Padding(

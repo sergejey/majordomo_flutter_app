@@ -25,20 +25,10 @@ class DeviceSensorPowerPage extends StatelessWidget {
             height: 20,
           ),
           Expanded(
-            child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: AutoSizeText("${properties['value']} W",
-                    style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
-                    minFontSize: 34,
-                      ),
-                ),
+            child: SizedBox(
+              height: 20,
             ),
           ),
-          SizedBox(
-            height: 20,
-          ),
-          /*3*/
           Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),

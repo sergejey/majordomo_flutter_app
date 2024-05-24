@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:home_app/commonWidgets/device_icon.dart';
 import 'package:home_app/utils/text_updated.dart';
-
-import '../utils/battery_level.dart';
 
 class DeviceSensorTemp extends StatelessWidget {
   const DeviceSensorTemp(
@@ -20,49 +19,24 @@ class DeviceSensorTemp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        DeviceIcon(
+          deviceType: 'sensor_temp',
+          deviceTitle: title,
+        ),
         Expanded(
-          /*1*/
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              /*1*/
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: Text(
-                        title,
-                        style: Theme.of(context).textTheme.bodyLarge,
-                        overflow: TextOverflow.fade,
-                        softWrap: false,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: Text(
-                      properties["value"] + "°C",
-                      style: Theme.of(context).textTheme.headlineMedium,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
-              /*2*/
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  TextUpdated(updated: properties["updated"] ?? ""),
-                  if (properties["batteryOperated"] == '1')
-                    BatteryLevel(level: properties["batteryLevel"] ?? "")
-                ],
-              ),
-            ],
+            /*1*/
+            child: SizedBox(width: 10)),
+        Container(
+          padding: const EdgeInsets.fromLTRB(12, 5, 12, 5),
+          decoration: BoxDecoration(
+            border: Border.all(color: Theme.of(context).primaryColor),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          child: Text(
+            properties["value"] + "°C",
+            overflow: TextOverflow.ellipsis,
           ),
         ),
-
       ],
     );
   }

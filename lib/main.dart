@@ -7,6 +7,7 @@ import 'package:localization/localization.dart';
 import 'package:oauth_webauth/oauth_webauth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:home_app/utils/theme.dart';
 
 void main() async {
   setupGetIt();
@@ -39,6 +40,7 @@ class MyAppState extends State<MyApp> {
     LocalJsonLocalization.delegate.directories = ['assets/lang'];
     _notificationService.initialize();
     return MaterialApp(
+
       title: 'MajorDoMo NG',
       locale: _locale,
       localeResolutionCallback: (locale, supportedLocales) {
@@ -61,9 +63,7 @@ class MyAppState extends State<MyApp> {
         Locale('en', 'US'),
       ],
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: lightAppTheme,
       home: const PageMain(title: 'MajorDoMo NG'),
     );
   }

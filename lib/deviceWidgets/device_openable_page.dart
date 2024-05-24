@@ -27,26 +27,11 @@ class DeviceOpenablePage extends StatelessWidget {
             height: 20,
           ),
           Expanded(
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      properties['status'] != "1" ? Colors.yellow : Colors.white),
-              onPressed: () {
-                stateManager.callObjectMethod(object, "switch");
-              },
-              child: SizedBox.fromSize(
-                size: const Size.fromRadius(150),
-                child: FittedBox(
-                  child: Icon(
-                    properties['status'] != "1"? Icons.lock_open_outlined: Icons.lock_outline,
-                    color: Colors.black,
-                  ),
-                ),
+            child: Expanded(
+              child: SizedBox(
+                height: 20,
               ),
             ),
-          ),
-          SizedBox(
-            height: 20,
           ),
           Center(
             child: Padding(

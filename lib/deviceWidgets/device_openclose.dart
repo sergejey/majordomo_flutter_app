@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:home_app/utils/text_updated.dart';
-
-import '../utils/battery_level.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:home_app/commonWidgets/device_icon.dart';
 
 class DeviceOpenClose extends StatelessWidget {
   const DeviceOpenClose(
@@ -20,39 +19,20 @@ class DeviceOpenClose extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(
-          /*1*/
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              /*2*/
-              Container(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Text(
-                  title,
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              Row(
-                children: [
-                  TextUpdated(updated: properties["updated"] ?? ""),
-                  if (properties["batteryOperated"]=='1')
-                    BatteryLevel(level: properties["batteryLevel"] ?? "")
-                ],
-              ),
-            ],
-          ),
+        DeviceIcon(
+          deviceType: 'openclose',
+          deviceState: properties['status'],
+          deviceTitle: title,
         ),
+        Expanded(child: SizedBox(width: 10)),
         /*3*/
-        CircleAvatar(
-            radius: 18,
-            backgroundColor:
-                properties['status'] != "1" ? Colors.yellow : Colors.white,
-            child: const Icon(
-              Icons.door_back_door_outlined,
-              color: Colors.black,
-            )),
+        SvgPicture.asset(
+          properties['status'] != "1"?'assets/devices/lock_open.svg':'assets/devices/lock_closed.svg',
+          width: 40,
+          height: 40,
+          colorFilter:
+          ColorFilter.mode(Theme.of(context).primaryColor.withOpacity(properties['status'] != "1"?1:0.3), BlendMode.srcIn),
+        ),
       ],
     );
   }

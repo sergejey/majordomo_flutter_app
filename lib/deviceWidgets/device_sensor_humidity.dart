@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_app/commonWidgets/device_icon.dart';
 import 'package:home_app/utils/text_updated.dart';
 
 import '../utils/battery_level.dart';
@@ -22,47 +23,29 @@ class DeviceSensorHumidity extends StatelessWidget {
       children: [
         Expanded(
           /*1*/
-          child: Column(
+          child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              DeviceIcon(
+                deviceType: 'sensor_humidity',
+                deviceTitle: title,
+              ),
+              Expanded(child: SizedBox(width: 10)),
+              Container(
+                padding: const EdgeInsets.fromLTRB(12, 5, 12, 5),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Theme.of(context).primaryColor),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                child: Text(
+                  properties["value"] + "%",
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
               /*1*/
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: Text(
-                        title,
-                        style: Theme.of(context).textTheme.bodyLarge,
-                        overflow: TextOverflow.fade,
-                        softWrap: false,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: Text(
-                      properties["value"] + "%",
-                      style: Theme.of(context).textTheme.headlineMedium,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
-              /*2*/
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  TextUpdated(updated: properties["updated"] ?? ""),
-                  if (properties["batteryOperated"] == '1')
-                    BatteryLevel(level: properties["batteryLevel"] ?? "")
-                ],
-              ),
             ],
           ),
         ),
-
       ],
     );
   }

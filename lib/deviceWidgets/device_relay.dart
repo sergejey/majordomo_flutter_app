@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:home_app/commonWidgets/device_icon.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/pages/page_main_logic.dart';
-import 'package:home_app/utils/text_updated.dart';
+import 'package:flutter_switch/flutter_switch.dart';
 
 class DeviceRelay extends StatelessWidget {
   const DeviceRelay(
@@ -20,44 +21,52 @@ class DeviceRelay extends StatelessWidget {
   Widget build(BuildContext context) {
     final stateManager = getIt<MainPageManager>();
     return Row(
-        children: [
-          Expanded(
-            /*1*/
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                /*2*/
-                Container(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Text(
-                    title,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                TextUpdated(updated: properties["updated"] ?? ""),
-              ],
-            ),
+      children: [
+        DeviceIcon(
+          deviceType: 'relay',
+          deviceSubType: properties['loadType'],
+          deviceState: properties['status'],
+          deviceTitle: title,
+        ),
+        Expanded(child: Text('')),
+        FlutterSwitch(
+          value: properties['status'] == "1",
+          width: 40,
+          height: 20,
+          toggleSize: 15.0,
+          activeColor: Theme.of(context).primaryColor,
+          inactiveColor: Theme.of(context).colorScheme.secondary,
+          borderRadius: 20.0,
+          padding: 2.0,
+          onToggle: (value) {
+            if (value) {
+              stateManager.callObjectMethod(object, "turnOn");
+            } else {
+              stateManager.callObjectMethod(object, "turnOff");
+            }
+          },
+        ),
+        /*
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: properties['status'] == "1"
+                ? Theme.of(context).primaryColor
+                : Colors.white,
+            minimumSize: Size(45, 45),
+            maximumSize: Size(45, 45),
+            padding: const EdgeInsets.all(0),
           ),
-          /*3*/
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    properties['status'] == "1" ? Colors.yellow : Colors.white,
-              minimumSize: Size(45,45),
-              maximumSize: Size(45,45),
-              padding: const EdgeInsets.all(0),
-
-            ),
-            onPressed: () {
-              stateManager.callObjectMethod(object, "switch");
-            },
-            child: Icon(
-              properties['loadType']=='light'?Icons.light_outlined:Icons.power_settings_new,
-              color: Colors.black,
-            ),
+          onPressed: () {
+            stateManager.callObjectMethod(object, "switch");
+          },
+          child: Icon(
+            Icons.power_settings_new,
+            color: properties['status'] == "1"
+                ? Theme.of(context).colorScheme.onPrimary
+                : Theme.of(context).primaryColor,
           ),
-        ],
+        ),*/
+      ],
     );
   }
 }

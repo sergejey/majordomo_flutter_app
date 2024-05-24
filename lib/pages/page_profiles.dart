@@ -36,7 +36,18 @@ class _ProfilesPageState extends State<PageProfiles> {
         builder: (context, value, child) {
           return Scaffold(
               appBar: AppBar(title: Text('profiles'.i18n())),
-              body: SettingsList(platform: DevicePlatform.android, sections: [
+              body: SettingsList(platform: DevicePlatform.android,
+                  lightTheme: SettingsThemeData(
+                    dividerColor: Theme.of(context).colorScheme.onPrimary,
+                    tileDescriptionTextColor: Theme.of(context).primaryColor,
+                    leadingIconsColor: Theme.of(context).primaryColor,
+                    settingsListBackground:  Theme.of(context).colorScheme.onPrimary,
+                    settingsSectionBackground:  Theme.of(context).colorScheme.onPrimary,
+                    settingsTileTextColor: Theme.of(context).primaryColor,
+                    tileHighlightColor: Theme.of(context).primaryColor,
+                    titleTextColor: Theme.of(context).primaryColor,
+                    trailingTextColor:  Theme.of(context).colorScheme.onPrimary,),
+                  sections: [
                 SettingsSection(tiles: [
                   SettingsTile(
                     title: Text('profiles_current'.i18n()),

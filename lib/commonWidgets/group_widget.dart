@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class GroupWidget extends StatelessWidget {
   const GroupWidget(
@@ -15,52 +16,62 @@ class GroupWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Icon groupIcon = const Icon(Icons.question_mark, color: Colors.green);
+    String svg_filename = 'filter_outlet';
+
     if (name == 'light') {
-      groupIcon = const Icon(Icons.light_outlined, color: Colors.green);
+      svg_filename = 'filter_light';
     }
     if (name == 'outlet') {
-      groupIcon = const Icon(Icons.power_settings_new, color: Colors.green);
+      svg_filename = 'filter_outlet';
     }
     if (name == 'openable') {
-      groupIcon = const Icon(Icons.lock_open_rounded, color: Colors.green);
+      svg_filename = 'filter_openable';
     }
     if (name == 'sensor') {
-      groupIcon = const Icon(Icons.thermostat_outlined, color: Colors.green);
+      svg_filename = 'filter_sensors';
     }
     if (name == 'motion') {
-      groupIcon = const Icon(Icons.man, color: Colors.green);
+      svg_filename = 'filter_motion';
     }
     if (name == 'camera') {
-      groupIcon = const Icon(Icons.video_camera_back_outlined, color: Colors.green);
+      svg_filename = 'filter_camera';
     }
     if (name == 'climate') {
-      groupIcon = const Icon(Icons.ac_unit_outlined, color: Colors.green);
+      svg_filename = 'filter_climate';
     }
     if (name == 'other') {
-      groupIcon = const Icon(Icons.question_mark, color: Colors.green);
+      svg_filename = 'filter_other';
     }
+
+
+
     return Padding(
         padding: const EdgeInsets.all(3.0),
         child: Container(
           decoration: BoxDecoration(
-            color: selected ? Colors.yellowAccent : Colors.white,
-            border: Border.all(
-                color: Colors.green,
-                width: 1.0,
-                style: BorderStyle.solid), //Border.all
-            borderRadius: const BorderRadius.all(
-              Radius.circular(3),
-            ),
-          ),
+              color: selected
+                  ? Theme.of(context).primaryColor
+                  : Theme.of(context).colorScheme.onPrimary,
+              borderRadius: const BorderRadius.all(
+                Radius.circular(10),
+              )),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Center(
                 child: Row(
               children: [
-                groupIcon,
+                SvgPicture.asset('assets/navigation/' + svg_filename + '.svg',
+                    width: 32,
+                    height: 32,
+                    colorFilter: ColorFilter.mode(
+                        selected? Theme.of(context).colorScheme.onPrimary
+                        : Theme.of(context).primaryColor, BlendMode.srcIn)),
                 SizedBox(width: 5),
-                Text(title),
+                Text(title,
+                    style: TextStyle(
+                        color: selected
+                            ? Theme.of(context).colorScheme.onPrimary
+                            : Theme.of(context).primaryColor)),
                 SizedBox(width: 5),
               ],
             )),

@@ -148,13 +148,16 @@ class DataServiceLocal extends DataService {
 
   @override
   Future<SimpleDevice> fetchMyDevice(String deviceId) async {
-    const emptyDevice = SimpleDevice(
+    List<String> _favorites = getFavorites();
+    SimpleDevice emptyDevice = SimpleDevice(
         id: 'error',
         title: 'Error device',
         object: 'unknown',
         type: 'unknown',
         linkedRoom: 'unknown',
-        properties: <String, dynamic>{});
+        favorite: false,
+        properties: <String, dynamic>{},
+        roomTitle: '');
     final baseURL = getBaseURL();
     if (baseURL == "") {
       dprint("Base URL is not set");
@@ -168,7 +171,11 @@ class DataServiceLocal extends DataService {
       final response = await getURL(apiURL);
       if (response != '') {
         final Map<String, dynamic> parsed = jsonDecode(response)["device"];
-        return SimpleDevice.fromJson(parsed);
+        emptyDevice = SimpleDevice.fromJson(parsed);
+        if (_favorites.contains(emptyDevice.object)) {
+          emptyDevice.favorite = true;
+        }
+        return emptyDevice;
       }
     } catch (e) {
       dprint('General Error: $e');
@@ -178,6 +185,7 @@ class DataServiceLocal extends DataService {
 
   @override
   Future<List<SimpleDevice>> fetchMyDevices() async {
+    List<String> _favorites = getFavorites();
     final baseURL = getBaseURL();
     if (baseURL == "") {
       dprint("Base URL is not set");
@@ -191,9 +199,13 @@ class DataServiceLocal extends DataService {
       if (response != '') {
         final parsed =
             jsonDecode(response)["devices"].cast<Map<String, dynamic>>();
-        return parsed
+        List<SimpleDevice> devicesReturned = parsed
             .map<SimpleDevice>((json) => SimpleDevice.fromJson(json))
             .toList();
+        for (int i = 0; i < devicesReturned.length; i++) {
+          if (_favorites.contains(devicesReturned[i].object)) devicesReturned[i].favorite = true;
+        }
+        return devicesReturned;
       }
     } catch (e) {
       dprint('General Error: $e');

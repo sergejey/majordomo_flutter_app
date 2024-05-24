@@ -12,12 +12,14 @@ class PageDeviceNotifier extends ValueNotifier<String> {
   String deviceId = '';
   String deviceConfigURL = '';
 
-  SimpleDevice myDevice = const SimpleDevice(
+  SimpleDevice myDevice = SimpleDevice(
       id: 'error',
       title: 'Error device',
       object: 'unknown',
       type: 'unknown',
       linkedRoom: 'unknown',
+      roomTitle: '',
+      favorite: false,
       properties: <String, dynamic>{});
 
   Future<void> initialize(String initDeviceId) async {
@@ -27,6 +29,17 @@ class PageDeviceNotifier extends ValueNotifier<String> {
         "${_dataService.getBaseURL()}/panel/devices/$deviceId.html?tab=settings";
 
     await fetchDevice();
+  }
+
+  void toggleFavorite() {
+    if (myDevice.favorite) {
+      myDevice.favorite = false;
+      _dataService.removeFromFavorites(myDevice.object);
+    } else {
+      _dataService.addToFavorites(myDevice.object);
+      myDevice.favorite = true;
+    }
+    refreshDevice();
   }
 
   Future<void> fetchDevice() async {

@@ -17,12 +17,14 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
 
   bool activeFilter = false;
   bool roomView = false;
+  bool favoritesView = false;
 
   String roomFilter = '';
   String groupFilter = '';
   String currentRoomTitle = '';
   String currentDataMode = '';
 
+  String currentProfileTitle = "";
   String currentProfileId = "";
   List<Profile> profiles = [];
   final _preferencesService = getIt<PreferencesService>();
@@ -49,35 +51,20 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
   List<SimpleDevice> myDevicesFullList = [];
   List<SimpleDevice> myDevicesBackupList = [];
 
-  void resetRoomFilter() {
-    roomFilter = '';
-    currentRoomTitle = '';
-    activeFilter = false;
-    roomView = false;
-    refreshDevices();
-  }
-
   void setRoomFilter(String roomObject, String roomTitle) {
+    resetAllFilters();
     roomFilter = roomObject;
     currentRoomTitle = roomTitle;
-    activeFilter = false;
-    roomView = false;
-    refreshDevices();
-  }
-
-  void toggleActiveFilter() {
-    if (activeFilter) {
-      activeFilter = false;
-    } else {
-      activeFilter = true;
-    }
-    roomView = false;
     refreshDevices();
   }
 
   void resetAllFilters() {
     groupFilter = '';
-    resetRoomFilter();
+    roomFilter = '';
+    currentRoomTitle = '';
+    roomView = false;
+    activeFilter = false;
+    favoritesView = false;
   }
 
   Future<void> initialize() async {
@@ -92,11 +79,11 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
     await _preferencesService.readAllPreferences();
     profiles = await _preferencesService.getProfiles();
     currentProfileId = _preferencesService.getProfileId();
+    currentProfileTitle = _preferencesService.getProfileTitle();
     await _dataService.initialize();
     myRooms = await _dataService.fetchRooms();
     currentDataMode = _dataService.currentMode;
     await fetchDevices();
-    resetAllFilters();
   }
 
   Future<void> switchProfile(String profileId) async {
@@ -124,10 +111,10 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
     } else if (filter_name == 'climate' &&
         (device.type == 'thermostat' || device.type == 'ac')) {
       return true;
-    } else if (filter_name == 'sensor' && (device.type.contains('sensor') || device.type == 'leak')) {
+    } else if (filter_name == 'sensor' && (device.type.contains('sensor') || device.type == 'leak' || device.type == 'smoke')) {
       return true;
     } else if (filter_name == 'other') {
-      if (!(device.type.contains('sensor') || (['relay','rgb','dimmer','openable','openclose','motion','camera','thermostat','ac','leak','tv','vacuum']).contains(device.type))) {
+      if (!(device.type.contains('sensor') || (['relay','rgb','dimmer','openable','openclose','motion','camera','thermostat','ac','leak','smoke','tv','vacuum']).contains(device.type))) {
         return true;
       }
     }
@@ -164,6 +151,7 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
       bool foundTemperature = false;
       bool foundOpen = false;
       for (int iD = 0; iD < totalDevices; iD++) {
+        roomDevices[iD].roomTitle = myRooms[i].title;
         if (((roomDevices[iD].type == 'relay' &&
                     roomDevices[iD].properties['loadType'] == 'light') ||
                 roomDevices[iD].type == 'dimmer') &&
@@ -246,9 +234,19 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
     refreshDevices();
   }
 
+  List<String> getFavorites() {
+    return _dataService.getFavorites();
+  }
+
   refreshDevices() {
     myDevices.clear();
     myDevices.addAll(myDevicesFullList);
+
+    if (favoritesView) {
+      myDevices.retainWhere((SimpleDevice device) {
+        return device.favorite;
+      });
+    }
 
     if (groupFilter != '') {
       myDevices.retainWhere((SimpleDevice device) {
@@ -302,15 +300,31 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
     refreshDevices();
   }
 
-  void toggleRoomView() {
-    groupFilter = '';
-    if (roomView) {
-      resetRoomFilter();
-    } else {
-      roomView = true;
-      activeFilter = false;
-    }
-    _updatePageMainDevices(DateTime.now().toString());
+  void setHomeView() {
+    resetAllFilters();
+    refreshDevices();
+  }
+
+  void setAttentionView() {
+    resetAllFilters();
+    activeFilter = true;
+    refreshDevices();
+  }
+
+  void setFavoritesView() {
+    resetAllFilters();
+    favoritesView = true;
+    refreshDevices();
+  }
+
+  void setRoomsView() {
+    resetAllFilters();
+    roomView = true;
+    refreshDevices();
+  }
+
+  void refreshPage() {
+    _updatePageMainDevices('');
   }
 
   void _updatePageMainDevices(String newValue) {

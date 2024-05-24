@@ -1,3 +1,5 @@
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:home_app/deviceWidgets/_device_wrapper.dart';
 import 'package:home_app/deviceWidgets/device_sensor_temphum_page.dart';
 import 'package:home_app/deviceWidgets/device_sensor_temp_page.dart';
 import 'package:home_app/deviceWidgets/device_sensor_humidity_page.dart';
@@ -48,9 +50,36 @@ class _DevicePageState extends State<PageDevice> {
                       padding: const EdgeInsets.all(8.0),
                       child: CircleAvatar(
                         radius: 20,
-                        backgroundColor: Colors.blue,
+                        backgroundColor:
+                            stateManager.pageDeviceNotifier.myDevice.favorite
+                                ? Theme.of(context).primaryColor
+                                : Theme.of(context).colorScheme.onPrimary,
                         child: IconButton(
-                          icon: Icon(Icons.settings, color: Colors.white),
+                          icon: SvgPicture.asset(
+                              'assets/navigation/nav_favorite.svg',
+                              colorFilter: ColorFilter.mode(
+                                  stateManager.pageDeviceNotifier.myDevice.favorite
+                                      ? Theme.of(context).colorScheme.onPrimary
+                                      : Theme.of(context).primaryColor,
+                                  BlendMode.srcIn)),
+                          tooltip: 'Favorite',
+                          onPressed: () {
+                            stateManager.toggleFavorite();
+                          },
+                        ),
+                      )),
+                  Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CircleAvatar(
+                        radius: 20,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.onPrimary,
+                        child: IconButton(
+                          icon: SvgPicture.asset(
+                              'assets/navigation/nav_settings.svg',
+                              colorFilter: ColorFilter.mode(
+                                  Theme.of(context).primaryColor,
+                                  BlendMode.srcIn)),
                           tooltip: 'Config',
                           onPressed: () {
                             stateManager.deviceConfigClicked();
@@ -59,85 +88,107 @@ class _DevicePageState extends State<PageDevice> {
                       ))
                 ],
               ),
-              body: Builder(builder: (BuildContext context) {
-                final SimpleDevice device =
-                    stateManager.pageDeviceNotifier.myDevice;
-                if (device.type == 'relay') {
-                  return DeviceRelayPage(
-                    id: device.id,
-                    title: device.title,
-                    object: device.object,
-                    properties: device.properties,
-                  );
-                } else if (device.type == 'dimmer') {
-                  return DeviceDimmerPage(
-                    id: device.id,
-                    title: device.title,
-                    object: device.object,
-                    properties: device.properties,
-                  );
-                } else if (device.type == 'rgb') {
-                  return DeviceRGBPage(
-                    id: device.id,
-                    title: device.title,
-                    object: device.object,
-                    properties: device.properties,
-                  );
-                } else if (device.type == 'openable') {
-                  return DeviceOpenablePage(
-                    id: device.id,
-                    title: device.title,
-                    object: device.object,
-                    properties: device.properties,
-                  );
-                } else if (device.type == 'thermostat') {
-                  return DeviceThermostatPage(
-                    id: device.id,
-                    title: device.title,
-                    object: device.object,
-                    properties: device.properties,
-                  );
-                } else if (device.type == 'sensor_power') {
-                  return DeviceSensorPowerPage(
-                    id: device.id,
-                    title: device.title,
-                    object: device.object,
-                    properties: device.properties,
-                  );
-                } else if (device.type == 'sensor_temphum') {
-                  return DeviceSensorTempHumPage(
-                    id: device.id,
-                    title: device.title,
-                    object: device.object,
-                    properties: device.properties,
-                  );
-                } else if (device.type == 'sensor_temp') {
-                  return DeviceSensorTempPage(
-                    id: device.id,
-                    title: device.title,
-                    object: device.object,
-                    properties: device.properties,
-                  );
-                } else if (device.type == 'sensor_humidity') {
-                  return DeviceSensorHumidityPage(
-                    id: device.id,
-                    title: device.title,
-                    object: device.object,
-                    properties: device.properties,
-                  );
-                } else if (device.type == 'motion') {
-                  return DeviceMotionPage(
-                    id: device.id,
-                    title: device.title,
-                    object: device.object,
-                    properties: device.properties,
-                  );
-                } else {
-                  return Center(
-                      child:
-                          Text('device_not_supported'.i18n()));
-                }
-              }));
+              body: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: stateManager.pageDeviceNotifier.myDevice.id == ''
+                    ? Text('')
+                    : Column(
+                        children: [
+                          DeviceWrapper(
+                            insideDevice: true,
+                            id: stateManager.pageDeviceNotifier.myDevice.id,
+                            type: stateManager.pageDeviceNotifier.myDevice.type,
+                            title:
+                                stateManager.pageDeviceNotifier.myDevice.title,
+                            object:
+                                stateManager.pageDeviceNotifier.myDevice.object,
+                            properties: stateManager
+                                .pageDeviceNotifier.myDevice.properties,
+                            roomTitle: stateManager
+                                .pageDeviceNotifier.myDevice.roomTitle,
+                          ),
+                          SizedBox(height: 10),
+                          Expanded(
+                              child: Builder(builder: (BuildContext context) {
+                            final SimpleDevice device =
+                                stateManager.pageDeviceNotifier.myDevice;
+                            if (device.type == 'relay') {
+                              return DeviceRelayPage(
+                                id: device.id,
+                                title: device.title,
+                                object: device.object,
+                                properties: device.properties,
+                              );
+                            } else if (device.type == 'dimmer') {
+                              return DeviceDimmerPage(
+                                id: device.id,
+                                title: device.title,
+                                object: device.object,
+                                properties: device.properties,
+                              );
+                            } else if (device.type == 'rgb') {
+                              return DeviceRGBPage(
+                                id: device.id,
+                                title: device.title,
+                                object: device.object,
+                                properties: device.properties,
+                              );
+                            } else if (device.type == 'openable') {
+                              return DeviceOpenablePage(
+                                id: device.id,
+                                title: device.title,
+                                object: device.object,
+                                properties: device.properties,
+                              );
+                            } else if (device.type == 'thermostat') {
+                              return DeviceThermostatPage(
+                                id: device.id,
+                                title: device.title,
+                                object: device.object,
+                                properties: device.properties,
+                              );
+                            } else if (device.type == 'sensor_power') {
+                              return DeviceSensorPowerPage(
+                                id: device.id,
+                                title: device.title,
+                                object: device.object,
+                                properties: device.properties,
+                              );
+                            } else if (device.type == 'sensor_temphum') {
+                              return DeviceSensorTempHumPage(
+                                id: device.id,
+                                title: device.title,
+                                object: device.object,
+                                properties: device.properties,
+                              );
+                            } else if (device.type == 'sensor_temp') {
+                              return DeviceSensorTempPage(
+                                id: device.id,
+                                title: device.title,
+                                object: device.object,
+                                properties: device.properties,
+                              );
+                            } else if (device.type == 'sensor_humidity') {
+                              return DeviceSensorHumidityPage(
+                                id: device.id,
+                                title: device.title,
+                                object: device.object,
+                                properties: device.properties,
+                              );
+                            } else if (device.type == 'motion') {
+                              return DeviceMotionPage(
+                                id: device.id,
+                                title: device.title,
+                                object: device.object,
+                                properties: device.properties,
+                              );
+                            } else {
+                              return SizedBox(height: 5);
+                            }
+                          })),
+                        ],
+                      ),
+              ));
         });
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_app/commonWidgets/device_icon.dart';
 import 'package:home_app/utils/text_updated.dart';
 
 class DeviceSensorPower extends StatelessWidget {
@@ -20,35 +21,24 @@ class DeviceSensorPower extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       child: Row(
         children: [
-          Expanded(
-            /*1*/
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                /*2*/
-                Container(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Text(
-                    title,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                TextUpdated(updated: properties["updated"] ?? ""),
-              ],
-            ),
+          DeviceIcon(
+            deviceType: 'sensor_power',
+            deviceTitle: title,
+            deviceState: properties["status"],
           ),
-          /*3*/
+          Expanded(
+              /*1*/
+              child: SizedBox(width: 10)),
           Container(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.fromLTRB(12, 5, 12, 5),
             decoration: BoxDecoration(
-              color: properties["status"] == "1" ? Colors.yellow : Colors.white,
-              borderRadius: const BorderRadius.all(
-                Radius.circular(6),
-              ),
+              border: Border.all(color: Theme.of(context).primaryColor),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
+            //properties["value"] + " W",
             child: Text(
-              properties["value"],
+              properties["value"] + " W",
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ],

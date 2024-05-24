@@ -1,28 +1,115 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:home_app/pages/page_main_devices_notifier.dart';
+import 'package:home_app/pages/page_settings.dart';
 import 'package:home_app/utils/logging.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:localization/localization.dart';
 
 class MainPageManager {
   final pageMainDevicesNotifier = PageMainDevicesNotifier();
   bool _fetchInProgress = false;
+  bool _canBeClosed = false;
+  int bottomBarIndex = 0;
+  String appView = '';
+
+  Timer? exitTimer;
 
   final Ticker _ticker = Ticker();
+
   StreamSubscription<int>? _tickerSubscription;
 
-  void setRoomFilter(String roomObject, String roomTitle) {
+  void onExitTimerEnd() {
+    _canBeClosed = false;
+  }
+
+  bool canBeClosed() {
+    return _canBeClosed;
+  }
+
+  bool allowToClose() {
+
+    if (_canBeClosed) {
+      endPeriodicUpdate();
+      return true;
+    }
+
+    print("Room filter: "+pageMainDevicesNotifier.roomFilter);
+    if (pageMainDevicesNotifier.roomFilter!='') {
+      pageMainDevicesNotifier.setRoomsView();
+      return false;
+    }
+
+    Fluttertoast.showToast(
+        msg: 'confirm_exit'.i18n());
+
+    exitTimer?.cancel();
+    exitTimer = Timer(Duration(seconds: 2), onExitTimerEnd);
+    _canBeClosed = true;
+
+    return false;
+  }
+
+  void setAppView(String viewName) {
+    appView = viewName;
+    if (viewName == 'home') {
+      pageMainDevicesNotifier.setHomeView();
+    } else if (viewName == 'favorites') {
+      pageMainDevicesNotifier.setFavoritesView();
+    } else if (viewName == 'rooms') {
+      pageMainDevicesNotifier.setRoomsView();
+    } else if (viewName == 'attention') {
+      pageMainDevicesNotifier.setAttentionView();
+    }
+  }
+
+  void setRoomFilter(roomObject, roomTitle) {
     pageMainDevicesNotifier.setRoomFilter(roomObject, roomTitle);
   }
 
-  void resetRoomFilter() {
-    pageMainDevicesNotifier.resetRoomFilter();
+  void setBottomBarIndex(int index, context) {
+    bottomBarIndex = index;
+    if (index == 0) {
+      setAppView('favorites');
+    } else if (index == 1) {
+      setAppView('home');
+    } else if (index == 2) {
+      setAppView('rooms');
+    } else if (index == 3) {
+      setAppView('attention');
+    } else if (index == 4) {
+      endPeriodicUpdate();
+      Navigator.of(context)
+          .push(
+        MaterialPageRoute(
+          builder: (context) => const PageSettings(),
+        ),
+      )
+          .then((value) {
+        bottomBarIndex = 1;
+        setAppView('home');
+        reload();
+      });
+    }
+    pageMainDevicesNotifier.refreshPage();
   }
 
-  void toggleActiveFilter() {
-    pageMainDevicesNotifier.toggleActiveFilter();
+  void switchProfile(String profileId) {
+    pageMainDevicesNotifier.switchProfile(profileId);
   }
 
-  void initMainPageState() {
-    pageMainDevicesNotifier.initialize();
+  Future<void> initMainPageState() async {
+    endPeriodicUpdate();
+    await pageMainDevicesNotifier.initialize();
+    if (appView == '') {
+      if (pageMainDevicesNotifier.getFavorites().length > 0) {
+        bottomBarIndex = 0;
+        setAppView('favorites');
+      } else {
+        bottomBarIndex = 1;
+        setAppView('home');
+      }
+    }
     startPeriodicUpdate();
   }
 

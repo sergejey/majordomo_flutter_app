@@ -38,8 +38,8 @@ class TextUpdated extends StatelessWidget {
     }
     return Text(
         updatedText,
-        style: Theme.of(context).textTheme.bodySmall,
         overflow: TextOverflow.fade,
+        textAlign: TextAlign.center,
         softWrap: false,
       );
   }

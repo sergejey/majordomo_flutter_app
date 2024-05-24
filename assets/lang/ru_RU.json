@@ -1,4 +1,8 @@
 {
+  "bar_home": "Дом",
+  "bar_favorites": "Избранное",
+  "bar_rooms": "Комнаты",
+  "bar_active": "Активно",
   "connect": "Сервис CONNECT",
   "not-authorized": "Не авторизовано",
   "authorized": "Авторизовано",
@@ -69,5 +73,6 @@
   "dialog_confirmation": "Подтверждение операции",
   "dialog_are_you_sure": "Вы уверены? Подтвердите операцию.",
   "dialog_ok": "Продолжить",
-  "dialog_cancel": "Отмена"
+  "dialog_cancel": "Отмена",
+  "confirm_exit": "Нажмите ещё раз для выхода..."
 }

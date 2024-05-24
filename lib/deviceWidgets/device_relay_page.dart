@@ -27,27 +27,11 @@ class DeviceRelayPage extends StatelessWidget {
             height: 20,
           ),
           Expanded(
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      properties['status'] == "1" ? Colors.yellow : Colors.white),
-              onPressed: () {
-                stateManager.callObjectMethod(object, "switch");
-              },
-              child: SizedBox.fromSize(
-                size: const Size.fromRadius(150),
-                child: FittedBox(
-                  child: Icon(
-                    properties['loadType']=='light'?Icons.light_outlined:Icons.power_settings_new,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
+            child: SizedBox(
+              height: 20,
             ),
           ),
-          SizedBox(
-            height: 20,
-          ),
+
           Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),

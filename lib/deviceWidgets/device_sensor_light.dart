@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_app/commonWidgets/device_icon.dart';
 import 'package:home_app/utils/text_updated.dart';
 
 import '../utils/battery_level.dart';
@@ -20,33 +21,19 @@ class DeviceSensorLight extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        DeviceIcon(
+          deviceType: 'sensor_light',
+          deviceTitle: title,
+        ),
         Expanded(
           /*1*/
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              /*2*/
-              Container(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Text(
-                  title,
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              Row(
-                children: [
-                  TextUpdated(updated: properties["updated"] ?? ""),
-                  if (properties["batteryOperated"]=='1')
-                    BatteryLevel(level: properties["batteryLevel"] ?? "")
-                ],
-              ),
-            ],
-          ),
-        ),
-        /*3*/
+            child: SizedBox(width: 10)),
         Container(
-          padding: const EdgeInsets.only(bottom: 8),
+          padding: const EdgeInsets.fromLTRB(12, 5, 12, 5),
+          decoration: BoxDecoration(
+            border: Border.all(color: Theme.of(context).primaryColor),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
           child: Text(
             properties["value"],
             style: Theme.of(context).textTheme.headlineMedium,

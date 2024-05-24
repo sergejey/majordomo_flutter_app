@@ -1,0 +1,28 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_287_901)">
+<g filter="url(#filter0_d_287_901)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M7.5 4.5V8C7.5 8.82843 8.17157 9.5 9 9.5H31C31.8284 9.5 32.5 8.82843 32.5 8V4.5H7.5ZM7 3C6.44772 3 6 3.44772 6 4V8C6 9.65685 7.34315 11 9 11H31C32.6569 11 34 9.65685 34 8V4C34 3.44772 33.5523 3 33 3H7Z" fill="#2B5EAE"/>
+<path d="M10 10.5V12.5C10 13.6046 10.8954 14.5 12 14.5H28C29.1046 14.5 30 13.6046 30 12.5V10.5" stroke="#2B5EAE" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M20 4V7" stroke="#2B5EAE" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M26 4V7" stroke="#2B5EAE" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M14 4V7" stroke="#2B5EAE" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M22 36C23.9454 34.5 24.9302 33 25.5552 30.5C26.0801 28.4004 25.0179 25.2428 24.6642 24.2852C24.6306 24.1945 24.5042 24.2034 24.4807 24.2973L23.252 29.2119C23.2234 29.3263 22.9538 29.315 22.9158 29.2034C22.5322 28.077 21.4614 27.0358 21.0546 25C20.5813 22.6316 21.0048 20.7119 21.0506 19.241C21.0534 19.152 20.9463 19.1069 20.8818 19.1684C19.8878 20.1153 18.4984 21.1121 17.5546 23C16.4813 25.1467 17.0552 26 16.5547 28C16.2479 29.2257 14.7338 26.7045 14.2235 25.8036C14.1739 25.7161 14.0412 25.746 14.0365 25.8464C13.9854 26.9384 13.8891 30.3353 14.5552 32C15.3554 34 16.4995 34.5 17.5 36" stroke="#2B5EAE" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M17.5 36H22" stroke="#2B5EAE" stroke-width="1.5" stroke-linecap="round"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_d_287_901" x="3" y="1" width="34" height="39.7501" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="1"/>
+<feGaussianBlur stdDeviation="1.5"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.0705903 0 0 0 0 0.16166 0 0 0 0 0.395833 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_287_901"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_287_901" result="shape"/>
+</filter>
+<clipPath id="clip0_287_901">
+<rect width="40" height="40" fill="white"/>
+</clipPath>
+</defs>
+</svg>

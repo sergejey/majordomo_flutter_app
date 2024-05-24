@@ -23,6 +23,7 @@ abstract class DataService {
   String _baseURL = "";
   String _username = "";
   String _password = "";
+  List<String> _favorites = [];
   String connectAccessToken = "";
   bool _checkInProgress = false;
 
@@ -96,6 +97,35 @@ abstract class DataService {
   void setUsernamePassword(String username, String password) {
     _username = username;
     _password = password;
+  }
+
+  List<String> getFavorites() {
+    String allFavorites =
+        _preferencesService.getPreference("userFavorites") ?? "";
+    if (allFavorites!='') {
+      _favorites = allFavorites.split('|');
+    } else {
+      _favorites = [];
+    }
+    return _favorites;
+  }
+
+  void saveFavorites() {
+    _preferencesService.savePreference('userFavorites', _favorites.join("|"));
+  }
+
+  void addToFavorites(object_name) {
+    if (!_favorites.contains(object_name)) {
+      _favorites.add(object_name);
+      saveFavorites();
+    }
+  }
+
+  void removeFromFavorites(object_name) {
+    if (_favorites.contains(object_name)) {
+      _favorites.remove(object_name);
+      saveFavorites();
+    }
   }
 
   String getUsername() {

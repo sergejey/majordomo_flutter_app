@@ -6,6 +6,7 @@ import '../models/profile.dart';
 class PreferencesService {
 
   String _profileId = '';
+  String _profileTitle = '';
   final _data = <String,dynamic>{};
 
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -18,10 +19,19 @@ class PreferencesService {
       _data[element] = prefs.getString(element);
     }
     _profileId = _data["profile_id"] ?? "";
+    if (_profileId != "") {
+      _profileTitle = prefs.getString("prof_${_profileId}_profile_title")??"";
+    } else {
+      _profileTitle = prefs.getString("profile_title")??"";
+    }
   }
 
   String getProfileId() {
     return _profileId;
+  }
+
+  String getProfileTitle() {
+    return _profileTitle;
   }
 
   void setProfileId(String Id) async {
@@ -29,6 +39,11 @@ class PreferencesService {
     prefs.setString("profile_id", Id);
     _data["profile_id"] = Id;
     _profileId = Id;
+    if (Id != "") {
+      _profileTitle = prefs.getString("prof_${Id}_profile_title")??"";
+    } else {
+      _profileTitle = prefs.getString("profile_title")??"";
+    }
   }
 
   void setProfileTitle(String Id, String profileTitle) async {
@@ -38,6 +53,7 @@ class PreferencesService {
     } else {
       prefs.setString("profile_title", profileTitle);
     }
+    _profileTitle = profileTitle;
   }
 
   Future<void> addProfile(String profileTitle) async {

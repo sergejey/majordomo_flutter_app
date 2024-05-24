@@ -5,14 +5,18 @@ class SimpleDevice {
   final String type;
   final String linkedRoom;
   final Map<String, dynamic> properties;
+  String roomTitle;
+  bool favorite;
 
-  const SimpleDevice({
+  SimpleDevice({
     required this.id,
     required this.title,
     required this.object,
     required this.type,
     required this.linkedRoom,
     required this.properties,
+    required this.roomTitle,
+    required this.favorite,
   });
 
   factory SimpleDevice.fromJson(Map<String, dynamic> json) {
@@ -23,6 +27,8 @@ class SimpleDevice {
       type: json['type']??'',
       linkedRoom: json['linkedRoom']??'',
       properties: json,
+      roomTitle: '',
+      favorite: false,
     );
   }
 }

@@ -27,7 +27,7 @@ class DeviceThermostatPage extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          Text('device_current_temperature'.i18n()+":"),
+          Text('device_current_temperature'.i18n() + ":"),
           SizedBox(
             height: 10,
           ),
@@ -49,64 +49,56 @@ class DeviceThermostatPage extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
+          Text('device_target_temperature'.i18n() + ":"),
+          SizedBox(
+            height: 15,
+          ),
           Expanded(
               child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('device_target_temperature'.i18n()+":"),
-                  SizedBox(
-                    height: 25,
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+                onPressed: properties['disabled'] == '1'
+                    ? null
+                    : () {
+                        stateManager.callObjectMethod(object, "tempDown");
+                      },
+                child: SizedBox.fromSize(
+                  size: const Size.fromRadius(20),
+                  child: const FittedBox(
+                    child: Icon(Icons.arrow_downward, color: Colors.black),
                   ),
-                  ElevatedButton(
-                    style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.white),
-                    onPressed: properties['disabled'] == '1'
-                        ? null
-                        : () {
-                            stateManager.callObjectMethod(object, "tempUp");
-                          },
-                    child: SizedBox.fromSize(
-                      size: const Size.fromRadius(40),
-                      child: const FittedBox(
-                        child: Icon(Icons.arrow_upward, color: Colors.black),
-                      ),
-                    ),
+                ),
+              ),
+              SizedBox(
+                width: 25,
+              ),
+              Text("${properties['currentTargetValue']} °C",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
+              SizedBox(
+                width: 25,
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+                onPressed: properties['disabled'] == '1'
+                    ? null
+                    : () {
+                        stateManager.callObjectMethod(object, "tempUp");
+                      },
+                child: SizedBox.fromSize(
+                  size: const Size.fromRadius(20),
+                  child: const FittedBox(
+                    child: Icon(Icons.arrow_upward, color: Colors.black),
                   ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Text("${properties['currentTargetValue']} °C",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 55)),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  ElevatedButton(
-                    style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.white),
-                    onPressed: properties['disabled'] == '1'
-                        ? null
-                        : () {
-                            stateManager.callObjectMethod(object, "tempDown");
-                          },
-                    child: SizedBox.fromSize(
-                      size: const Size.fromRadius(40),
-                      child: const FittedBox(
-                        child: Icon(Icons.arrow_downward, color: Colors.black),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ],
           )),
           SizedBox(
             height: 20,
           ),
-          Text('device_mode'.i18n()+":"),
+          Text('device_mode'.i18n() + ":"),
           SizedBox(
             height: 10,
           ),
@@ -124,8 +116,8 @@ class DeviceThermostatPage extends StatelessWidget {
                           ? Colors.yellow
                           : Colors.white),
                 ),
-                child:
-                    Text('is_off'.i18n(), style: TextStyle(color: Colors.black)),
+                child: Text('is_off'.i18n(),
+                    style: TextStyle(color: Colors.black)),
               ),
               const SizedBox(width: 15),
               ElevatedButton(
@@ -140,8 +132,8 @@ class DeviceThermostatPage extends StatelessWidget {
                           ? Colors.yellow
                           : Colors.white),
                 ),
-                child:
-                    Text("device_mode_normal".i18n(), style: TextStyle(color: Colors.black)),
+                child: Text("device_mode_normal".i18n(),
+                    style: TextStyle(color: Colors.black)),
               ),
               const SizedBox(width: 15),
               ElevatedButton(
@@ -156,7 +148,8 @@ class DeviceThermostatPage extends StatelessWidget {
                           ? Colors.yellow
                           : Colors.white),
                 ),
-                child: Text("device_mode_eco".i18n(), style: TextStyle(color: Colors.black)),
+                child: Text("device_mode_eco".i18n(),
+                    style: TextStyle(color: Colors.black)),
               ),
             ],
           ),

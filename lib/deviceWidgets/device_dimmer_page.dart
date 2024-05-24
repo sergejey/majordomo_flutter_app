@@ -51,23 +51,6 @@ class DeviceDimmerPage extends StatelessWidget {
             height: 20,
           ),
           /*3*/
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    properties['status'] == "1" ? Colors.yellow : Colors.white),
-            onPressed: () {
-              stateManager.callObjectMethod(object, "switch");
-            },
-            child: SizedBox.fromSize(
-              size: const Size.fromRadius(50),
-              child: const FittedBox(
-                child: const Icon(
-                  Icons.light_outlined,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          ),
           Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),

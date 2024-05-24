@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_app/commonWidgets/device_icon.dart';
 import 'package:home_app/utils/text_updated.dart';
 import 'package:localization/localization.dart';
 
@@ -19,25 +20,12 @@ class DeviceThermostat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(
-          /*1*/
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              /*2*/
-              Container(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Text(
-                  title,
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              TextUpdated(updated: properties["updated"] ?? ""),
-            ],
-          ),
+        DeviceIcon(
+          deviceType: 'thermostat',
+          deviceState: properties["relay_status"],
+          deviceTitle: title,
         ),
-        /*3*/
+        Expanded(child: SizedBox(width:10)),
         Container(
           decoration: BoxDecoration(
             color: properties["relay_status"] == "1"
@@ -48,19 +36,18 @@ class DeviceThermostat extends StatelessWidget {
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+            padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
             child: Column(
               children: [
                 Text(
                   properties["value"] + "°C",
-                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 Text(
                     properties["disabled"] == "1"
                         ? 'is_off'.i18n()
                         : properties["status"] == "1"
-                            ? 'normal → ${properties["currentTargetValue"]}°C'
-                            : 'eco → ${properties["currentTargetValue"]}°C',
+                            ? '→ ${properties["currentTargetValue"]}°C'
+                            : '→ ${properties["currentTargetValue"]}°C',
                     style: Theme.of(context).textTheme.bodySmall),
               ],
             ),

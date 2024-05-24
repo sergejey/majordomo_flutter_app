@@ -40,7 +40,7 @@ class PushNotificationService {
   FirebaseMessaging _fcm = FirebaseMessaging.instance;
 
   Future initialize() async {
-    if (isFlutterLocalNotificationsInitialized) {
+    if (isFlutterLocalNotificationsInitialized || kIsWeb) {
       return;
     }
 
