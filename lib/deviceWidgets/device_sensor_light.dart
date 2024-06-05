@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_app/commonWidgets/device_icon.dart';
+import 'package:home_app/commonWidgets/device_value.dart';
 import 'package:home_app/utils/text_updated.dart';
 
 import '../utils/battery_level.dart';
@@ -28,17 +29,7 @@ class DeviceSensorLight extends StatelessWidget {
         Expanded(
           /*1*/
             child: SizedBox(width: 10)),
-        Container(
-          padding: const EdgeInsets.fromLTRB(12, 5, 12, 5),
-          decoration: BoxDecoration(
-            border: Border.all(color: Theme.of(context).primaryColor),
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-          child: Text(
-            properties["value"],
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-        ),
+        DeviceValue(value:properties["value"]??'')
       ],
     );
   }

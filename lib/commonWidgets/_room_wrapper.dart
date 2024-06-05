@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_app/commonWidgets/device_icon.dart';
+import 'package:home_app/commonWidgets/device_value.dart';
 import 'package:home_app/commonWidgets/room_icon.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/pages/page_main_logic.dart';
@@ -76,23 +77,7 @@ class RoomWrapper extends StatelessWidget {
                               if (properties.containsKey("temperature"))
                                 Padding(
                                   padding: const EdgeInsets.all(3.0),
-                                  child: Container(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(12, 5, 12, 5),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color:
-                                              Theme.of(context).primaryColor),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
-                                    ),
-                                    child: Text(
-                                      properties["temperature"] + "°C",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium,
-                                    ),
-                                  ),
+                                  child: DeviceValue(value:properties["temperature"] + "°C")
                                 ),
                             ],
                           ),

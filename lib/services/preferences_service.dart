@@ -1,4 +1,5 @@
 import "dart:async";
+import 'package:home_app/utils/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:localization/localization.dart';
 import '../models/profile.dart';
@@ -123,6 +124,7 @@ class PreferencesService {
   }
 
   Future<void> savePreference(String key, String value) async {
+    dprint("Saving setting [{key}] to {value}");
     final SharedPreferences prefs = await _prefs;
     if (_profileId == '' || isAppKey(key)) {
       prefs.setString(key, value);

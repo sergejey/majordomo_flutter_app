@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_app/commonWidgets/device_icon.dart';
+import 'package:home_app/commonWidgets/device_value.dart';
 import 'package:home_app/utils/text_updated.dart';
 
 class DeviceMotion extends StatelessWidget {

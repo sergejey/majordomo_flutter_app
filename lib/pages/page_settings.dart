@@ -1,8 +1,5 @@
-import 'dart:convert';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
-import 'package:oauth_webauth/oauth_webauth.dart';
 import 'package:settings_ui/settings_ui.dart';
 import '../main.dart';
 import '../services/service_locator.dart';
@@ -12,7 +9,6 @@ import 'package:prompt_dialog/prompt_dialog.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart' as http;
 import 'package:package_info_plus/package_info_plus.dart';
 
 class PageSettings extends StatefulWidget {
@@ -106,7 +102,7 @@ class _SettingsPageState extends State<PageSettings> {
                               : Text('authorized'.i18n()),
                           onPressed: (context) async {
                             if (connectAccessToken == '') {
-                              loginV2();
+                              stateManager.loginV2(context);
                             } else {
                               showDialog(
                                 context: context,
@@ -118,7 +114,7 @@ class _SettingsPageState extends State<PageSettings> {
                                         child: Text("Re-login"),
                                         onPressed: () {
                                           Navigator.pop(context);
-                                          loginV2();
+                                          stateManager.loginV2(context);
                                         },
                                       ),
                                       SimpleDialogOption(
@@ -366,91 +362,5 @@ class _SettingsPageState extends State<PageSettings> {
         });
   }
 
-  void loginV2() {
-    OAuthWebScreen.start(
-      context: context,
-      configuration: OAuthConfiguration(
-          authorizationEndpointUrl:
-              'https://connect.smartliving.ru/oauth2/authorize.php',
-          tokenEndpointUrl: 'https://connect.smartliving.ru/oauth2/token.php',
-          clientSecret: 'FlutterAppSecret',
-          clientId: 'MajorDoMoFlutterApp',
-          redirectUrl: 'https://connect.smartliving.ru/',
-          scopes: ['basic'],
-          promptValues: const ['login'],
-          loginHint: 'johndoe@mail.com',
-          onCertificateValidate: (certificate) {
-            ///This is recommended
-            /// Do certificate validations here
-            /// If false is returned then a CertificateException() will be thrown
-            return true;
-          },
-          refreshBtnVisible: false,
-          clearCacheBtnVisible: false,
-          onSuccessAuth: (credentials) async {
-            stateManager.setAppSetting(
-                "connectAccessToken", credentials.accessToken);
-            if ((stateManager.getAppSetting("serverAddressRemote") ?? "") ==
-                "") {
-              stateManager.setAppSetting(
-                  "serverAddressRemote", 'connect.smartliving.ru');
-            }
-            if ((stateManager.getAppSetting("serverMode") ?? "") == "") {
-              stateManager.setAppSetting("serverMode", 'auto');
-            }
-            //Send firebase token to server if available
-            FirebaseMessaging _fcm = FirebaseMessaging.instance;
-            String token = await _fcm.getToken() ?? '';
-            if (token != '') {
-              String goURL =
-                  'https://connect.smartliving.ru/register_push.php?token=' +
-                      token;
-              String userName = 'access_token';
-              String password = credentials.accessToken;
-              String basicCredentials = "$userName:$password";
-              Codec<String, String> stringToBase64 = utf8.fuse(base64);
-              String encoded = stringToBase64.encode(basicCredentials);
-              String basicAuth = 'Basic ' + encoded;
-              final http.Response response;
-              final http.Client client = http.Client();
-              response = await client.get(Uri.parse(goURL),
-                  headers: <String, String>{
-                    'Authorization': basicAuth
-                  }).timeout(const Duration(seconds: 10));
-              print("Token authorization response: " + response.body);
 
-              var platform = Theme.of(context).platform;
-              if (platform == TargetPlatform.iOS) {
-                FirebaseMessaging messaging = FirebaseMessaging.instance;
-                NotificationSettings settings =
-                    await messaging.requestPermission(
-                  alert: true,
-                  announcement: false,
-                  badge: true,
-                  carPlay: false,
-                  criticalAlert: false,
-                  provisional: false,
-                  sound: true,
-                );
-                if (settings.authorizationStatus ==
-                    AuthorizationStatus.authorized) {
-                  print('User granted permission');
-                } else if (settings.authorizationStatus ==
-                    AuthorizationStatus.provisional) {
-                  print('User granted provisional permission');
-                } else {
-                  print('User declined or has not accepted permission');
-                }
-              }
-            }
-          },
-          onError: (error) {
-            print("oAuth error: ");
-            print(error);
-          },
-          onCancel: () {
-            print("oAuth cancelled.");
-          }),
-    );
-  }
 }

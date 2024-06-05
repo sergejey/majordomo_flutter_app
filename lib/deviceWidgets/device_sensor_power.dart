@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_app/commonWidgets/device_icon.dart';
+import 'package:home_app/commonWidgets/device_value.dart';
 import 'package:home_app/utils/text_updated.dart';
 
 class DeviceSensorPower extends StatelessWidget {
@@ -29,18 +30,7 @@ class DeviceSensorPower extends StatelessWidget {
           Expanded(
               /*1*/
               child: SizedBox(width: 10)),
-          Container(
-            padding: const EdgeInsets.fromLTRB(12, 5, 12, 5),
-            decoration: BoxDecoration(
-              border: Border.all(color: Theme.of(context).primaryColor),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-            //properties["value"] + " W",
-            child: Text(
-              properties["value"] + " W",
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
+          DeviceValue(value:(properties["value"]??'')+' W')
         ],
       ),
     );

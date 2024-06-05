@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_app/commonWidgets/device_icon.dart';
+import 'package:home_app/commonWidgets/device_value.dart';
 import 'package:home_app/utils/text_updated.dart';
 
 class DeviceCounter extends StatelessWidget {
@@ -23,18 +24,8 @@ class DeviceCounter extends StatelessWidget {
           deviceType: 'counter',
           deviceTitle: title,
         ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(6),
-            ),
-          ),
-          child: Text(
-            properties["value"],
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
+        Expanded(child: SizedBox(width: 5)),
+        DeviceValue(value: properties["value"])
       ],
     );
   }

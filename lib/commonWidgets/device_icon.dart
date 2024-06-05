@@ -49,8 +49,10 @@ class DeviceIcon extends StatelessWidget {
       svg_filename = 'camera';
     } else if (this.deviceType == 'counter') {
       svg_filename = 'counter';
-    } else if (this.deviceType == 'ac' || this.deviceType == 'thermostat') {
+    } else if (this.deviceType == 'ac') {
       svg_filename = this.deviceState == '1' ? 'ac_on' : 'ac_off';
+    } else if (this.deviceType == 'thermostat') {
+      svg_filename = this.deviceState == '1' ? 'thermostat_on' : 'thermostat_off';
     } else if (this.deviceType == 'sensor_light') {
       svg_filename = 'sensor_light';
     } else if (this.deviceType == 'sensor_power') {
