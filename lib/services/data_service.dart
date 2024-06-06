@@ -73,10 +73,7 @@ abstract class DataService {
 
     if (serverMode == 'auto') {
       currentWifiSSID = "";
-      bool wifiFound = await checkWifiChange();
-      //if (!wifiFound) {
-      //  loadURL = localURL;
-      //}
+      await checkWifiChange();
       startPeriodicUpdate();
     } else {
       currentMode = serverMode;
@@ -102,7 +99,7 @@ abstract class DataService {
   List<String> getFavorites() {
     String allFavorites =
         _preferencesService.getPreference("userFavorites") ?? "";
-    if (allFavorites!='') {
+    if (allFavorites != '') {
       _favorites = allFavorites.split('|');
     } else {
       _favorites = [];
@@ -173,13 +170,15 @@ abstract class DataService {
       String remoteURL =
           _preferencesService.getPreference("serverAddressRemote") ?? localURL;
 
-      ConnectivityResult _connectionStatus = ConnectivityResult.none;
+      List<ConnectivityResult> _connectionStatus = [ConnectivityResult.none];
+
       final Connectivity _connectivity = Connectivity();
       _connectionStatus = await _connectivity.checkConnectivity();
 
-      if (_connectionStatus != ConnectivityResult.wifi) {
+      if (!_connectionStatus.contains(ConnectivityResult.wifi)) {
         dprint('(auto) No WiFi. Loading remote URL');
         currentMode = 'remote';
+        currentWifiSSID = '';
         setBaseURL(remoteURL);
       } else {
         String localWifiSSID =
@@ -210,7 +209,8 @@ abstract class DataService {
             setBaseURL(loadURL);
           }
         } else {
-          dprint('(auto) Local wifi is not set or cannot get it\'s name. Loading remote URL');
+          dprint(
+              '(auto) Local wifi is not set or cannot get it\'s name. Loading remote URL');
           currentMode = 'remote';
           setBaseURL(remoteURL);
         }
@@ -225,7 +225,7 @@ abstract class DataService {
       (duration) async {
         if (!_checkInProgress) {
           _checkInProgress = true;
-          bool urlFound = await checkWifiChange();
+          await checkWifiChange();
           _checkInProgress = false;
         }
       },
