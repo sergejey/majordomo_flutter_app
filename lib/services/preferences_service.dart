@@ -27,6 +27,14 @@ class PreferencesService {
     }
   }
 
+  bool isSetupRequired() {
+    if ((getPreference('serverAddressLocal')??'')=='' && (getPreference('serverAddressRemote')??'')=='') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   String getProfileId() {
     return _profileId;
   }

@@ -74,5 +74,6 @@
   "dialog_are_you_sure": "Are you sure? Please confirm.",
   "dialog_ok": "OK",
   "dialog_cancel": "Cancel",
-  "confirm_exit": "Press again to exit..."
+  "confirm_exit": "Press again to exit...",
+  "setup_required": "Please open Settings to configure application"
 }

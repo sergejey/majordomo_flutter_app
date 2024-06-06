@@ -15,6 +15,8 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
   PageMainDevicesNotifier() : super('');
   final _dataService = getIt<DataService>();
 
+  bool isSetupRequired = false;
+
   bool activeFilter = false;
   bool roomView = false;
   bool favoritesView = false;
@@ -77,6 +79,9 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
     _updatePageMainDevices(DateTime.now().toString()+'_clear');
 
     await _preferencesService.readAllPreferences();
+
+    isSetupRequired = _preferencesService.isSetupRequired();
+
     profiles = await _preferencesService.getProfiles();
     currentProfileId = _preferencesService.getProfileId();
     currentProfileTitle = _preferencesService.getProfileTitle();

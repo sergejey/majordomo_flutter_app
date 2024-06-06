@@ -11,6 +11,7 @@ import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/pages/page_main_logic.dart';
 
 import 'package:flutter_fgbg/flutter_fgbg.dart';
+import 'package:localization/localization.dart';
 
 import '../commonWidgets/bottom_app_bar.dart';
 
@@ -60,7 +61,6 @@ class _MyHomePageState extends State<PageMain> {
               if (didPop) {
                 return;
               }
-              final NavigatorState navigator = Navigator.of(context);
               final bool? shouldPop = await stateManager.allowToClose();
               if (shouldPop ?? false) {
                 SystemChannels.platform.invokeMethod('SystemNavigator.pop');
@@ -71,17 +71,51 @@ class _MyHomePageState extends State<PageMain> {
               appBar: MainAppBar(context),
               bottomNavigationBar: bottomAppBar(context),
               body: stateManager.pageMainDevicesNotifier.roomView
-                  ? RoomsList(rooms: stateManager.pageMainDevicesNotifier.myRooms)
+                  ? RoomsList(
+                      rooms: stateManager.pageMainDevicesNotifier.myRooms)
                   : Column(children: [
-                stateManager.appView == 'home'
+                (stateManager.appView == 'home' && !stateManager
+                    .pageMainDevicesNotifier.isSetupRequired)
                           ? GroupsList(
                               groups:
                                   stateManager.pageMainDevicesNotifier.myGroups)
-                          : const SizedBox(height: 1,),
+                          : const SizedBox(
+                              height: 1,
+                            ),
                       Expanded(
-                          child: DevicesList(
-                              devices:
-                                  stateManager.pageMainDevicesNotifier.myDevices))
+                          child: stateManager
+                                  .pageMainDevicesNotifier.isSetupRequired
+                              ? Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(20.0),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            stateManager.setBottomBarIndex(4, context);
+                                          },
+                                            child: Container(
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius: const BorderRadius.all(
+                                                      Radius.circular(20),
+                                                    ),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: const Color(0xffb9cbe8).withOpacity(0.6),
+                                                        blurRadius: 11,
+                                                        offset: Offset(0, 4), // Shadow position
+                                                      ),
+                                                    ]),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(18.0),
+                                                  child: Text('setup_required'.i18n()),
+                                                ))),
+                                      ),
+                                    ])
+                              : DevicesList(
+                                  devices: stateManager
+                                      .pageMainDevicesNotifier.myDevices))
                     ]),
             ),
           ),
@@ -90,7 +124,3 @@ class _MyHomePageState extends State<PageMain> {
     );
   }
 }
-
-
-
-
