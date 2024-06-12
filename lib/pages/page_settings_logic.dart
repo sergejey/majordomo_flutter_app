@@ -37,7 +37,7 @@ class SettingsPageManager {
           tokenEndpointUrl: 'https://connect.smartliving.ru/oauth2/token.php',
           clientSecret: 'FlutterAppSecret',
           clientId: 'MajorDoMoFlutterApp',
-          redirectUrl: 'https://connect.smartliving.ru/',
+          redirectUrl: 'https://majordroidng.app/',
           scopes: ['basic'],
           promptValues: const ['login'],
           loginHint: 'johndoe@mail.com',
