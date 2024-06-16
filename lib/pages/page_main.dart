@@ -74,8 +74,9 @@ class _MyHomePageState extends State<PageMain> {
                   ? RoomsList(
                       rooms: stateManager.pageMainDevicesNotifier.myRooms)
                   : Column(children: [
-                (stateManager.appView == 'home' && !stateManager
-                    .pageMainDevicesNotifier.isSetupRequired)
+                      (stateManager.appView == 'home' &&
+                              !stateManager
+                                  .pageMainDevicesNotifier.isSetupRequired)
                           ? GroupsList(
                               groups:
                                   stateManager.pageMainDevicesNotifier.myGroups)
@@ -91,25 +92,64 @@ class _MyHomePageState extends State<PageMain> {
                                       Padding(
                                         padding: const EdgeInsets.all(20.0),
                                         child: GestureDetector(
-                                          onTap: () {
-                                            stateManager.setBottomBarIndex(4, context);
-                                          },
+                                            onTap: () {
+                                              stateManager.openSettings(
+                                                  context, "");
+                                            },
                                             child: Container(
                                                 decoration: BoxDecoration(
                                                     color: Colors.white,
-                                                    borderRadius: const BorderRadius.all(
+                                                    borderRadius:
+                                                        const BorderRadius.all(
                                                       Radius.circular(20),
                                                     ),
                                                     boxShadow: [
                                                       BoxShadow(
-                                                        color: const Color(0xffb9cbe8).withOpacity(0.6),
+                                                        color: const Color(
+                                                                0xffb9cbe8)
+                                                            .withOpacity(0.6),
                                                         blurRadius: 11,
-                                                        offset: Offset(0, 4), // Shadow position
+                                                        offset: Offset(0,
+                                                            4), // Shadow position
                                                       ),
                                                     ]),
                                                 child: Padding(
-                                                  padding: const EdgeInsets.all(18.0),
-                                                  child: Text('setup_required'.i18n()),
+                                                  padding: const EdgeInsets.all(
+                                                      18.0),
+                                                  child: Text(
+                                                      'setup_required'.i18n()),
+                                                ))),
+                                      ),
+                                      Text('setup_or'.i18n()),
+                                      Padding(
+                                        padding: const EdgeInsets.all(20.0),
+                                        child: GestureDetector(
+                                            onTap: () {
+                                              stateManager.openSettings(
+                                                  context, "login");
+                                            },
+                                            child: Container(
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        const BorderRadius.all(
+                                                      Radius.circular(20),
+                                                    ),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: const Color(
+                                                                0xffb9cbe8)
+                                                            .withOpacity(0.6),
+                                                        blurRadius: 11,
+                                                        offset: Offset(0,
+                                                            4), // Shadow position
+                                                      ),
+                                                    ]),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      18.0),
+                                                  child: Text(
+                                                      'setup_login'.i18n()),
                                                 ))),
                                       ),
                                     ])

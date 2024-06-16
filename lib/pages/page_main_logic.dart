@@ -67,6 +67,21 @@ class MainPageManager {
     pageMainDevicesNotifier.setRoomFilter(roomObject, roomTitle);
   }
 
+  void openSettings(context, String startWith) {
+    endPeriodicUpdate();
+    Navigator.of(context)
+        .push(
+      MaterialPageRoute(
+        builder: (context) => PageSettings(startWith: startWith),
+      ),
+    )
+        .then((value) {
+      bottomBarIndex = 1;
+      setAppView('home');
+      reload();
+    });
+  }
+
   void setBottomBarIndex(int index, context) {
     bottomBarIndex = index;
     if (index == 0) {
@@ -78,18 +93,7 @@ class MainPageManager {
     } else if (index == 3) {
       setAppView('attention');
     } else if (index == 4) {
-      endPeriodicUpdate();
-      Navigator.of(context)
-          .push(
-        MaterialPageRoute(
-          builder: (context) => const PageSettings(),
-        ),
-      )
-          .then((value) {
-        bottomBarIndex = 1;
-        setAppView('home');
-        reload();
-      });
+      openSettings(context, '');
     }
     pageMainDevicesNotifier.refreshPage();
   }

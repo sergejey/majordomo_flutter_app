@@ -62,7 +62,7 @@ class DataServiceLocal extends DataService {
       return [];
     }
 
-    final apiURL = '$baseURL/api/history/$objectName.$property/1month';
+    final apiURL = '$baseURL/api.php/history/$objectName.$property/1month';
     try {
       final response = await getURL(apiURL);
       if (response != '') {
@@ -85,7 +85,7 @@ class DataServiceLocal extends DataService {
       dprint("Base URL is not set");
       return [];
     }
-    final apiURL = '$baseURL/api/objects/SystemStates';
+    final apiURL = '$baseURL/api.php/objects/SystemStates';
     try {
       final response = await getURL(apiURL);
       if (response != '') {
@@ -108,7 +108,7 @@ class DataServiceLocal extends DataService {
       dprint("Base URL is not set");
       return [];
     }
-    final apiURL = '$baseURL/api/objects/OperationalModes';
+    final apiURL = '$baseURL/api.php/objects/OperationalModes';
     try {
       final response = await getURL(apiURL);
       if (response != '') {
@@ -131,7 +131,7 @@ class DataServiceLocal extends DataService {
       dprint("Base URL is not set");
       return [];
     }
-    final apiURL = '$baseURL/api/rooms';
+    final apiURL = '$baseURL/api.php/rooms';
     dprint("Fetching rooms data from $apiURL ${DateTime.now().toString()}");
     try {
       final response = await getURL(apiURL);
@@ -163,7 +163,7 @@ class DataServiceLocal extends DataService {
       dprint("Base URL is not set");
       return emptyDevice;
     }
-    final apiURL = '$baseURL/api/devices/$deviceId';
+    final apiURL = '$baseURL/api.php/devices/$deviceId';
 
     dprint(
         "Fetching my devices data from $apiURL ${DateTime.now().toString()}");
@@ -191,7 +191,7 @@ class DataServiceLocal extends DataService {
       dprint("Base URL is not set");
       return [];
     }
-    final apiURL = '$baseURL/api/devices';
+    final apiURL = '$baseURL/api.php/devices';
     dprint(
         "Fetching my devices data from $apiURL ${DateTime.now().toString()}");
     try {
@@ -221,7 +221,7 @@ class DataServiceLocal extends DataService {
     if (baseURL == "") {
       dprint("Base URL is not set");
     } else {
-      String url = '$baseURL/api/method/$objectName.$method';
+      String url = '$baseURL/api.php/method/$objectName.$method';
       if (params != null) {
         url += '?';
         params.forEach((key, value) {

@@ -12,7 +12,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class PageSettings extends StatefulWidget {
-  const PageSettings({super.key});
+  const PageSettings({super.key, this.startWith = ''});
+
+  final String startWith;
 
   @override
   State<PageSettings> createState() => _SettingsPageState();
@@ -35,6 +37,11 @@ class _SettingsPageState extends State<PageSettings> {
     stateManager.initSettingsPageState();
     super.initState();
     _initPackageInfo();
+    if (widget.startWith == 'login') {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        stateManager.loginV2(context);
+      });
+    }
   }
 
   Future<void> _initPackageInfo() async {
