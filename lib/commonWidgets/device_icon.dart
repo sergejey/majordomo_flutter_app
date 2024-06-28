@@ -42,7 +42,7 @@ class DeviceIcon extends StatelessWidget {
     } else if (this.deviceType == 'sensor_humidity') {
       svg_filename = 'sensor_humidity';
     } else if (this.deviceType == 'sensor_co2') {
-      svg_filename = 'sensor_co2';
+      svg_filename = 'sensor_air';
     } else if (this.deviceType == 'relay') {
       svg_filename = 'outlet';
     } else if (this.deviceType == 'camera') {

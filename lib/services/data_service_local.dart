@@ -37,12 +37,13 @@ class DataServiceLocal extends DataService {
 
     if (basicAuth != '') {
       response = await client.get(Uri.parse(goURL), headers: <String, String>{
-        'Authorization': basicAuth
+        'Authorization': basicAuth,
+        'Connection': 'Keep-Alive'
       }).timeout(const Duration(seconds: 10));
     } else {
-      response = await client
-          .get(Uri.parse(goURL))
-          .timeout(const Duration(seconds: 10));
+      response = await client.get(Uri.parse(goURL), headers: <String, String>{
+        'Connection': 'Keep-Alive'
+      }).timeout(const Duration(seconds: 10));
     }
 
     if (response.statusCode == 200) {
@@ -203,7 +204,8 @@ class DataServiceLocal extends DataService {
             .map<SimpleDevice>((json) => SimpleDevice.fromJson(json))
             .toList();
         for (int i = 0; i < devicesReturned.length; i++) {
-          if (_favorites.contains(devicesReturned[i].object)) devicesReturned[i].favorite = true;
+          if (_favorites.contains(devicesReturned[i].object))
+            devicesReturned[i].favorite = true;
         }
         return devicesReturned;
       }
