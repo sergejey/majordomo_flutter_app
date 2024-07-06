@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_app/commonWidgets/device_chart.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/pages/page_device_logic.dart';
 import 'package:home_app/utils/text_updated.dart';
@@ -28,25 +29,10 @@ class DeviceSensorTempPage extends StatelessWidget {
             height: 20,
           ),
           Expanded(
-              child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('device_temperature'.i18n()+":"),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text("${properties['value']} °C",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 55)),
-                ],
-              ),
-            ],
-          )),
+              child: DeviceChart(deviceObject: object, deviceProperty: 'value')
+          ),
           SizedBox(
-            height: 20,
+            height: 10,
           ),
           /*3*/
           Center(

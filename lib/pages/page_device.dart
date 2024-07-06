@@ -14,6 +14,7 @@ import 'package:home_app/deviceWidgets/device_openable_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:home_app/services/service_locator.dart';
+import 'package:home_app/utils/logging.dart';
 import 'package:localization/localization.dart';
 
 import './page_device_logic.dart';
@@ -29,6 +30,12 @@ class PageDevice extends StatefulWidget {
 
 class _DevicePageState extends State<PageDevice> {
   final stateManager = getIt<DevicePageManager>();
+
+  @override
+  void deactivate() {
+    stateManager.endPeriodicUpdate();
+    super.deactivate();
+  }
 
   @override
   void initState() {

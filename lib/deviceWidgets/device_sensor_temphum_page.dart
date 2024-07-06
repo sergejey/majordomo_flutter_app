@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:home_app/commonWidgets/device_chart.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/pages/page_device_logic.dart';
 import 'package:home_app/utils/text_updated.dart';
 import 'package:localization/localization.dart';
 
+import '../commonWidgets/device_value.dart';
+
 class DeviceSensorTempHumPage extends StatelessWidget {
-  const DeviceSensorTempHumPage(
-      {super.key,
-      required this.title,
-      required this.id,
-      required this.object,
-      required this.properties});
+  const DeviceSensorTempHumPage({super.key,
+    required this.title,
+    required this.id,
+    required this.object,
+    required this.properties});
 
   final String title;
   final String id;
@@ -25,38 +27,28 @@ class DeviceSensorTempHumPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            height: 20,
+            height: 10,
           ),
-          Expanded(
-              child: Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('device_temperature'.i18n()+":"),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text("${properties['value']} °C",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 55)),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Text('device_humidity'.i18n()+":"),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text("${properties['valueHumidity']} %",
-                      style:
-                      TextStyle(fontWeight: FontWeight.bold, fontSize: 45)),
-                ],
-              ),
+              Text('device_temperature'.i18n() + ":"),
+              SizedBox(width: 10),
+              DeviceValue(value: (properties["value"] ?? '') + '°C'),
+              SizedBox(width: 20),
+              Text('device_humidity'.i18n() + ":"),
+              SizedBox(width: 10),
+              DeviceValue(value: (properties["valueHumidity"] ?? '') + '%'),
             ],
-          )),
+          ),
           SizedBox(
-            height: 20,
+            height: 10,
+          ),
+          Expanded(
+              child: DeviceChart(deviceObject: object, deviceProperty: 'value')
+          ),
+          SizedBox(
+            height: 10,
           ),
           /*3*/
           Center(

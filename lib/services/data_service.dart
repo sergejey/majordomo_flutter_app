@@ -46,7 +46,8 @@ abstract class DataService {
       [Map<String, dynamic>? params]);
 
   Future<List<HistoryRecord>> getPropertyHistory(
-      String objectName, String property);
+      String objectName, String property,
+      [String? period]);
 
   Future<void> initialize() async {
     dprint("DataService initialize");

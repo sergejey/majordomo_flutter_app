@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_app/commonWidgets/device_chart.dart';
 import 'package:home_app/utils/text_updated.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -25,9 +26,10 @@ class DeviceSensorPowerPage extends StatelessWidget {
             height: 20,
           ),
           Expanded(
-            child: SizedBox(
-              height: 20,
-            ),
+              child: DeviceChart(deviceObject: object, deviceProperty: 'value')
+          ),
+          SizedBox(
+            height: 10,
           ),
           Center(
             child: Padding(

@@ -86,73 +86,75 @@ class _MyHomePageState extends State<PageMain> {
                       Expanded(
                           child: stateManager
                                   .pageMainDevicesNotifier.isSetupRequired
-                              ? Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(20.0),
-                                        child: GestureDetector(
-                                            onTap: () {
-                                              stateManager.openSettings(
-                                                  context, "");
-                                            },
-                                            child: Container(
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                        const BorderRadius.all(
-                                                      Radius.circular(20),
-                                                    ),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: const Color(
-                                                                0xffb9cbe8)
-                                                            .withOpacity(0.6),
-                                                        blurRadius: 11,
-                                                        offset: Offset(0,
-                                                            4), // Shadow position
+                              ? Center(
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(20.0),
+                                          child: GestureDetector(
+                                              onTap: () {
+                                                stateManager.openSettings(
+                                                    context, "");
+                                              },
+                                              child: Container(
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          const BorderRadius.all(
+                                                        Radius.circular(20),
                                                       ),
-                                                    ]),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      18.0),
-                                                  child: Text(
-                                                      'setup_required'.i18n()),
-                                                ))),
-                                      ),
-                                      Text('setup_or'.i18n()),
-                                      Padding(
-                                        padding: const EdgeInsets.all(20.0),
-                                        child: GestureDetector(
-                                            onTap: () {
-                                              stateManager.openSettings(
-                                                  context, "login");
-                                            },
-                                            child: Container(
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                        const BorderRadius.all(
-                                                      Radius.circular(20),
-                                                    ),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: const Color(
-                                                                0xffb9cbe8)
-                                                            .withOpacity(0.6),
-                                                        blurRadius: 11,
-                                                        offset: Offset(0,
-                                                            4), // Shadow position
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: const Color(
+                                                                  0xffb9cbe8)
+                                                              .withOpacity(0.6),
+                                                          blurRadius: 11,
+                                                          offset: Offset(0,
+                                                              4), // Shadow position
+                                                        ),
+                                                      ]),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(
+                                                        18.0),
+                                                    child: Text(
+                                                        'setup_required'.i18n()),
+                                                  ))),
+                                        ),
+                                        Text('setup_or'.i18n()),
+                                        Padding(
+                                          padding: const EdgeInsets.all(20.0),
+                                          child: GestureDetector(
+                                              onTap: () {
+                                                stateManager.openSettings(
+                                                    context, "login");
+                                              },
+                                              child: Container(
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          const BorderRadius.all(
+                                                        Radius.circular(20),
                                                       ),
-                                                    ]),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      18.0),
-                                                  child: Text(
-                                                      'setup_login'.i18n()),
-                                                ))),
-                                      ),
-                                    ])
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: const Color(
+                                                                  0xffb9cbe8)
+                                                              .withOpacity(0.6),
+                                                          blurRadius: 11,
+                                                          offset: Offset(0,
+                                                              4), // Shadow position
+                                                        ),
+                                                      ]),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(
+                                                        18.0),
+                                                    child: Text(
+                                                        'setup_login'.i18n()),
+                                                  ))),
+                                        ),
+                                      ]),
+                              )
                               : DevicesList(
                                   devices: stateManager
                                       .pageMainDevicesNotifier.myDevices))

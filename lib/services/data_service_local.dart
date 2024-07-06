@@ -56,14 +56,18 @@ class DataServiceLocal extends DataService {
 
   @override
   Future<List<HistoryRecord>> getPropertyHistory(
-      String objectName, String property) async {
+      String objectName, String property,
+      [String? period]) async {
     final baseURL = getBaseURL();
+
+    if (period == null) period = '1month';
+
     if (baseURL == "") {
       dprint("Base URL is not set");
       return [];
     }
 
-    final apiURL = '$baseURL/api.php/history/$objectName.$property/1month';
+    final apiURL = '$baseURL/api.php/history/$objectName.$property/$period';
     try {
       final response = await getURL(apiURL);
       if (response != '') {

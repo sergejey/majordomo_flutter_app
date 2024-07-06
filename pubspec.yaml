@@ -65,6 +65,7 @@ dependencies:
   flutter_switch: ^0.3.2
   google_nav_bar: ^5.0.6
   device_info_plus: ^10.1.0
+  fl_chart: ^0.68.0
 
 dev_dependencies:
   flutter_launcher_icons: "^0.13.1" # https://pub.dev/packages/flutter_launcher_icons
