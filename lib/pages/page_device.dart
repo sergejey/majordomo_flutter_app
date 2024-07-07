@@ -1,7 +1,10 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:home_app/deviceWidgets/_device_wrapper.dart';
+import 'package:home_app/deviceWidgets/device_counter_page.dart';
 import 'package:home_app/deviceWidgets/device_sensor_temphum_page.dart';
 import 'package:home_app/deviceWidgets/device_sensor_temp_page.dart';
+import 'package:home_app/deviceWidgets/device_sensor_light_page.dart';
+import 'package:home_app/deviceWidgets/device_sensor_general_page.dart';
 import 'package:home_app/deviceWidgets/device_sensor_humidity_page.dart';
 import 'package:home_app/models/simple_device.dart';
 import 'package:home_app/deviceWidgets/device_relay_page.dart';
@@ -11,11 +14,10 @@ import 'package:home_app/deviceWidgets/device_thermostat_page.dart';
 import 'package:home_app/deviceWidgets/device_sensor_power_page.dart';
 import 'package:home_app/deviceWidgets/device_motion_page.dart';
 import 'package:home_app/deviceWidgets/device_openable_page.dart';
+import 'package:home_app/deviceWidgets/device_openclose_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:home_app/services/service_locator.dart';
-import 'package:home_app/utils/logging.dart';
-import 'package:localization/localization.dart';
 
 import './page_device_logic.dart';
 
@@ -65,7 +67,8 @@ class _DevicePageState extends State<PageDevice> {
                           icon: SvgPicture.asset(
                               'assets/navigation/nav_favorite.svg',
                               colorFilter: ColorFilter.mode(
-                                  stateManager.pageDeviceNotifier.myDevice.favorite
+                                  stateManager
+                                          .pageDeviceNotifier.myDevice.favorite
                                       ? Theme.of(context).colorScheme.onPrimary
                                       : Theme.of(context).primaryColor,
                                   BlendMode.srcIn)),
@@ -147,6 +150,13 @@ class _DevicePageState extends State<PageDevice> {
                                 object: device.object,
                                 properties: device.properties,
                               );
+                            } else if (device.type == 'openclose') {
+                              return DeviceOpenClosePage(
+                                id: device.id,
+                                title: device.title,
+                                object: device.object,
+                                properties: device.properties,
+                              );
                             } else if (device.type == 'thermostat') {
                               return DeviceThermostatPage(
                                 id: device.id,
@@ -161,6 +171,20 @@ class _DevicePageState extends State<PageDevice> {
                                 object: device.object,
                                 properties: device.properties,
                               );
+                            } else if (device.type == 'sensor_light') {
+                              return DeviceSensorLightPage(
+                                id: device.id,
+                                title: device.title,
+                                object: device.object,
+                                properties: device.properties,
+                              );
+                            } else if (device.type == 'sensor_general') {
+                              return DeviceSensorGeneralPage(
+                                id: device.id,
+                                title: device.title,
+                                object: device.object,
+                                properties: device.properties,
+                              );
                             } else if (device.type == 'sensor_temphum') {
                               return DeviceSensorTempHumPage(
                                 id: device.id,
@@ -170,6 +194,13 @@ class _DevicePageState extends State<PageDevice> {
                               );
                             } else if (device.type == 'sensor_temp') {
                               return DeviceSensorTempPage(
+                                id: device.id,
+                                title: device.title,
+                                object: device.object,
+                                properties: device.properties,
+                              );
+                            } else if (device.type == 'counter') {
+                              return DeviceCounterPage(
                                 id: device.id,
                                 title: device.title,
                                 object: device.object,

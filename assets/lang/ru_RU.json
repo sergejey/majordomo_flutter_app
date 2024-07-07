@@ -1,4 +1,5 @@
 {
+  "locale": "ru_Ru",
   "bar_home": "Дом",
   "bar_favorites": "Избранное",
   "bar_rooms": "Комнаты",
@@ -35,6 +36,8 @@
   "no_devices": "Нет устройств",
   "is_on": "Включено",
   "is_off": "Выключено",
+  "is_open": "Открыто",
+  "is_close": "Закрыто",
   "timestamp": "Время",
   "value": "Значение",
   "time_go": "назад",
@@ -77,5 +80,10 @@
   "confirm_exit": "Нажмите ещё раз для выхода...",
   "setup_required": "Пожалуйста, перейдите в раздел Настройки для конфигурации приложения",
   "setup_or": "или",
-  "setup_login": "Войдите в сервис CONNECT"
+  "setup_login": "Войдите в сервис CONNECT",
+  "period_hour": "Час",
+  "period_day": "День",
+  "period_week": "Неделя",
+  "period_month": "Месяц",
+  "period_year": "Год"
 }

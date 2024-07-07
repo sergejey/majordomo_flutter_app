@@ -38,9 +38,6 @@ class PageModesNotifier extends ValueNotifier<String> {
   Future<void> fetchModeHistory(int modeNum) async {
     OperationalMode opMode = opModes[modeNum];
     opModesHistory[modeNum] = await _dataService.getPropertyHistory(opMode.object, 'active');
-    opModesHistory[modeNum].sort((a, b) {
-      return b.data_tm.compareTo(a.data_tm);
-    });
   }
 
   Future<void> callMethod(String object, String method, [Map<String , dynamic>? params]) async {

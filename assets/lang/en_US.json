@@ -1,4 +1,5 @@
 {
+  "locale": "en_US",
   "bar_home": "Home",
   "bar_favorites": "Favorites",
   "bar_rooms": "Rooms",
@@ -35,6 +36,8 @@
   "no_devices": "No devices",
   "is_on": "On",
   "is_off": "Off",
+  "is_open": "Open",
+  "is_close": "Closed",
   "timestamp": "Time",
   "value": "Value",
   "time_go": "ago",
@@ -77,5 +80,10 @@
   "confirm_exit": "Press again to exit...",
   "setup_required": "Please open Settings to configure application",
   "setup_or": "or",
-  "setup_login": "Sign-in to CONNECT"
+  "setup_login": "Sign-in to CONNECT",
+  "period_hour": "Hour",
+  "period_day": "Day",
+  "period_week": "Week",
+  "period_month": "Month",
+  "period_year": "Year"
 }

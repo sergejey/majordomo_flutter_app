@@ -11,13 +11,23 @@ class ObjectHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<HistoryRecord> recordsSorted = records;
+    recordsSorted.sort((a, b) {
+      return b.data_tm.compareTo(a.data_tm);
+    });
+
     return Expanded(
       child: records.length == 0
           ? Center(child: Text('no_records'.i18n()))
           : SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: DataTable(
-                border: TableBorder.all(width: 1),
+                border: TableBorder.all(width: 1, color: Theme.of(context).primaryColor),
+                headingRowHeight: 30,
+                headingTextStyle: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor),
+                dataTextStyle: TextStyle(color: Theme.of(context).primaryColor),
+                dataRowMinHeight: 30,
+                dataRowMaxHeight: 40,
                 columns: <DataColumn>[
                   DataColumn(
                     label: Text('timestamp'.i18n()),
@@ -30,12 +40,17 @@ class ObjectHistory extends StatelessWidget {
                 rows: records
                     .map(
                       (item) => DataRow(cells: [
-                        DataCell(Text(DateFormat.yMd().add_jm().format(item.data_tm))),
+                        DataCell(Text(
+                            DateFormat.yMd('locale'.i18n()).add_jm().format(item.data_tm))),
                         DataCell(valueType == 'onoff'
                             ? Text(item.data_value == '1'
                                 ? 'is_on'.i18n()
                                 : 'is_off'.i18n())
-                            : Text(item.data_value)),
+                            : valueType == 'openclose'
+                                ? Text(item.data_value == '1'
+                                    ? 'is_close'.i18n()
+                                    : 'is_open'.i18n())
+                                : Text(item.data_value)),
                       ]),
                     )
                     .toList(),

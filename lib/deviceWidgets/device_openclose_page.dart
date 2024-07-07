@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:home_app/commonWidgets/device_chart.dart';
 import 'package:home_app/utils/text_updated.dart';
 
-class DeviceOpenablePage extends StatelessWidget {
-  const DeviceOpenablePage(
+class DeviceOpenClosePage extends StatelessWidget {
+  const DeviceOpenClosePage(
       {super.key,
       required this.title,
       required this.id,

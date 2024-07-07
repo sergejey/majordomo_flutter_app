@@ -124,6 +124,7 @@ class DeviceWrapper extends StatelessWidget {
                             id: id,
                             object: object,
                             properties: properties,
+                            insideDevice: insideDevice,
                           );
                         } else if (type == 'sensor_temp') {
                           return DeviceSensorTemp(

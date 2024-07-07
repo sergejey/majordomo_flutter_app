@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_app/commonWidgets/device_chart.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/pages/page_device_logic.dart';
 import 'package:home_app/utils/text_updated.dart';
@@ -27,9 +28,7 @@ class DeviceMotionPage extends StatelessWidget {
             height: 20,
           ),
           Expanded(
-            child: SizedBox(
-              height: 20,
-            ),
+            child: DeviceChart(deviceObject: object, deviceProperty: 'status', chartType: 'history', defaultPeriod: 'day',),
           ),
           Center(
             child: Padding(

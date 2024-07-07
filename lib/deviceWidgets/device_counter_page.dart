@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:home_app/commonWidgets/device_chart.dart';
 import 'package:home_app/utils/text_updated.dart';
 
-class DeviceOpenablePage extends StatelessWidget {
-  const DeviceOpenablePage(
+class DeviceCounterPage extends StatelessWidget {
+  const DeviceCounterPage(
       {super.key,
       required this.title,
       required this.id,
@@ -25,13 +25,21 @@ class DeviceOpenablePage extends StatelessWidget {
             height: 20,
           ),
           Expanded(
-            child: DeviceChart(
-                deviceObject: object,
-                deviceProperty: 'status',
-                chartType: 'history',
-                defaultPeriod: 'day',
-                historyType: 'openclose'),
+              child: DeviceChart(
+                  deviceObject: object,
+                  deviceProperty: 'value',
+                  devicePropertyHour: 'valueHour',
+                  devicePropertyDay: 'valueHour',
+                  devicePropertyWeek: 'valueDay',
+                  devicePropertyMonth: 'valueDay',
+                  devicePropertyYear: 'valueMonth',
+                  chartType: 'bar',
+                  periodsEnabled: ['day','week','month','year'],
+                  defaultPeriod: 'month')),
+          SizedBox(
+            height: 10,
           ),
+          /*3*/
           Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),

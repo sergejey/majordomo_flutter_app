@@ -29,21 +29,6 @@ class DeviceSensorTempHumPage extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('device_temperature'.i18n() + ":"),
-              SizedBox(width: 10),
-              DeviceValue(value: (properties["value"] ?? '') + '°C'),
-              SizedBox(width: 20),
-              Text('device_humidity'.i18n() + ":"),
-              SizedBox(width: 10),
-              DeviceValue(value: (properties["valueHumidity"] ?? '') + '%'),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
           Expanded(
               child: DeviceChart(deviceObject: object, deviceProperty: 'value')
           ),

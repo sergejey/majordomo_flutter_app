@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:home_app/commonWidgets/device_chart.dart';
 import 'package:home_app/utils/text_updated.dart';
 
-class DeviceOpenablePage extends StatelessWidget {
-  const DeviceOpenablePage(
+class DeviceSensorLightPage extends StatelessWidget {
+  const DeviceSensorLightPage(
       {super.key,
-      required this.title,
-      required this.id,
-      required this.object,
-      required this.properties});
+        required this.title,
+        required this.id,
+        required this.object,
+        required this.properties});
 
   final String title;
   final String id;
@@ -25,13 +25,12 @@ class DeviceOpenablePage extends StatelessWidget {
             height: 20,
           ),
           Expanded(
-            child: DeviceChart(
-                deviceObject: object,
-                deviceProperty: 'status',
-                chartType: 'history',
-                defaultPeriod: 'day',
-                historyType: 'openclose'),
+              child: DeviceChart(deviceObject: object, deviceProperty: 'value')
           ),
+          SizedBox(
+            height: 10,
+          ),
+          /*3*/
           Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),

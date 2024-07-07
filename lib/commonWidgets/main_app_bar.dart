@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:home_app/models/profile.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/pages/page_main_logic.dart';
 import 'package:home_app/config.dart';
