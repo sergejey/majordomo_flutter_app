@@ -21,6 +21,8 @@ import './device_sensor_temphum.dart';
 import './device_sensor_general.dart';
 import './device_sensor_power.dart';
 import './device_sensor_light.dart';
+import './device_sensor_percentage.dart';
+import './device_sensor_pressure.dart';
 
 class DeviceWrapper extends StatelessWidget {
   const DeviceWrapper(
@@ -170,6 +172,20 @@ class DeviceWrapper extends StatelessWidget {
                           );
                         } else if (type == 'sensor_power') {
                           return DeviceSensorPower(
+                            title: title,
+                            id: id,
+                            object: object,
+                            properties: properties,
+                          );
+                        } else if (type == 'sensor_percentage') {
+                          return DeviceSensorPercentage(
+                            title: title,
+                            id: id,
+                            object: object,
+                            properties: properties,
+                          );
+                        } else if (type == 'sensor_pressure') {
+                          return DeviceSensorPressure(
                             title: title,
                             id: id,
                             object: object,

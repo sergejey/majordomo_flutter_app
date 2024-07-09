@@ -81,6 +81,7 @@
   "setup_required": "Пожалуйста, перейдите в раздел Настройки для конфигурации приложения",
   "setup_or": "или",
   "setup_login": "Войдите в сервис CONNECT",
+  "setup_demo": "Попробовать DEMO-версию",
   "period_hour": "Час",
   "period_day": "День",
   "period_week": "Неделя",

@@ -37,12 +37,10 @@ class DataServiceLocal extends DataService {
 
     if (basicAuth != '') {
       response = await client.get(Uri.parse(goURL), headers: <String, String>{
-        'Authorization': basicAuth,
-        'Connection': 'Keep-Alive'
+        'Authorization': basicAuth
       }).timeout(const Duration(seconds: 10));
     } else {
       response = await client.get(Uri.parse(goURL), headers: <String, String>{
-        'Connection': 'Keep-Alive'
       }).timeout(const Duration(seconds: 10));
     }
 

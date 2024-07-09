@@ -153,6 +153,37 @@ class _MyHomePageState extends State<PageMain> {
                                                         'setup_login'.i18n()),
                                                   ))),
                                         ),
+                                      Text('setup_or'.i18n()),
+                                      Padding(
+                                        padding: const EdgeInsets.all(20.0),
+                                        child: GestureDetector(
+                                            onTap: () {
+                                              stateManager.demoSetup();
+                                            },
+                                            child: Container(
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                    const BorderRadius.all(
+                                                      Radius.circular(20),
+                                                    ),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: const Color(
+                                                            0xffb9cbe8)
+                                                            .withOpacity(0.6),
+                                                        blurRadius: 11,
+                                                        offset: Offset(0,
+                                                            4), // Shadow position
+                                                      ),
+                                                    ]),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      18.0),
+                                                  child: Text(
+                                                      'setup_demo'.i18n()),
+                                                ))),
+                                      ),
                                       ]),
                               )
                               : DevicesList(

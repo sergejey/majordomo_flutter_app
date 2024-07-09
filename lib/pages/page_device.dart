@@ -12,6 +12,8 @@ import 'package:home_app/deviceWidgets/device_dimmer_page.dart';
 import 'package:home_app/deviceWidgets/device_rgb_page.dart';
 import 'package:home_app/deviceWidgets/device_thermostat_page.dart';
 import 'package:home_app/deviceWidgets/device_sensor_power_page.dart';
+import 'package:home_app/deviceWidgets/device_sensor_percentage_page.dart';
+import 'package:home_app/deviceWidgets/device_sensor_pressure_page.dart';
 import 'package:home_app/deviceWidgets/device_motion_page.dart';
 import 'package:home_app/deviceWidgets/device_openable_page.dart';
 import 'package:home_app/deviceWidgets/device_openclose_page.dart';
@@ -194,6 +196,20 @@ class _DevicePageState extends State<PageDevice> {
                               );
                             } else if (device.type == 'sensor_temp') {
                               return DeviceSensorTempPage(
+                                id: device.id,
+                                title: device.title,
+                                object: device.object,
+                                properties: device.properties,
+                              );
+                            } else if (device.type == 'sensor_percentage') {
+                              return DeviceSensorPercentagePage(
+                                id: device.id,
+                                title: device.title,
+                                object: device.object,
+                                properties: device.properties,
+                              );
+                            } else if (device.type == 'sensor_pressure') {
+                              return DeviceSensorPressurePage(
                                 id: device.id,
                                 title: device.title,
                                 object: device.object,

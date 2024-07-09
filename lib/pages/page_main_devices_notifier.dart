@@ -91,6 +91,10 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
     await fetchDevices();
   }
 
+  void demoSetup() {
+    _preferencesService.savePreference('serverAddressLocal', 'https://demo.mjdm.ru');
+  }
+
   Future<void> switchProfile(String profileId) async {
     _preferencesService.setProfileId(profileId);
     initialize();

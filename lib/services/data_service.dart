@@ -158,7 +158,7 @@ abstract class DataService {
     if (url == '') return url;
     if (url == 'connect.smartliving.ru')
       return 'https://connect.smartliving.ru';
-    if (!url.startsWith('http:')) url = 'http://$url';
+    if (!url.startsWith('http:') && !url.startsWith('https:')) url = 'http://$url';
     return url;
   }
 

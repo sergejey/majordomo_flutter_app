@@ -67,6 +67,12 @@ class MainPageManager {
     pageMainDevicesNotifier.setRoomFilter(roomObject, roomTitle);
   }
 
+  void demoSetup() {
+    pageMainDevicesNotifier.demoSetup();
+    setAppView('home');
+    reload();
+  }
+
   void openSettings(context, String startWith) {
     endPeriodicUpdate();
     Navigator.of(context)

@@ -81,6 +81,7 @@
   "setup_required": "Please open Settings to configure application",
   "setup_or": "or",
   "setup_login": "Sign-in to CONNECT",
+  "setup_demo": "Try DEMO setup",
   "period_hour": "Hour",
   "period_day": "Day",
   "period_week": "Week",
