@@ -5,10 +5,10 @@ import 'package:home_app/commonWidgets/device_value.dart';
 class DeviceSensorPressure extends StatelessWidget {
   const DeviceSensorPressure(
       {super.key,
-        required this.title,
-        required this.id,
-        required this.object,
-        required this.properties});
+      required this.title,
+      required this.id,
+      required this.object,
+      required this.properties});
 
   final String title;
   final String id;
@@ -24,10 +24,11 @@ class DeviceSensorPressure extends StatelessWidget {
           deviceTitle: title,
         ),
         Expanded(
-          /*1*/
+            /*1*/
             child: SizedBox(width: 10)),
         DeviceValue(
-            value: (properties["value"]??''))
+            value: (properties["value"] ?? ''),
+            valueState: ((properties["normalValue"] ?? "1") != "1") ? "1" : "0")
       ],
     );
   }

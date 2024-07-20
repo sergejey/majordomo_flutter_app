@@ -42,8 +42,7 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
     DeviceGroup(name: 'camera', title: 'group_camera'.i18n(), devicesTotal: 0),
     DeviceGroup(
         name: 'climate', title: 'group_climate'.i18n(), devicesTotal: 0),
-    DeviceGroup(
-        name: 'other', title: 'group_other'.i18n(), devicesTotal: 0),
+    DeviceGroup(name: 'other', title: 'group_other'.i18n(), devicesTotal: 0),
   ];
 
   List<OperationalMode> myOperationalModes = [];
@@ -76,7 +75,7 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
     myOperationalModes.clear();
     myOperationalModesFiltered.clear();
     updateGroupsDataByDevices();
-    _updatePageMainDevices(DateTime.now().toString()+'_clear');
+    _updatePageMainDevices(DateTime.now().toString() + '_clear');
 
     await _preferencesService.readAllPreferences();
 
@@ -92,7 +91,8 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
   }
 
   void demoSetup() {
-    _preferencesService.savePreference('serverAddressLocal', 'https://demo.mjdm.ru');
+    _preferencesService.savePreference(
+        'serverAddressLocal', 'https://demo.mjdm.ru');
   }
 
   Future<void> switchProfile(String profileId) async {
@@ -107,7 +107,9 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
             device.type == 'rgb')) {
       return true;
     } else if (filter_name == 'outlet' &&
-        (device.type == 'relay' || device.type == 'tv' || device.type == 'vacuum') &&
+        (device.type == 'relay' ||
+            device.type == 'tv' ||
+            device.type == 'vacuum') &&
         device.properties['loadType'] != 'light') {
       return true;
     } else if (filter_name == 'openable' &&
@@ -120,10 +122,28 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
     } else if (filter_name == 'climate' &&
         (device.type == 'thermostat' || device.type == 'ac')) {
       return true;
-    } else if (filter_name == 'sensor' && (device.type.contains('sensor') || device.type == 'leak' || device.type == 'smoke')) {
+    } else if (filter_name == 'sensor' &&
+        (device.type.contains('sensor') ||
+            device.type == 'leak' ||
+            device.type == 'smoke')) {
       return true;
     } else if (filter_name == 'other') {
-      if (!(device.type.contains('sensor') || (['relay','rgb','dimmer','openable','openclose','motion','camera','thermostat','ac','leak','smoke','tv','vacuum']).contains(device.type))) {
+      if (!(device.type.contains('sensor') ||
+          ([
+            'relay',
+            'rgb',
+            'dimmer',
+            'openable',
+            'openclose',
+            'motion',
+            'camera',
+            'thermostat',
+            'ac',
+            'leak',
+            'smoke',
+            'tv',
+            'vacuum'
+          ]).contains(device.type))) {
         return true;
       }
     }
@@ -211,7 +231,6 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
   }
 
   Future<void> fetchDevices() async {
-
     currentDataMode = _dataService.currentMode;
     myDevicesFullList = await _dataService.fetchMyDevices();
     myOperationalModes = await _dataService.fetchOperationalModes();
@@ -228,11 +247,25 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
       return false;
     });
     if (currentDataMode == 'local') {
-      myOperationalModesFiltered.insert(0, OperationalMode(id: '0', title: 'Connection', object: 'connectionLocal', active: (myDevicesFullList.length>0), properties: {}));
+      myOperationalModesFiltered.insert(
+          0,
+          OperationalMode(
+              id: '0',
+              title: 'Connection',
+              object: 'connectionLocal',
+              active: (myDevicesFullList.length > 0),
+              properties: {}));
     } else {
-      myOperationalModesFiltered.insert(0, OperationalMode(id: '0', title: 'Connection', object: 'connectionRemote', active: (myDevicesFullList.length>0), properties: {}));
+      myOperationalModesFiltered.insert(
+          0,
+          OperationalMode(
+              id: '0',
+              title: 'Connection',
+              object: 'connectionRemote',
+              active: (myDevicesFullList.length > 0),
+              properties: {}));
     }
-    if (myDevicesFullList.length>0) {
+    if (myDevicesFullList.length > 0) {
       myDevicesBackupList = myDevicesFullList;
     } else {
       myDevicesFullList = myDevicesBackupList;
@@ -279,12 +312,15 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
                     device.type == "motion" ||
                     device.type == "vacuum" ||
                     device.type == "sensor_power" ||
+                    device.type == "leak" ||
+                    device.type == "smoke" ||
                     device.type == "tv") &&
                 device.properties["status"] == "1") ||
             ((device.type == "openclose" || device.type == "openable") &&
                 device.properties["status"] != "1") ||
             (device.type == "thermostat" &&
-                device.properties["relay_status"] == "1")) {
+                device.properties["relay_status"] == "1") ||
+            ((device.properties["normalValue"] ?? "1") != "1")) {
           return true;
         }
         return false;

@@ -111,7 +111,7 @@ class DeviceThermostatPage extends StatelessWidget {
                   stateManager.callObjectMethod(object, "disable");
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
+                  backgroundColor: WidgetStateProperty.all(
                       properties['disabled'] == '1'
                           ? Colors.yellow
                           : Colors.white),
@@ -126,7 +126,7 @@ class DeviceThermostatPage extends StatelessWidget {
                   stateManager.callObjectMethod(object, "turnOn");
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
+                  backgroundColor: WidgetStateProperty.all(
                       (properties['disabled'] != '1' &&
                               properties['status'] == '1')
                           ? Colors.yellow
@@ -142,7 +142,7 @@ class DeviceThermostatPage extends StatelessWidget {
                   stateManager.callObjectMethod(object, "turnOff");
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
+                  backgroundColor: WidgetStateProperty.all(
                       (properties['disabled'] != '1' &&
                               properties['status'] != '1')
                           ? Colors.yellow

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:home_app/commonWidgets/device_icon.dart';
 import 'package:home_app/commonWidgets/device_value.dart';
-import 'package:home_app/utils/text_updated.dart';
 
-import '../utils/battery_level.dart';
 
 class DeviceSensorLight extends StatelessWidget {
   const DeviceSensorLight(
@@ -27,9 +25,11 @@ class DeviceSensorLight extends StatelessWidget {
           deviceTitle: title,
         ),
         Expanded(
-          /*1*/
+            /*1*/
             child: SizedBox(width: 10)),
-        DeviceValue(value:properties["value"]??'')
+        DeviceValue(
+            value: properties["value"] ?? '',
+            valueState: ((properties["normalValue"] ?? "1") != "1") ? "1" : "0")
       ],
     );
   }

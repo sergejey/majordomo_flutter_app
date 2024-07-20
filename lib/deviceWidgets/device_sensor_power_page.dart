@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_app/commonWidgets/device_chart.dart';
 import 'package:home_app/utils/text_updated.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 
 class DeviceSensorPowerPage extends StatelessWidget {
   const DeviceSensorPowerPage(

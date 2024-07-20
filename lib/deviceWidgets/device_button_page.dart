@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:home_app/commonWidgets/device_chart.dart';
 import 'package:home_app/utils/text_updated.dart';
 
-class DeviceSensorHumidityPage extends StatelessWidget {
-  const DeviceSensorHumidityPage(
+class DeviceButtonPage extends StatelessWidget {
+  const DeviceButtonPage(
       {super.key,
       required this.title,
       required this.id,
@@ -25,16 +25,15 @@ class DeviceSensorHumidityPage extends StatelessWidget {
             height: 20,
           ),
           Expanded(
-              child: DeviceChart(deviceObject: object, deviceProperty: 'value')
+            child: DeviceChart(deviceObject: object, deviceProperty: 'status', chartType: 'history', defaultPeriod: 'day',),
           ),
-          SizedBox(
-            height: 10,
-          ),
-          /*3*/
+
           Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: TextUpdated(updated: properties['updated']),
+              child: TextUpdated(
+                updated: properties['updated']
+              ),
             ),
           )
         ],

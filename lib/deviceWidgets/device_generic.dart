@@ -23,9 +23,9 @@ class DeviceGeneric extends StatelessWidget {
     return Row(
       children: [
         DeviceIcon(
-          deviceType: type??'',
+          deviceType: type,
           deviceState: properties['status']??'',
-          deviceTitle: title??'',
+          deviceTitle: title,
         ),
         Expanded(child: SizedBox(width: 10)),
         Text(

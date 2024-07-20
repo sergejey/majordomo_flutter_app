@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:home_app/commonWidgets/history_chart.dart';
-import 'package:home_app/commonWidgets/object_history.dart';
 import 'package:home_app/models/history_record.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/services/data_service.dart';
-import 'package:home_app/utils/logging.dart';
 import 'package:localization/localization.dart';
 
 class DeviceChart extends StatefulWidget {
@@ -203,7 +201,6 @@ class PeriodWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final stateManager = context.widget;
     return GestureDetector(
       onTap: () {
         onTap(value);

@@ -86,5 +86,7 @@
   "period_day": "День",
   "period_week": "Неделя",
   "period_month": "Месяц",
-  "period_year": "Год"
+  "period_year": "Год",
+  "devices_in_group": "Устройства в группе",
+  "confirm_group_state_save": "Подтвердите сохранение текущего состояния устройств в группе. Продолжить?"
 }

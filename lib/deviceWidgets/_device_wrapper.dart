@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:home_app/deviceWidgets/device_counter.dart';
 
@@ -15,6 +13,8 @@ import './device_thermostat.dart';
 import './device_motion.dart';
 import './device_openclose.dart';
 import './device_openable.dart';
+import './device_button.dart';
+import './device_group_state.dart';
 import './device_sensor_temp.dart';
 import './device_sensor_humidity.dart';
 import './device_sensor_temphum.dart';
@@ -162,6 +162,21 @@ class DeviceWrapper extends StatelessWidget {
                             id: id,
                             object: object,
                             properties: properties,
+                          );
+                        } else if (type == 'button') {
+                          return DeviceButton(
+                            title: title,
+                            id: id,
+                            object: object,
+                            properties: properties,
+                          );
+                        } else if (type == 'group_state') {
+                          return DeviceGroupState(
+                            title: title,
+                            id: id,
+                            object: object,
+                            properties: properties,
+                            insideDevice: insideDevice,
                           );
                         } else if (type == 'sensor_light') {
                           return DeviceSensorLight(

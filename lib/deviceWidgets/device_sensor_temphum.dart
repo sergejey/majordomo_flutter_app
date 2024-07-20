@@ -26,7 +26,10 @@ class DeviceSensorTempHum extends StatelessWidget {
           deviceTitle: title,
         ),
         Expanded(child: SizedBox(width: 10)),
-        DeviceValue(value: (properties["value"] ?? '') + '°C'),
+        DeviceValue(
+            value: (properties["value"] ?? '') + '°C',
+            valueState:
+                ((properties["normalValue"] ?? "1") != "1") ? "1" : "0"),
         if (insideDevice) ...[
           SizedBox(width: 5),
           DeviceValue(value: (properties["valueHumidity"] ?? '') + '%')

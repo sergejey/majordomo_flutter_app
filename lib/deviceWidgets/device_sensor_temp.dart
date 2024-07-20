@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_app/commonWidgets/device_icon.dart';
 import 'package:home_app/commonWidgets/device_value.dart';
-import 'package:home_app/utils/text_updated.dart';
 
 class DeviceSensorTemp extends StatelessWidget {
   const DeviceSensorTemp(
@@ -27,7 +26,9 @@ class DeviceSensorTemp extends StatelessWidget {
         Expanded(
             /*1*/
             child: SizedBox(width: 10)),
-        DeviceValue(value:(properties["value"]??'')+'°C')
+        DeviceValue(
+            value: (properties["value"] ?? '') + '°C',
+            valueState: ((properties["normalValue"] ?? "1") != "1") ? "1" : "0")
       ],
     );
   }

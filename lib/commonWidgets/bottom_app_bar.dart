@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:home_app/pages/page_settings.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/pages/page_main_logic.dart';
-import 'package:home_app/config.dart';
-import 'package:home_app/utils/logging.dart';
 import 'package:localization/localization.dart';
 
 BottomNavigationBar bottomAppBar(context) {

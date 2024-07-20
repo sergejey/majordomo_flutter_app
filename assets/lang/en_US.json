@@ -86,5 +86,7 @@
   "period_day": "Day",
   "period_week": "Week",
   "period_month": "Month",
-  "period_year": "Year"
+  "period_year": "Year",
+  "devices_in_group": "Devices in the group",
+  "confirm_group_state_save": "Please confirm saving of current state for devices in the group."
 }

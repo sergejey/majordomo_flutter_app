@@ -204,7 +204,7 @@ class OpModeView extends StatelessWidget {
                       }
                     : null,
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.white),
+                  backgroundColor: WidgetStateProperty.all(Colors.white),
                 ),
                 child: Text("mode_activate".i18n(),
                     style: TextStyle(color: Colors.black)),
@@ -219,7 +219,7 @@ class OpModeView extends StatelessWidget {
                       }
                     : null,
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.white),
+                  backgroundColor: WidgetStateProperty.all(Colors.white),
                 ),
                 child: Text("mode_deactivate".i18n(),
                     style: TextStyle(color: Colors.black)),

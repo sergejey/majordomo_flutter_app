@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:home_app/pages/page_device_notifier.dart';
-import 'package:home_app/utils/logging.dart';
 
 class DevicePageManager {
   final pageDeviceNotifier = PageDeviceNotifier();

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_app/commonWidgets/device_icon.dart';
 import 'package:home_app/commonWidgets/device_value.dart';
-import 'package:home_app/utils/text_updated.dart';
 
 class DeviceSensorGeneral extends StatelessWidget {
   const DeviceSensorGeneral(
@@ -30,7 +29,8 @@ class DeviceSensorGeneral extends StatelessWidget {
             /*1*/
             child: SizedBox(width: 10)),
         DeviceValue(
-            value: properties["value"]??'')
+            value: properties["value"] ?? '',
+            valueState: ((properties["normalValue"] ?? "1") != "1") ? "1" : "0")
       ],
     );
   }

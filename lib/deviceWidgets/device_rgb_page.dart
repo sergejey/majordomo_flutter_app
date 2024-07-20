@@ -19,7 +19,7 @@ class DeviceRGBPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final stateManager = getIt<DevicePageManager>();
-    Color currentColor = Color(int.parse('ff'+properties['color']??"", radix: 16));
+    Color currentColor = Color(int.parse('ff'+(properties['color']??""), radix: 16));
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

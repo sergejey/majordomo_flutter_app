@@ -23,7 +23,7 @@ class PageSettingsNotifier extends ValueNotifier<String> {
   }
 
   String getProfileId() {
-    return _preferencesService.getProfileId() ?? '';
+    return _preferencesService.getProfileId();
   }
 
   String? getPreference(String key) {

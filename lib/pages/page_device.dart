@@ -17,6 +17,8 @@ import 'package:home_app/deviceWidgets/device_sensor_pressure_page.dart';
 import 'package:home_app/deviceWidgets/device_motion_page.dart';
 import 'package:home_app/deviceWidgets/device_openable_page.dart';
 import 'package:home_app/deviceWidgets/device_openclose_page.dart';
+import 'package:home_app/deviceWidgets/device_button_page.dart';
+import 'package:home_app/deviceWidgets/device_group_state_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:home_app/services/service_locator.dart';
@@ -231,6 +233,20 @@ class _DevicePageState extends State<PageDevice> {
                               );
                             } else if (device.type == 'motion') {
                               return DeviceMotionPage(
+                                id: device.id,
+                                title: device.title,
+                                object: device.object,
+                                properties: device.properties,
+                              );
+                            } else if (device.type == 'button') {
+                              return DeviceButtonPage(
+                                id: device.id,
+                                title: device.title,
+                                object: device.object,
+                                properties: device.properties,
+                              );
+                            } else if (device.type == 'group_state') {
+                              return DeviceGroupStatePage(
                                 id: device.id,
                                 title: device.title,
                                 object: device.object,
