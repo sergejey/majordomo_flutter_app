@@ -14,6 +14,47 @@ import 'package:http/http.dart' as http;
 class DataServiceLocal extends DataService {
   static http.Client client = http.Client();
 
+  Future<String> postURL(String URL, [Map<String, dynamic>? params]) async {
+    String goURL = URL;
+
+    String basicAuth = '';
+    String userName = getUsername();
+    String password = getPassword();
+
+    if (userName != '' && password != '') {
+      String credentials = "$userName:$password";
+      Codec<String, String> stringToBase64 = utf8.fuse(base64);
+      String encoded = stringToBase64.encode(credentials);
+      basicAuth = 'Basic ' + encoded;
+    }
+    final http.Response response;
+
+    if (goURL.contains('http://connect.smartliving.ru')) {
+      goURL = goURL.replaceFirst('http://', 'https://');
+    }
+
+    dprint('Posting to $goURL');
+
+    if (basicAuth != '') {
+      response = await client.post(Uri.parse(goURL),
+          body: params,
+          headers: <String, String>{
+            'Authorization': basicAuth
+          }).timeout(const Duration(seconds: 10));
+    } else {
+      response = await client.post(Uri.parse(goURL),
+          body: params,
+          headers: <String, String>{}).timeout(const Duration(seconds: 10));
+    }
+
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      dprint("Error loading $goURL (code: ${response.statusCode})");
+      return '';
+    }
+  }
+
   Future<String> getURL(String URL) async {
     String goURL = URL;
 
@@ -40,8 +81,8 @@ class DataServiceLocal extends DataService {
         'Authorization': basicAuth
       }).timeout(const Duration(seconds: 10));
     } else {
-      response = await client.get(Uri.parse(goURL), headers: <String, String>{
-      }).timeout(const Duration(seconds: 10));
+      response = await client.get(Uri.parse(goURL),
+          headers: <String, String>{}).timeout(const Duration(seconds: 10));
     }
 
     if (response.statusCode == 200) {
@@ -215,6 +256,19 @@ class DataServiceLocal extends DataService {
       dprint('General Error: $e');
     }
     return [];
+  }
+
+  @override
+  Future<void> updateDevice(String deviceId,
+      [Map<String, dynamic>? params]) async {
+    final baseURL = getBaseURL();
+    dprint("Updating device $deviceId");
+    if (baseURL == "") {
+      dprint("Base URL is not set");
+    } else {
+      String url = '$baseURL/api.php/devices/$deviceId';
+      await postURL(url, params);
+    }
   }
 
   @override

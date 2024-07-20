@@ -76,6 +76,8 @@
   "dialog_confirmation": "Confirmation",
   "dialog_are_you_sure": "Are you sure? Please confirm.",
   "dialog_ok": "OK",
+  "dialog_save": "Save",
+  "dialog_saved": "Data saved",
   "dialog_cancel": "Cancel",
   "confirm_exit": "Press again to exit...",
   "setup_required": "Please open Settings to configure application",
@@ -88,5 +90,9 @@
   "period_month": "Month",
   "period_year": "Year",
   "devices_in_group": "Devices in the group",
-  "confirm_group_state_save": "Please confirm saving of current state for devices in the group."
+  "confirm_group_state_save": "Please confirm saving of current state for devices in the group.",
+  "device_title": "Device title",
+  "device_room": "Room",
+  "please_enter_text": "Please enter some text",
+  "please_make_selection": "Please make a selection"
 }

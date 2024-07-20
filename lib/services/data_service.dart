@@ -45,6 +45,8 @@ abstract class DataService {
   Future<void> callDeviceMethod(String objectName, String method,
       [Map<String, dynamic>? params]);
 
+  Future<void> updateDevice(String deviceId, [Map<String, dynamic>? params]);
+
   Future<List<HistoryRecord>> getPropertyHistory(
       String objectName, String property,
       [String? period]);
@@ -158,7 +160,8 @@ abstract class DataService {
     if (url == '') return url;
     if (url == 'connect.smartliving.ru')
       return 'https://connect.smartliving.ru';
-    if (!url.startsWith('http:') && !url.startsWith('https:')) url = 'http://$url';
+    if (!url.startsWith('http:') && !url.startsWith('https:'))
+      url = 'http://$url';
     return url;
   }
 

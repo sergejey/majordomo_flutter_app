@@ -1,5 +1,6 @@
 import 'dart:async';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/material.dart';
+import 'package:home_app/pages/page_edit_device.dart';
 import 'package:home_app/pages/page_device_notifier.dart';
 
 class DevicePageManager {
@@ -18,11 +19,18 @@ class DevicePageManager {
     pageDeviceNotifier.dispose();
   }
 
-  Future<void> deviceConfigClicked() async {
-    final Uri _url = Uri.parse(pageDeviceNotifier.deviceConfigURL);
-    if (!await launchUrl(_url)) {
-      throw Exception('Could not launch $_url');
-    }
+  void deviceEditClicked(BuildContext context) async {
+    endPeriodicUpdate();
+    Navigator.of(context)
+        .push(
+      MaterialPageRoute(
+        builder: (context) =>
+            PageEditDevice(deviceId: pageDeviceNotifier.deviceId),
+      ),
+    )
+        .then((value) {
+      startPeriodicUpdate();
+    });
   }
 
   void toggleFavorite() {
