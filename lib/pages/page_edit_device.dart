@@ -37,28 +37,8 @@ class _EditDevicePageState extends State<PageEditDevice> {
 
           return Scaffold(
               appBar: AppBar(
-                  title:
-                      Text(stateManager.pageEditDeviceNotifier.myDevice.title),
-              actions: [
-                Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircleAvatar(
-                      radius: 20,
-                      backgroundColor:
-                      Theme.of(context).colorScheme.onPrimary,
-                      child: IconButton(
-                        icon: SvgPicture.asset(
-                            'assets/navigation/nav_settings.svg',
-                            colorFilter: ColorFilter.mode(
-                                Theme.of(context).primaryColor,
-                                BlendMode.srcIn)),
-                        tooltip: 'Config',
-                        onPressed: () {
-                          stateManager.deviceConfigClicked();
-                        },
-                      ),
-                    ))
-              ],),
+                title: Text('device_edit_title_room'.i18n()),
+              ),
               body: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Container(
@@ -114,7 +94,8 @@ class _EditDevicePageState extends State<PageEditDevice> {
                                 );
                               }).toList(),
                               onChanged: (String? newValue) {
-                                stateManager.newDeviceLinkedRoom = newValue??'';
+                                stateManager.newDeviceLinkedRoom =
+                                    newValue ?? '';
                               }),
                           SizedBox(height: 40),
                           Row(
@@ -123,7 +104,8 @@ class _EditDevicePageState extends State<PageEditDevice> {
                               ElevatedButton(
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
-                                    stateManager.newDeviceTitle = myDeviceTitleController.text;
+                                    stateManager.newDeviceTitle =
+                                        myDeviceTitleController.text;
                                     stateManager.saveDeviceData(context);
                                   }
                                 },
@@ -138,7 +120,6 @@ class _EditDevicePageState extends State<PageEditDevice> {
                               ),
                             ],
                           )
-
                         ],
                       ),
                     ),

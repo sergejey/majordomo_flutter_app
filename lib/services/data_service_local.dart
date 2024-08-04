@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:home_app/models/device_schedule.dart';
 import 'package:home_app/utils/logging.dart';
 
 import 'data_service.dart';
@@ -13,6 +14,48 @@ import 'package:http/http.dart' as http;
 
 class DataServiceLocal extends DataService {
   static http.Client client = http.Client();
+
+  Future<String> deleteURL(String URL, [Map<String, dynamic>? params]) async {
+    String goURL = URL;
+
+    String basicAuth = '';
+    String userName = getUsername();
+    String password = getPassword();
+
+    if (userName != '' && password != '') {
+      String credentials = "$userName:$password";
+      Codec<String, String> stringToBase64 = utf8.fuse(base64);
+      String encoded = stringToBase64.encode(credentials);
+      basicAuth = 'Basic ' + encoded;
+    }
+    final http.Response response;
+
+    if (goURL.contains('http://connect.smartliving.ru')) {
+      goURL = goURL.replaceFirst('http://', 'https://');
+    }
+
+    dprint('DELETE to $goURL with ' + params.toString());
+
+    if (basicAuth != '') {
+      response = await client.delete(Uri.parse(goURL),
+          body: params,
+          headers: <String, String>{
+            'Authorization': basicAuth
+          }).timeout(const Duration(seconds: 10));
+    } else {
+      response = await client.delete(Uri.parse(goURL),
+          body: params,
+          headers: <String, String>{}).timeout(const Duration(seconds: 10));
+    }
+
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      dprint(
+          "Error loading $goURL (code: ${response.statusCode}) ${response.body}");
+      return '';
+    }
+  }
 
   Future<String> postURL(String URL, [Map<String, dynamic>? params]) async {
     String goURL = URL;
@@ -191,6 +234,53 @@ class DataServiceLocal extends DataService {
   }
 
   @override
+  Future<(List<DeviceSchedulePoint>, List<DeviceScheduleMethod>)>
+      fetchDeviceSchedule(String deviceId) async {
+    List<DeviceSchedulePoint> pointsReturned = [];
+    List<DeviceScheduleMethod> methodsReturned = [];
+
+    final baseURL = getBaseURL();
+    if (baseURL == "") {
+      dprint("Base URL is not set");
+      return (pointsReturned, methodsReturned);
+    }
+    final apiURL = '$baseURL/api.php/devices/$deviceId/schedule';
+    try {
+      final response = await getURL(apiURL);
+      if (response != '') {
+        final parsedPoints = jsonDecode(response)["schedule_points"]
+            .cast<Map<String, dynamic>>();
+
+        pointsReturned = parsedPoints
+            .map<DeviceSchedulePoint>(
+                (json) => DeviceSchedulePoint.fromJson(json))
+            .toList();
+
+        final parsedMethods = jsonDecode(response)["schedule_methods"]
+            .cast<Map<String, dynamic>>();
+
+        methodsReturned = parsedMethods
+            .map<DeviceScheduleMethod>(
+                (json) => DeviceScheduleMethod.fromJson(json))
+            .toList();
+
+        for (int i = 0; i < pointsReturned.length; i++) {
+          for (int k = 0; k < methodsReturned.length; k++) {
+            if (pointsReturned[i].linkedMethod ==
+                methodsReturned[k].methodName) {
+              pointsReturned[i].linkedMethodTitle = methodsReturned[k].title;
+            }
+          }
+        }
+      }
+    } catch (e) {
+      dprint('General Error: $e');
+    }
+
+    return (pointsReturned, methodsReturned);
+  }
+
+  @override
   Future<SimpleDevice> fetchMyDevice(String deviceId) async {
     List<String> _favorites = getFavorites();
     SimpleDevice emptyDevice = SimpleDevice(
@@ -256,6 +346,53 @@ class DataServiceLocal extends DataService {
       dprint('General Error: $e');
     }
     return [];
+  }
+
+  @override
+  Future<bool?> updateScheduleItem(
+      String deviceId, DeviceSchedulePoint item) async {
+    dprint("Updating schedule point for $deviceId");
+    final baseURL = getBaseURL();
+
+    if (baseURL == "") {
+      dprint("Base URL is not set");
+    } else {
+      String url = '$baseURL/api.php/devices/$deviceId/schedule';
+      Map<String, dynamic>? params = {
+        'point_id': item.id,
+        'linked_method': item.linkedMethod,
+        'value': item.value,
+        'set_time': item.setTime,
+        'set_days': item.setDays
+      };
+      String response = await postURL(url, params) ?? '';
+      if (response != '') {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+
+  Future<bool?> deleteScheduleItem(
+      String deviceId, DeviceSchedulePoint item) async {
+    dprint("Deleting schedule point for $deviceId");
+    final baseURL = getBaseURL();
+
+    if (baseURL == "") {
+      dprint("Base URL is not set");
+    } else {
+      String url = '$baseURL/api.php/devices/$deviceId/schedule';
+      Map<String, dynamic>? params = {
+        'point_id': item.id,
+      };
+      String response = await deleteURL(url, params) ?? '';
+      if (response != '') {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 
   @override

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:home_app/commonWidgets/device_icon.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/pages/page_main_logic.dart';
+import 'package:home_app/utils/confirm_dialog.dart';
 import 'package:localization/localization.dart';
 
 class DeviceGroupState extends StatelessWidget {
@@ -38,30 +39,10 @@ class DeviceGroupState extends StatelessWidget {
                 maximumSize: Size(55, 55),
                 padding: const EdgeInsets.all(0),
               ),
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text('dialog_confirmation'.i18n()),
-                        content: Text('confirm_group_state_save'.i18n()),
-                        actions: [
-                          TextButton(
-                            child: Text('dialog_ok'.i18n()),
-                            onPressed: () {
-                              stateManager.callObjectMethod(object, "save");
-                              Navigator.pop(context);
-                            },
-                          ),
-                          TextButton(
-                            child: Text('dialog_cancel'.i18n()),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ],
-                      );
-                    });
+              onPressed: () async {
+                if (await confirm(context)) {
+                  stateManager.callObjectMethod(object, "save");
+                }
               },
               child: const Icon(Icons.save_alt_outlined)),
           SizedBox(width: 10)

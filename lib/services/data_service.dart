@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:home_app/models/device_schedule.dart';
 import 'package:home_app/models/simple_device.dart';
 import 'package:home_app/models/room.dart';
 import 'package:home_app/models/operational_mode.dart';
@@ -40,12 +41,18 @@ abstract class DataService {
 
   Future<List<SimpleDevice>> fetchMyDevices();
 
+  Future<(List<DeviceSchedulePoint>,List<DeviceScheduleMethod>)> fetchDeviceSchedule(String deviceId);
+
   Future<SimpleDevice> fetchMyDevice(String deviceId);
 
   Future<void> callDeviceMethod(String objectName, String method,
       [Map<String, dynamic>? params]);
 
   Future<void> updateDevice(String deviceId, [Map<String, dynamic>? params]);
+
+  Future<bool?> deleteScheduleItem(String deviceId, DeviceSchedulePoint item);
+
+  Future<bool?> updateScheduleItem(String deviceId, DeviceSchedulePoint item);
 
   Future<List<HistoryRecord>> getPropertyHistory(
       String objectName, String property,
@@ -137,7 +144,7 @@ abstract class DataService {
   }
 
   void setBaseURL(String url) {
-    dprint("Setting baseURL to $url");
+    //dprint("Setting baseURL to $url");
     String serverUsername =
         _preferencesService.getPreference("serverUsername") ?? "";
     String serverPassword =
@@ -180,7 +187,7 @@ abstract class DataService {
       _connectionStatus = await _connectivity.checkConnectivity();
 
       if (!_connectionStatus.contains(ConnectivityResult.wifi)) {
-        dprint('(auto) No WiFi. Loading remote URL');
+        //dprint('(auto) No WiFi. Loading remote URL');
         currentMode = 'remote';
         currentWifiSSID = '';
         setBaseURL(remoteURL);
@@ -213,8 +220,7 @@ abstract class DataService {
             setBaseURL(loadURL);
           }
         } else {
-          dprint(
-              '(auto) Local wifi is not set or cannot get it\'s name. Loading remote URL');
+          //dprint('(auto) Local wifi is not set or cannot get it\'s name. Loading remote URL');
           currentMode = 'remote';
           setBaseURL(remoteURL);
         }

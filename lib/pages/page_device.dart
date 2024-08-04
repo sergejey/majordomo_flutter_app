@@ -89,10 +89,14 @@ class _DevicePageState extends State<PageDevice> {
                         backgroundColor:
                             Theme.of(context).colorScheme.onPrimary,
                         child: IconButton(
-                          icon: Icon(Icons.edit, color: Theme.of(context).colorScheme.primary),
-                          tooltip: 'Edit',
+                          icon: SvgPicture.asset(
+                              'assets/navigation/nav_settings.svg',
+                              colorFilter: ColorFilter.mode(
+                                  Theme.of(context).primaryColor,
+                                  BlendMode.srcIn)),
+                          tooltip: 'Configuration',
                           onPressed: () {
-                            stateManager.deviceEditClicked(context);
+                            stateManager.deviceConfigurationClicked(context);
                           },
                         ),
                       )),

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:home_app/pages/page_edit_device.dart';
+import 'package:home_app/pages/page_configure_device.dart';
 import 'package:home_app/pages/page_device_notifier.dart';
 
 class DevicePageManager {
@@ -19,13 +19,13 @@ class DevicePageManager {
     pageDeviceNotifier.dispose();
   }
 
-  void deviceEditClicked(BuildContext context) async {
+  void deviceConfigurationClicked(BuildContext context) async {
     endPeriodicUpdate();
     Navigator.of(context)
         .push(
       MaterialPageRoute(
         builder: (context) =>
-            PageEditDevice(deviceId: pageDeviceNotifier.deviceId),
+            PageConfigureDevice(deviceId: pageDeviceNotifier.deviceId),
       ),
     )
         .then((value) {
