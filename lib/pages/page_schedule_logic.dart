@@ -41,6 +41,8 @@ class SchedulePageManager {
                   alert(context, 'dialog_saved'.i18n());
                   initSchedulePageState(pageScheduleNotifier.deviceId);
                   Navigator.pop(context, true);
+                } else {
+                  alert(context, 'general_error'.i18n(), color: Colors.redAccent);
                 }
               },
             ),
@@ -60,6 +62,8 @@ class SchedulePageManager {
                     alert(context, 'dialog_saved'.i18n());
                     initSchedulePageState(pageScheduleNotifier.deviceId);
                     Navigator.pop(context, true);
+                  } else {
+                    alert(context, 'general_error'.i18n(), color: Colors.redAccent);
                   }
                 }
               },
@@ -96,6 +100,8 @@ class SchedulePageManager {
                   alert(context, 'dialog_saved'.i18n());
                   initSchedulePageState(pageScheduleNotifier.deviceId);
                   Navigator.pop(context, true);
+                } else {
+                  alert(context, 'general_error'.i18n(), color: Colors.redAccent);
                 }
               },
             ),

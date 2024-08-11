@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:home_app/models/device_schedule.dart';
-import 'package:home_app/models/simple_device.dart';
 
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/services/data_service.dart';

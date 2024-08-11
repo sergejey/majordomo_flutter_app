@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:home_app/models/device_links.dart';
 import 'package:home_app/models/device_schedule.dart';
 import 'package:home_app/models/simple_device.dart';
 import 'package:home_app/models/room.dart';
@@ -41,8 +42,6 @@ abstract class DataService {
 
   Future<List<SimpleDevice>> fetchMyDevices();
 
-  Future<(List<DeviceSchedulePoint>,List<DeviceScheduleMethod>)> fetchDeviceSchedule(String deviceId);
-
   Future<SimpleDevice> fetchMyDevice(String deviceId);
 
   Future<void> callDeviceMethod(String objectName, String method,
@@ -50,9 +49,13 @@ abstract class DataService {
 
   Future<void> updateDevice(String deviceId, [Map<String, dynamic>? params]);
 
+  Future<(List<DeviceSchedulePoint>,List<DeviceScheduleMethod>)> fetchDeviceSchedule(String deviceId);
   Future<bool?> deleteScheduleItem(String deviceId, DeviceSchedulePoint item);
-
   Future<bool?> updateScheduleItem(String deviceId, DeviceSchedulePoint item);
+
+  Future<(List<DeviceLink>,List<DeviceAvailableLink>)> fetchDeviceLinks(String deviceId);
+  Future<bool?> deleteLinkItem(String deviceId, DeviceLink item);
+  Future<bool?> updateLinkItem(String deviceId, DeviceLink item);
 
   Future<List<HistoryRecord>> getPropertyHistory(
       String objectName, String property,

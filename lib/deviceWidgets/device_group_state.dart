@@ -3,7 +3,6 @@ import 'package:home_app/commonWidgets/device_icon.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/pages/page_main_logic.dart';
 import 'package:home_app/utils/confirm_dialog.dart';
-import 'package:localization/localization.dart';
 
 class DeviceGroupState extends StatelessWidget {
   const DeviceGroupState(

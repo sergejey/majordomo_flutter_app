@@ -1,5 +1,8 @@
 {
   "locale": "ru_Ru",
+  "yes": "Да",
+  "no": "Нет",
+  "general_error": "Ошибка выполнения операции",
   "bar_home": "Дом",
   "bar_favorites": "Избранное",
   "bar_rooms": "Комнаты",
@@ -104,9 +107,9 @@
   "add_schedule_point": "Добавить элемент расписания",
   "week_daily": "Ежедневно",
   "week_sun": "Воскресенье",
-  "week_sun_short": "Вск",
+  "week_sun_short": "Вс",
   "week_mon": "Понедельник",
-  "week_mon_short": "Пнд",
+  "week_mon_short": "Пн",
   "week_tue": "Вторник",
   "week_tue_short": "Вт",
   "week_wed": "Среда",
@@ -118,5 +121,11 @@
   "week_sat": "Суббота",
   "week_sat_short": "Сб",
   "action": "Действие",
-  "not_available": "Недоступно"
+  "not_available": "Недоступно",
+  "link_type": "Тип связи",
+  "goto_master_device": "Пожалуйста, перейдите в главное устройство для настройки связи",
+  "link_target_device": "Целевое устройство",
+  "link_enabled": "Связь активна",
+  "new_device": "Новое устройство",
+  "new_devices_available": "Доступны новые устройства"
 }

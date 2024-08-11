@@ -1,5 +1,8 @@
 {
   "locale": "en_US",
+  "yes": "Yes",
+  "no": "No",
+  "general_error": "General error",
   "bar_home": "Home",
   "bar_favorites": "Favorites",
   "bar_rooms": "Rooms",
@@ -118,5 +121,11 @@
   "week_sat": "Saturday",
   "week_sat_short": "Sat",
   "action": "Action",
-  "not_available": "Not available"
+  "not_available": "Not available",
+  "link_type": "Link type",
+  "goto_master_device": "Please, go to main device to update the link.",
+  "link_target_device": "Target device",
+  "link_enabled": "Link is active",
+  "new_device": "New device",
+  "new_devices_available": "New devices available"
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:home_app/models/device_links.dart';
 import 'package:home_app/models/device_schedule.dart';
 import 'package:home_app/utils/logging.dart';
 
@@ -234,47 +235,89 @@ class DataServiceLocal extends DataService {
   }
 
   @override
+  Future<(List<DeviceLink>, List<DeviceAvailableLink>)> fetchDeviceLinks(
+      String deviceId) async {
+    List<DeviceLink> linksReturned = [];
+    List<DeviceAvailableLink> linksAvailableReturned = [];
+
+    final baseURL = getBaseURL();
+    if (baseURL != "") {
+      final apiURL = '$baseURL/api.php/devices/$deviceId/links';
+      try {
+        final response = await getURL(apiURL);
+        if (response != '') {
+          final parsedLinks =
+              jsonDecode(response)["links"].cast<Map<String, dynamic>>();
+
+          linksReturned = parsedLinks
+              .map<DeviceLink>((json) => DeviceLink.fromJson(json))
+              .toList();
+
+          final parsedAvailableLinks = jsonDecode(response)["available_links"]
+              .cast<Map<String, dynamic>>();
+
+          linksAvailableReturned = parsedAvailableLinks
+              .map<DeviceAvailableLink>(
+                  (json) => DeviceAvailableLink.fromJson(json))
+              .toList();
+
+          for (int i = 0; i < linksReturned.length; i++) {
+            for (int k = 0; k < linksAvailableReturned.length; k++) {
+              if (linksReturned[i].link_type ==
+                  linksAvailableReturned[k].name) {
+                linksReturned[i].link_type_title =
+                    linksAvailableReturned[k].title;
+              }
+            }
+          }
+        }
+      } catch (e) {
+        dprint('General Error: $e');
+      }
+    }
+    return (linksReturned, linksAvailableReturned);
+  }
+
+  @override
   Future<(List<DeviceSchedulePoint>, List<DeviceScheduleMethod>)>
       fetchDeviceSchedule(String deviceId) async {
     List<DeviceSchedulePoint> pointsReturned = [];
     List<DeviceScheduleMethod> methodsReturned = [];
 
     final baseURL = getBaseURL();
-    if (baseURL == "") {
-      dprint("Base URL is not set");
-      return (pointsReturned, methodsReturned);
-    }
-    final apiURL = '$baseURL/api.php/devices/$deviceId/schedule';
-    try {
-      final response = await getURL(apiURL);
-      if (response != '') {
-        final parsedPoints = jsonDecode(response)["schedule_points"]
-            .cast<Map<String, dynamic>>();
+    if (baseURL != "") {
+      final apiURL = '$baseURL/api.php/devices/$deviceId/schedule';
+      try {
+        final response = await getURL(apiURL);
+        if (response != '') {
+          final parsedPoints = jsonDecode(response)["schedule_points"]
+              .cast<Map<String, dynamic>>();
 
-        pointsReturned = parsedPoints
-            .map<DeviceSchedulePoint>(
-                (json) => DeviceSchedulePoint.fromJson(json))
-            .toList();
+          pointsReturned = parsedPoints
+              .map<DeviceSchedulePoint>(
+                  (json) => DeviceSchedulePoint.fromJson(json))
+              .toList();
 
-        final parsedMethods = jsonDecode(response)["schedule_methods"]
-            .cast<Map<String, dynamic>>();
+          final parsedMethods = jsonDecode(response)["schedule_methods"]
+              .cast<Map<String, dynamic>>();
 
-        methodsReturned = parsedMethods
-            .map<DeviceScheduleMethod>(
-                (json) => DeviceScheduleMethod.fromJson(json))
-            .toList();
+          methodsReturned = parsedMethods
+              .map<DeviceScheduleMethod>(
+                  (json) => DeviceScheduleMethod.fromJson(json))
+              .toList();
 
-        for (int i = 0; i < pointsReturned.length; i++) {
-          for (int k = 0; k < methodsReturned.length; k++) {
-            if (pointsReturned[i].linkedMethod ==
-                methodsReturned[k].methodName) {
-              pointsReturned[i].linkedMethodTitle = methodsReturned[k].title;
+          for (int i = 0; i < pointsReturned.length; i++) {
+            for (int k = 0; k < methodsReturned.length; k++) {
+              if (pointsReturned[i].linkedMethod ==
+                  methodsReturned[k].methodName) {
+                pointsReturned[i].linkedMethodTitle = methodsReturned[k].title;
+              }
             }
           }
         }
+      } catch (e) {
+        dprint('General Error: $e');
       }
-    } catch (e) {
-      dprint('General Error: $e');
     }
 
     return (pointsReturned, methodsReturned);
@@ -291,7 +334,9 @@ class DataServiceLocal extends DataService {
         linkedRoom: 'unknown',
         favorite: false,
         properties: <String, dynamic>{},
-        roomTitle: '');
+        roomTitle: '',
+        linksTotal: 0,
+        scheduleTotal: 0);
     final baseURL = getBaseURL();
     if (baseURL == "") {
       dprint("Base URL is not set");
@@ -349,14 +394,51 @@ class DataServiceLocal extends DataService {
   }
 
   @override
+  Future<bool?> updateLinkItem(String deviceId, DeviceLink item) async {
+    dprint("Updating link for $deviceId");
+    final baseURL = getBaseURL();
+    if (baseURL != "") {
+      String url = '$baseURL/api.php/devices/$deviceId/links';
+      Map<String, dynamic>? params = {
+        'link_id': item.id,
+        'device1_id': item.device1_id,
+        'device2_id': item.device2_id,
+        'link_type': item.link_type,
+        'link_settings': jsonEncode(item.link_settings),
+        'active': item.active ? '1' : '0'
+      };
+      String response = await postURL(url, params);
+      dprint("Response: " + response);
+      if (response != '') {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  Future<bool?> deleteLinkItem(String deviceId, DeviceLink item) async {
+    dprint("Deleting link for $deviceId");
+    final baseURL = getBaseURL();
+    if (baseURL != "") {
+      String url = '$baseURL/api.php/devices/$deviceId/links';
+      Map<String, dynamic>? params = {
+        'link_id': item.id,
+      };
+      String response = await deleteURL(url, params);
+      if (response != '') {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @override
   Future<bool?> updateScheduleItem(
       String deviceId, DeviceSchedulePoint item) async {
     dprint("Updating schedule point for $deviceId");
     final baseURL = getBaseURL();
 
-    if (baseURL == "") {
-      dprint("Base URL is not set");
-    } else {
+    if (baseURL != "") {
       String url = '$baseURL/api.php/devices/$deviceId/schedule';
       Map<String, dynamic>? params = {
         'point_id': item.id,
@@ -365,13 +447,12 @@ class DataServiceLocal extends DataService {
         'set_time': item.setTime,
         'set_days': item.setDays
       };
-      String response = await postURL(url, params) ?? '';
+      String response = await postURL(url, params);
       if (response != '') {
         return true;
-      } else {
-        return false;
       }
     }
+    return false;
   }
 
   Future<bool?> deleteScheduleItem(
@@ -379,20 +460,17 @@ class DataServiceLocal extends DataService {
     dprint("Deleting schedule point for $deviceId");
     final baseURL = getBaseURL();
 
-    if (baseURL == "") {
-      dprint("Base URL is not set");
-    } else {
+    if (baseURL != "") {
       String url = '$baseURL/api.php/devices/$deviceId/schedule';
       Map<String, dynamic>? params = {
         'point_id': item.id,
       };
-      String response = await deleteURL(url, params) ?? '';
+      String response = await deleteURL(url, params);
       if (response != '') {
         return true;
-      } else {
-        return false;
       }
     }
+    return false;
   }
 
   @override
@@ -400,9 +478,7 @@ class DataServiceLocal extends DataService {
       [Map<String, dynamic>? params]) async {
     final baseURL = getBaseURL();
     dprint("Updating device $deviceId");
-    if (baseURL == "") {
-      dprint("Base URL is not set");
-    } else {
+    if (baseURL != "") {
       String url = '$baseURL/api.php/devices/$deviceId';
       await postURL(url, params);
     }
@@ -413,9 +489,7 @@ class DataServiceLocal extends DataService {
       [Map<String, dynamic>? params]) async {
     final baseURL = getBaseURL();
     dprint("Calling $objectName . $method");
-    if (baseURL == "") {
-      dprint("Base URL is not set");
-    } else {
+    if (baseURL != "") {
       String url = '$baseURL/api.php/method/$objectName.$method';
       if (params != null) {
         url += '?';

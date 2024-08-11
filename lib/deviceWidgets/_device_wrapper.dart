@@ -4,6 +4,7 @@ import 'package:home_app/deviceWidgets/device_counter.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/pages/page_main_logic.dart';
 import 'package:home_app/pages/page_device.dart';
+import 'package:localization/localization.dart';
 
 import './device_generic.dart';
 import './device_relay.dart';
@@ -241,7 +242,7 @@ class DeviceWrapper extends StatelessWidget {
                     SizedBox(
                       height: 5,
                     ),
-                    Text(roomTitle,
+                    Text(roomTitle!=''?roomTitle:'new_device'.i18n(),
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.bodySmall),
                   ],

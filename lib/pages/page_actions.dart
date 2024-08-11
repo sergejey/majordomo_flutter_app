@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_app/commonWidgets/link_item.dart';
 import 'package:home_app/pages/page_actions_logic.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:localization/localization.dart';
@@ -50,22 +51,51 @@ class _ActionsPageState extends State<PageActions> {
                       ]),
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Coming soon..."),
-                        SizedBox(height: 20),
-                        ElevatedButton(
-                          onPressed: () {
-                            stateManager.addLinkClicked();
-                          },
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: Size(double.infinity, 50), // Set minimum width and height
+                    child: (stateManager
+                                .pageActionsNotifier.availableLinks.length ==
+                            0 && stateManager
+                        .pageActionsNotifier.links.length ==
+                        0)
+                        ? Center(child: Text('not_available'.i18n()))
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (stateManager.pageActionsNotifier
+                                      .availableLinks.length >
+                                  0)
+                                ElevatedButton(
+                                  onPressed: () {
+                                    stateManager.addLinkClicked(context);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    minimumSize: Size(double.infinity,
+                                        50), // Set minimum width and height
+                                  ),
+                                  child: Text('add_action_link'.i18n()),
+                                ),
+                              Expanded(
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      ...stateManager.pageActionsNotifier.links
+                                          .map((item) => LinkItem(
+                                              item: item,
+                                              onTap: () {
+                                                stateManager.editLinkClicked(
+                                                    context,
+                                                    item,
+                                                    item.link_type);
+                                              }))
+                                          .toList(),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          child: Text('add_action_link'.i18n()),
-                        ),
-                      ],
-                    ),
                   ),
                 ),
               ));

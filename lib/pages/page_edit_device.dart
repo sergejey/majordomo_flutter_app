@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:home_app/models/room.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:localization/localization.dart';
@@ -86,13 +85,19 @@ class _EditDevicePageState extends State<PageEditDevice> {
                                 }
                                 return null;
                               },
-                              items: stateManager.pageEditDeviceNotifier.myRooms
-                                  .map<DropdownMenuItem<String>>((Room item) {
-                                return DropdownMenuItem(
-                                  value: item.object,
-                                  child: Text(item.title),
-                                );
-                              }).toList(),
+                              items: [
+                                ...stateManager.pageEditDeviceNotifier.myRooms
+                                    .map<DropdownMenuItem<String>>((Room item) {
+                                  return DropdownMenuItem(
+                                    value: item.object,
+                                    child: Text(item.title),
+                                  );
+                                }).toList(),
+                                if (stateManager.pageEditDeviceNotifier.myDevice
+                                        .linkedRoom ==
+                                    '')
+                                  DropdownMenuItem(value: '', child: Text(''))
+                              ],
                               onChanged: (String? newValue) {
                                 stateManager.newDeviceLinkedRoom =
                                     newValue ?? '';

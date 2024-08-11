@@ -104,6 +104,11 @@ class MainPageManager {
     pageMainDevicesNotifier.refreshPage();
   }
 
+  void newDevicesClicked(BuildContext context) {
+    setBottomBarIndex(1, context);
+    pageMainDevicesNotifier.setNewDevicesView();
+  }
+
   void switchProfile(String profileId) {
     pageMainDevicesNotifier.switchProfile(profileId);
   }

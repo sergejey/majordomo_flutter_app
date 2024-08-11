@@ -7,8 +7,8 @@ void dprint(String message) {
   }
 }
 
-void alert(BuildContext context, String message) {
+void alert(BuildContext context, String message, {Color color = Colors.deepPurpleAccent}) {
   ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(content: Text(message), duration: Duration(seconds: 2),),
+    SnackBar(content: Text(message), duration: Duration(seconds: 2),backgroundColor: color),
   );
 }

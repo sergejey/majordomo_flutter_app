@@ -17,9 +17,12 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
 
   bool isSetupRequired = false;
 
+  int newDevicesAvailable = 0;
+
   bool activeFilter = false;
   bool roomView = false;
   bool favoritesView = false;
+  bool newDevicesView = false;
 
   String roomFilter = '';
   String groupFilter = '';
@@ -66,6 +69,7 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
     roomView = false;
     activeFilter = false;
     favoritesView = false;
+    newDevicesView = false;
   }
 
   Future<void> initialize() async {
@@ -271,6 +275,11 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
       myDevicesFullList = myDevicesBackupList;
     }
 
+    newDevicesAvailable = 0;
+    myDevicesFullList.forEach((device) {
+      if (device.linkedRoom == '') newDevicesAvailable++;
+    });
+
     updateRoomsDataByDevices();
     updateGroupsDataByDevices();
     refreshDevices();
@@ -287,6 +296,15 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
     if (favoritesView) {
       myDevices.retainWhere((SimpleDevice device) {
         return device.favorite;
+      });
+    }
+
+    if (newDevicesAvailable==0 && newDevicesView) {
+      newDevicesView = false;
+    }
+    if (newDevicesView) {
+      myDevices.retainWhere((SimpleDevice device) {
+        return device.roomTitle == '';
       });
     }
 
@@ -359,6 +377,12 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
   void setFavoritesView() {
     resetAllFilters();
     favoritesView = true;
+    refreshDevices();
+  }
+
+  void setNewDevicesView() {
+    resetAllFilters();
+    newDevicesView = true;
     refreshDevices();
   }
 

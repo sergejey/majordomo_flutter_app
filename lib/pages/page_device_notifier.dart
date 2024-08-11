@@ -20,7 +20,9 @@ class PageDeviceNotifier extends ValueNotifier<String> {
       linkedRoom: 'unknown',
       roomTitle: '',
       favorite: false,
-      properties: <String, dynamic>{});
+      properties: <String, dynamic>{},
+      linksTotal: 0,
+      scheduleTotal: 0);
 
   Future<void> initialize(String initDeviceId) async {
     deviceId = initDeviceId;

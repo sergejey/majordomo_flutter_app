@@ -23,13 +23,15 @@ class PageConfigureDeviceNotifier extends ValueNotifier<String> {
       linkedRoom: 'unknown',
       roomTitle: '',
       favorite: false,
-      properties: <String, dynamic>{});
+      properties: <String, dynamic>{},
+      linksTotal: 0,
+      scheduleTotal: 0);
 
   Future<void> initialize(String initDeviceId) async {
     deviceId = initDeviceId;
     await _dataService.initialize();
     deviceConfigURL =
-    "${_dataService.getBaseURL()}/panel/devices/$deviceId.html?tab=settings";
+        "${_dataService.getBaseURL()}/panel/devices/$deviceId.html?tab=settings";
     fetchDevice();
   }
 
@@ -39,7 +41,7 @@ class PageConfigureDeviceNotifier extends ValueNotifier<String> {
   }
 
   refreshDevice() {
-    _updateConfigurePageDevice(myDevice.title);
+    _updateConfigurePageDevice(DateTime.now().millisecondsSinceEpoch.toString());
   }
 
   void _updateConfigurePageDevice(String newValue) {

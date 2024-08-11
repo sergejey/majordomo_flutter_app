@@ -48,150 +48,164 @@ class _MyHomePageState extends State<PageMain> {
       valueListenable: stateManager.pageMainDevicesNotifier,
       builder: (context, value, child) {
         return FGBGNotifier(
-          onEvent: (event) {
-            if (event == FGBGType.foreground) {
-              stateManager.reload();
-            } else if (event == FGBGType.background) {
-              stateManager.endPeriodicUpdate();
-            }
-          },
-          child: PopScope(
-            canPop: stateManager.canBeClosed(),
-            onPopInvoked: (bool didPop) async {
-              if (didPop) {
-                return;
-              }
-              final bool? shouldPop = await stateManager.allowToClose();
-              if (shouldPop ?? false) {
-                SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+            onEvent: (event) {
+              if (event == FGBGType.foreground) {
+                stateManager.reload();
+              } else if (event == FGBGType.background) {
+                stateManager.endPeriodicUpdate();
               }
             },
-            child: Scaffold(
-              backgroundColor: const Color(0xffe3eeff),
-              appBar: MainAppBar(context),
-              bottomNavigationBar: bottomAppBar(context),
-              body: stateManager.pageMainDevicesNotifier.roomView
-                  ? RoomsList(
-                      rooms: stateManager.pageMainDevicesNotifier.myRooms)
-                  : Column(children: [
-                      (stateManager.appView == 'home' &&
-                              !stateManager
-                                  .pageMainDevicesNotifier.isSetupRequired)
-                          ? GroupsList(
-                              groups:
-                                  stateManager.pageMainDevicesNotifier.myGroups)
-                          : const SizedBox(
-                              height: 1,
+            child: PopScope(
+                canPop: stateManager.canBeClosed(),
+                onPopInvoked: (bool didPop) async {
+                  if (didPop) {
+                    return;
+                  }
+                  final bool? shouldPop = await stateManager.allowToClose();
+                  if (shouldPop ?? false) {
+                    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                  }
+                },
+                child: Scaffold(
+                    backgroundColor: const Color(0xffe3eeff),
+                    appBar: MainAppBar(context),
+                    bottomNavigationBar: bottomAppBar(context),
+                    body: stateManager.pageMainDevicesNotifier.roomView
+                        ? RoomsList(
+                        rooms: stateManager.pageMainDevicesNotifier.myRooms)
+                        : Column(children: [
+                    (stateManager.appView == 'home' &&
+                        !stateManager
+                        .pageMainDevicesNotifier.isSetupRequired)
+                        ? GroupsList(
+                        groups:
+                        stateManager.pageMainDevicesNotifier.myGroups)
+                        : const SizedBox(
+                      height: 1,
+                    ),
+                    if ((stateManager.pageMainDevicesNotifier.newDevicesAvailable
+                    >0) && stateManager.pageMainDevicesNotifier.roomFilter=='') Padding(
+                      padding: const EdgeInsets.fromLTRB(12, 5, 12, 5),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            stateManager.newDevicesClicked(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            minimumSize: Size(double.infinity,
+                                50), // Set minimum width and height
+                          ),
+                          child: Text('new_devices_available'.i18n()+' ('+stateManager.pageMainDevicesNotifier.newDevicesAvailable.toString()+')')),
+                    ),
+            Expanded(
+            child: stateManager
+                .pageMainDevicesNotifier.isSetupRequired
+            ? Center(
+        child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: GestureDetector(
+                    onTap: () {
+                      stateManager.openSettings(
+                          context, "");
+                    },
+                    child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                            const BorderRadius.all(
+                              Radius.circular(20),
                             ),
-                      Expanded(
-                          child: stateManager
-                                  .pageMainDevicesNotifier.isSetupRequired
-                              ? Center(
-                                child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(20.0),
-                                          child: GestureDetector(
-                                              onTap: () {
-                                                stateManager.openSettings(
-                                                    context, "");
-                                              },
-                                              child: Container(
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      borderRadius:
-                                                          const BorderRadius.all(
-                                                        Radius.circular(20),
-                                                      ),
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          color: const Color(
-                                                                  0xffb9cbe8)
-                                                              .withOpacity(0.6),
-                                                          blurRadius: 11,
-                                                          offset: Offset(0,
-                                                              4), // Shadow position
-                                                        ),
-                                                      ]),
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(
-                                                        18.0),
-                                                    child: Text(
-                                                        'setup_required'.i18n()),
-                                                  ))),
-                                        ),
-                                        Text('setup_or'.i18n()),
-                                        Padding(
-                                          padding: const EdgeInsets.all(20.0),
-                                          child: GestureDetector(
-                                              onTap: () {
-                                                stateManager.openSettings(
-                                                    context, "login");
-                                              },
-                                              child: Container(
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      borderRadius:
-                                                          const BorderRadius.all(
-                                                        Radius.circular(20),
-                                                      ),
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          color: const Color(
-                                                                  0xffb9cbe8)
-                                                              .withOpacity(0.6),
-                                                          blurRadius: 11,
-                                                          offset: Offset(0,
-                                                              4), // Shadow position
-                                                        ),
-                                                      ]),
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(
-                                                        18.0),
-                                                    child: Text(
-                                                        'setup_login'.i18n()),
-                                                  ))),
-                                        ),
-                                      Text('setup_or'.i18n()),
-                                      Padding(
-                                        padding: const EdgeInsets.all(20.0),
-                                        child: GestureDetector(
-                                            onTap: () {
-                                              stateManager.demoSetup();
-                                            },
-                                            child: Container(
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                    const BorderRadius.all(
-                                                      Radius.circular(20),
-                                                    ),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: const Color(
-                                                            0xffb9cbe8)
-                                                            .withOpacity(0.6),
-                                                        blurRadius: 11,
-                                                        offset: Offset(0,
-                                                            4), // Shadow position
-                                                      ),
-                                                    ]),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      18.0),
-                                                  child: Text(
-                                                      'setup_demo'.i18n()),
-                                                ))),
-                                      ),
-                                      ]),
-                              )
-                              : DevicesList(
-                                  devices: stateManager
-                                      .pageMainDevicesNotifier.myDevices))
-                    ]),
-            ),
-          ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(
+                                    0xffb9cbe8)
+                                    .withOpacity(0.6),
+                                blurRadius: 11,
+                                offset: Offset(0,
+                                    4), // Shadow position
+                              ),
+                            ]),
+                        child: Padding(
+                          padding: const EdgeInsets.all(
+                              18.0),
+                          child: Text(
+                              'setup_required'.i18n()),
+                        ))),
+              ),
+              Text('setup_or'.i18n()),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: GestureDetector(
+                    onTap: () {
+                      stateManager.openSettings(
+                          context, "login");
+                    },
+                    child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                            const BorderRadius.all(
+                              Radius.circular(20),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(
+                                    0xffb9cbe8)
+                                    .withOpacity(0.6),
+                                blurRadius: 11,
+                                offset: Offset(0,
+                                    4), // Shadow position
+                              ),
+                            ]),
+                        child: Padding(
+                          padding: const EdgeInsets.all(
+                              18.0),
+                          child: Text(
+                              'setup_login'.i18n()),
+                        ))),
+              ),
+              Text('setup_or'.i18n()),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: GestureDetector(
+                    onTap: () {
+                      stateManager.demoSetup();
+                    },
+                    child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                            const BorderRadius.all(
+                              Radius.circular(20),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(
+                                    0xffb9cbe8)
+                                    .withOpacity(0.6),
+                                blurRadius: 11,
+                                offset: Offset(0,
+                                    4), // Shadow position
+                              ),
+                            ]),
+                        child: Padding(
+                          padding: const EdgeInsets.all(
+                              18.0),
+                          child: Text(
+                              'setup_demo'.i18n()),
+                        ))),
+              ),
+            ]),
+        )
+            : DevicesList(
+        devices: stateManager
+            .pageMainDevicesNotifier.myDevices))
+        ]),
+        ),
+        ),
         );
       },
     );

@@ -59,7 +59,8 @@ class _ConfigureDevicePageState extends State<PageConfigureDevice> {
                             stateManager.deviceEditClicked(context);
                           },
                           style: ElevatedButton.styleFrom(
-                            minimumSize: Size(double.infinity, 50), // Set minimum width and height
+                            minimumSize: Size(double.infinity,
+                                50), // Set minimum width and height
                           ),
                           child: Text('device_edit_title_room'.i18n()),
                         ),
@@ -71,9 +72,18 @@ class _ConfigureDevicePageState extends State<PageConfigureDevice> {
                             stateManager.deviceScheduleClicked(context);
                           },
                           style: ElevatedButton.styleFrom(
-                            minimumSize: Size(double.infinity, 50), // Set minimum width and height
+                            minimumSize: Size(double.infinity,
+                                50), // Set minimum width and height
                           ),
-                          child: Text('device_schedule'.i18n()),
+                          child: Text('device_schedule'.i18n()+(stateManager.pageConfigureDeviceNotifier.myDevice
+                              .scheduleTotal >
+                              0
+                              ? ' (' +
+                              stateManager.pageConfigureDeviceNotifier
+                                  .myDevice.scheduleTotal
+                                  .toString() +
+                              ')'
+                              : '' )),
                         ),
                         SizedBox(
                           height: 20,
@@ -83,9 +93,19 @@ class _ConfigureDevicePageState extends State<PageConfigureDevice> {
                             stateManager.deviceAutomationClicked(context);
                           },
                           style: ElevatedButton.styleFrom(
-                            minimumSize: Size(double.infinity, 50), // Set minimum width and height
+                            minimumSize: Size(double.infinity,
+                                50), // Set minimum width and height
                           ),
-                          child: Text('device_automation_rules'.i18n()),
+                          child: Text('device_automation_rules'.i18n() +
+                              (stateManager.pageConfigureDeviceNotifier.myDevice
+                                          .linksTotal >
+                                      0
+                                  ? ' (' +
+                                      stateManager.pageConfigureDeviceNotifier
+                                          .myDevice.linksTotal
+                                          .toString() +
+                                      ')'
+                                  : '' )),
                         ),
                         SizedBox(
                           height: 20,
@@ -95,7 +115,8 @@ class _ConfigureDevicePageState extends State<PageConfigureDevice> {
                             stateManager.deviceAdvancedConfigClicked();
                           },
                           style: ElevatedButton.styleFrom(
-                            minimumSize: Size(double.infinity, 50), // Set minimum width and height
+                            minimumSize: Size(double.infinity,
+                                50), // Set minimum width and height
                           ),
                           child: Text('device_advanced_config'.i18n()),
                         ),

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:home_app/models/device_schedule.dart';
-import 'package:home_app/utils/logging.dart';
 import 'package:intl/intl.dart';
 import 'package:localization/localization.dart';
 import 'package:time_picker_spinner_pop_up/time_picker_spinner_pop_up.dart';
