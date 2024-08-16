@@ -17,6 +17,14 @@ class DeviceSensorPower extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String deviceValueString = '';
+    double deviceValue = double.parse(properties["value"] ?? '0');
+    if (deviceValue>1000) {
+      deviceValueString = (deviceValue/1000).toStringAsFixed(2)+' kW';
+    } else {
+      deviceValueString = deviceValue.toString()+' W';
+    }
+
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       child: Row(
@@ -30,7 +38,7 @@ class DeviceSensorPower extends StatelessWidget {
               /*1*/
               child: SizedBox(width: 10)),
           DeviceValue(
-              value: (properties["value"] ?? '') + ' W',
+              value: deviceValueString,
               valueState: properties["status"] ?? '')
         ],
       ),

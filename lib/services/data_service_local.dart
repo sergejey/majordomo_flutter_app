@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:home_app/models/chat_message.dart';
 import 'package:home_app/models/device_links.dart';
 import 'package:home_app/models/device_schedule.dart';
 import 'package:home_app/utils/logging.dart';
@@ -391,6 +392,54 @@ class DataServiceLocal extends DataService {
       dprint('General Error: $e');
     }
     return [];
+  }
+
+  @override
+  Future<bool?> postMessage(String message) async {
+    final baseURL = getBaseURL();
+    if (baseURL != "") {
+      final apiURL = '$baseURL/api.php/messages';
+      dprint("Posting messages to $apiURL");
+      Map<String, dynamic>? params = {
+        'message': message,
+      };
+      String response = await postURL(apiURL, params);
+      dprint("Response: " + response);
+      if (response != '') {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @override
+  Future<(List<ChatMessage>, ChatUser)> fetchMessages() async {
+    List<ChatMessage> messagesReturned = [];
+    ChatUser userReturned = ChatUser(id: "0", name: "User");
+
+    final baseURL = getBaseURL();
+    if (baseURL != "") {
+      final apiURL = '$baseURL/api.php/messages';
+      dprint("Fetching messages from $apiURL ${DateTime.now().toString()}");
+      try {
+        final response = await getURL(apiURL);
+        if (response != '') {
+          final parsedMessages =
+              jsonDecode(response)["messages"].cast<Map<String, dynamic>>();
+
+          messagesReturned = parsedMessages
+              .map<ChatMessage>((json) => ChatMessage.fromJson(json))
+              .toList();
+
+          final parsedUser =
+              jsonDecode(response)["user"] as Map<String, dynamic>;
+          userReturned = ChatUser.fromJson(parsedUser);
+        }
+      } catch (e) {
+        dprint('General Error: $e');
+      }
+    }
+    return (messagesReturned, userReturned);
   }
 
   @override

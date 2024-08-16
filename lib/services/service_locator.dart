@@ -14,6 +14,8 @@ import 'package:home_app/pages/page_settings_logic.dart';
 import 'package:home_app/pages/page_modes_logic.dart';
 import 'package:home_app/pages/page_profiles_logic.dart';
 
+import 'package:home_app/pages/page_chat_logic.dart';
+
 final getIt = GetIt.instance;
 
 void setupGetIt() {
@@ -29,4 +31,5 @@ void setupGetIt() {
   getIt.registerLazySingleton<ModesPageManager>(() => ModesPageManager());
   getIt.registerLazySingleton<SettingsPageManager>(() => SettingsPageManager());
   getIt.registerLazySingleton<ProfilesPageManager>(() => ProfilesPageManager());
+  getIt.registerLazySingleton<ChatPageManager>(() => ChatPageManager());
 }

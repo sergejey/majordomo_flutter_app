@@ -127,5 +127,7 @@
   "link_target_device": "Целевое устройство",
   "link_enabled": "Связь активна",
   "new_device": "Новое устройство",
-  "new_devices_available": "Доступны новые устройства"
+  "new_devices_available": "Доступны новые устройства",
+  "chat": "Сообщения",
+  "chat_placeholder": "Сообщение..."
 }

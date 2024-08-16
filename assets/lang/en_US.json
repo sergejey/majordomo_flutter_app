@@ -127,5 +127,7 @@
   "link_target_device": "Target device",
   "link_enabled": "Link is active",
   "new_device": "New device",
-  "new_devices_available": "New devices available"
+  "new_devices_available": "New devices available",
+  "chat": "Messages",
+  "chat_placeholder": "Message..."
 }

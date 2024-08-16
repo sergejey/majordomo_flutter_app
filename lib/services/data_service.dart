@@ -7,6 +7,7 @@ import 'package:home_app/models/room.dart';
 import 'package:home_app/models/operational_mode.dart';
 import 'package:home_app/models/system_state.dart';
 import 'package:home_app/models/history_record.dart';
+import 'package:home_app/models/chat_message.dart';
 
 import 'package:home_app/services/preferences_service.dart';
 import 'package:home_app/services/service_locator.dart';
@@ -56,6 +57,9 @@ abstract class DataService {
   Future<(List<DeviceLink>,List<DeviceAvailableLink>)> fetchDeviceLinks(String deviceId);
   Future<bool?> deleteLinkItem(String deviceId, DeviceLink item);
   Future<bool?> updateLinkItem(String deviceId, DeviceLink item);
+
+  Future<(List<ChatMessage>, ChatUser)> fetchMessages();
+  Future<bool?> postMessage(String message);
 
   Future<List<HistoryRecord>> getPropertyHistory(
       String objectName, String property,
