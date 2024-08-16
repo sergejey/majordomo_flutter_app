@@ -24,6 +24,9 @@ class ActionsPageManager {
                 return SimpleDialogOption(
                   child: Text(value.title),
                   onPressed: () {
+
+                    Navigator.pop(context, true);
+
                     DeviceLink item = DeviceLink(
                         id: 'new',
                         device1_id: pageActionsNotifier.deviceId,

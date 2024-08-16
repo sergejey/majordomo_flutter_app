@@ -1,14 +1,10 @@
 import 'dart:async';
 
-import 'dart:convert';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:home_app/models/chat_message.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/services/data_service.dart';
-import 'package:home_app/utils/logging.dart';
 
 class PageChatNotifier extends ValueNotifier<String> {
   PageChatNotifier() : super('');

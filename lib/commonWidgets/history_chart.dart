@@ -13,8 +13,7 @@ class HistoryChart extends StatefulWidget {
       required this.records,
       this.intervalType = '',
       this.chartType = 'line',
-      this.historyType = 'onoff'
-      });
+      this.historyType = 'onoff'});
 
   final List<HistoryRecord> records;
   final String chartType;
@@ -115,6 +114,29 @@ class _HistoryChartState extends State<HistoryChart> {
                             HorizontalLine(
                                 y: double.parse(avgValue),
                                 label: HorizontalLineLabel(
+                                    style: TextStyle(
+                                        inherit: true,
+                                        color: Theme.of(context)
+                                            .primaryColor
+                                            .withOpacity(0.8),
+                                        shadows: [
+                                          Shadow(
+                                              // bottomLeft
+                                              offset: Offset(-1, -1),
+                                              color: Colors.white),
+                                          Shadow(
+                                              // bottomRight
+                                              offset: Offset(1, -1),
+                                              color: Colors.white),
+                                          Shadow(
+                                              // topRight
+                                              offset: Offset(1, 1),
+                                              color: Colors.white),
+                                          Shadow(
+                                              // topLeft
+                                              offset: Offset(-1, 1),
+                                              color: Colors.white),
+                                        ]),
                                     show: true,
                                     alignment: Alignment.topRight,
                                     labelResolver: (line) =>
@@ -132,7 +154,27 @@ class _HistoryChartState extends State<HistoryChart> {
                           ),
                           barTouchData: BarTouchData(
                               touchTooltipData: BarTouchTooltipData(
+                                  tooltipBorder: BorderSide(
+                                      color: Theme.of(context).primaryColor),
                                   getTooltipColor: (_) => Colors.white,
+                                  getTooltipItem: (
+                                    BarChartGroupData group,
+                                    int groupIndex,
+                                    BarChartRodData rod,
+                                    int rodIndex,
+                                  ) {
+                                    return BarTooltipItem(
+                                        rod.toY.toString() + "\n", TextStyle(),
+                                        children: [
+                                          TextSpan(
+                                              text:
+                                                  DateFormat('yyyy-MM-dd kk:mm')
+                                                      .format(widget
+                                                          .records[group.x]
+                                                          .data_tm),
+                                              style: TextStyle(fontSize: 10))
+                                        ]);
+                                  },
                                   fitInsideVertically: true,
                                   fitInsideHorizontally: true))))),
                 if (widget.chartType == 'line')
@@ -144,6 +186,29 @@ class _HistoryChartState extends State<HistoryChart> {
                           label: HorizontalLineLabel(
                               show: true,
                               alignment: Alignment.topRight,
+                              style: TextStyle(
+                                  inherit: true,
+                                  color: Theme.of(context)
+                                      .primaryColor
+                                      .withOpacity(0.8),
+                                  shadows: [
+                                    Shadow(
+                                        // bottomLeft
+                                        offset: Offset(-1, -1),
+                                        color: Colors.white),
+                                    Shadow(
+                                        // bottomRight
+                                        offset: Offset(1, -1),
+                                        color: Colors.white),
+                                    Shadow(
+                                        // topRight
+                                        offset: Offset(1, 1),
+                                        color: Colors.white),
+                                    Shadow(
+                                        // topLeft
+                                        offset: Offset(-1, 1),
+                                        color: Colors.white),
+                                  ]),
                               labelResolver: (line) =>
                                   "Avg: ${avgValue} / Min: ${minValue} / Max: ${maxValue}"),
                           color: Theme.of(context).primaryColor.withOpacity(0.8),
@@ -162,10 +227,29 @@ class _HistoryChartState extends State<HistoryChart> {
                     lineTouchData: LineTouchData(
                         enabled: true,
                         touchTooltipData: LineTouchTooltipData(
-                          fitInsideHorizontally: true,
-                          fitInsideVertically: true,
-                          getTooltipColor: (_) => Colors.white,
-                        )),
+                            fitInsideHorizontally: true,
+                            fitInsideVertically: true,
+                            getTooltipColor: (_) => Colors.white,
+                            tooltipBorder: BorderSide(
+                                color: Theme.of(context).primaryColor),
+                            getTooltipItems: (touchedSpots) {
+                              return touchedSpots.map((touchedSpot) {
+                                return LineTooltipItem(
+                                    touchedSpot.y.toString() + "\n",
+                                    TextStyle(),
+                                    children: [
+                                      TextSpan(
+                                          text: DateFormat('yyyy-MM-dd kk:mm')
+                                              .format(DateTime
+                                                  .fromMillisecondsSinceEpoch(
+                                                      (touchedSpot.x *
+                                                              1000 *
+                                                              60)
+                                                          .toInt())),
+                                          style: TextStyle(fontSize: 10))
+                                    ]);
+                              }).toList();
+                            })),
                     titlesData: FlTitlesData(
                       bottomTitles: getBottomTitles(),
                       topTitles: noTitlesWidget(),
@@ -183,7 +267,8 @@ class _HistoryChartState extends State<HistoryChart> {
                     ],
                   ))),
                 if (widget.chartType == 'history')
-                  Expanded(child: ObjectHistory(
+                  Expanded(
+                      child: ObjectHistory(
                     records: widget.records,
                     valueType: widget.historyType,
                   ))

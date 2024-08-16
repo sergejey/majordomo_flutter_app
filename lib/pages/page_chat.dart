@@ -3,7 +3,6 @@ import 'package:home_app/pages/page_chat_logic.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:localization/localization.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
-import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 
 class PageChat extends StatefulWidget {

@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
-import 'package:home_app/pages/page_chat.dart';
 import 'package:home_app/pages/page_chat_notifier.dart';
 
 class ChatPageManager {
