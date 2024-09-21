@@ -38,24 +38,23 @@ class _ActionsPageState extends State<PageActions> {
                 padding: const EdgeInsets.all(16.0),
                 child: Container(
                   decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.primary,
                       borderRadius: const BorderRadius.all(
                         Radius.circular(20),
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xffb9cbe8).withOpacity(0.6),
-                          blurRadius: 11,
+                          color: Theme.of(context).colorScheme.secondary.withOpacity(0.2),
+                          blurRadius: 6,
                           offset: Offset(0, 4), // Shadow position
                         ),
                       ]),
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
-                    child: (stateManager
-                                .pageActionsNotifier.availableLinks.length ==
-                            0 && stateManager
-                        .pageActionsNotifier.links.length ==
-                        0)
+                    child: (stateManager.pageActionsNotifier.availableLinks
+                                    .length ==
+                                0 &&
+                            stateManager.pageActionsNotifier.links.length == 0)
                         ? Center(child: Text('not_available'.i18n()))
                         : Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,6 +67,8 @@ class _ActionsPageState extends State<PageActions> {
                                     stateManager.addLinkClicked(context);
                                   },
                                   style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        Theme.of(context).colorScheme.onPrimary,
                                     minimumSize: Size(double.infinity,
                                         50), // Set minimum width and height
                                   ),

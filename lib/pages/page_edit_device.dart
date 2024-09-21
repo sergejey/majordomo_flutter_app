@@ -42,14 +42,14 @@ class _EditDevicePageState extends State<PageEditDevice> {
                 padding: const EdgeInsets.all(16.0),
                 child: Container(
                   decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.primary,
                       borderRadius: const BorderRadius.all(
                         Radius.circular(20),
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xffb9cbe8).withOpacity(0.6),
-                          blurRadius: 11,
+                          color: Theme.of(context).colorScheme.secondary.withOpacity(0.2),
+                          blurRadius: 6,
                           offset: Offset(0, 4), // Shadow position
                         ),
                       ]),
@@ -63,6 +63,7 @@ class _EditDevicePageState extends State<PageEditDevice> {
                           TextFormField(
                             controller: myDeviceTitleController,
                             decoration: InputDecoration(
+                              fillColor: Theme.of(context).colorScheme.onPrimary,
                               labelText: 'device_title'.i18n(),
                             ),
                             validator: (value) {
@@ -107,6 +108,9 @@ class _EditDevicePageState extends State<PageEditDevice> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Theme.of(context).colorScheme.onPrimary,
+                                ),
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
                                     stateManager.newDeviceTitle =
@@ -118,6 +122,9 @@ class _EditDevicePageState extends State<PageEditDevice> {
                               ),
                               SizedBox(width: 20),
                               ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Theme.of(context).colorScheme.onPrimary,
+                                ),
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },

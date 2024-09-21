@@ -21,15 +21,17 @@ class DeviceThermostat extends StatelessWidget {
       children: [
         DeviceIcon(
           deviceType: 'thermostat',
+          deviceSubType:
+              (properties["ncno"] ?? '') == 'no' ? 'cooling' : 'heating',
           deviceState: properties["relay_status"],
           deviceTitle: title,
         ),
-        Expanded(child: SizedBox(width:10)),
+        Expanded(child: SizedBox(width: 10)),
         Container(
           decoration: BoxDecoration(
             color: properties["relay_status"] == "1"
-                ? Colors.yellow
-                : Colors.white,
+                ? Theme.of(context).colorScheme.tertiary
+                : Theme.of(context).primaryColor,
             borderRadius: const BorderRadius.all(
               Radius.circular(6),
             ),

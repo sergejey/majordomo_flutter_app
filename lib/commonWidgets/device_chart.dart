@@ -6,19 +6,19 @@ import 'package:home_app/services/data_service.dart';
 import 'package:localization/localization.dart';
 
 class DeviceChart extends StatefulWidget {
-  const DeviceChart({super.key,
-    required this.deviceObject,
-    required this.deviceProperty,
-    this.devicePropertyHour = '',
-    this.devicePropertyDay = '',
-    this.devicePropertyWeek = '',
-    this.devicePropertyMonth = '',
-    this.devicePropertyYear = '',
-    this.chartType = 'line',
-    this.defaultPeriod = 'hour',
-    this.periodsEnabled = const ['hour', 'day', 'week', 'month'],
-    this.historyType = 'onoff'
-  });
+  const DeviceChart(
+      {super.key,
+      required this.deviceObject,
+      required this.deviceProperty,
+      this.devicePropertyHour = '',
+      this.devicePropertyDay = '',
+      this.devicePropertyWeek = '',
+      this.devicePropertyMonth = '',
+      this.devicePropertyYear = '',
+      this.chartType = 'line',
+      this.defaultPeriod = 'hour',
+      this.periodsEnabled = const ['hour', 'day', 'week', 'month'],
+      this.historyType = 'onoff'});
 
   final String deviceObject;
   final String deviceProperty;
@@ -119,14 +119,14 @@ class _DeviceChartState extends State<DeviceChart> {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.primary,
             borderRadius: const BorderRadius.all(
               Radius.circular(20),
             ),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xffb9cbe8).withOpacity(0.6),
-                blurRadius: 11,
+                color: Theme.of(context).colorScheme.secondary.withOpacity(0.2),
+                blurRadius: 6,
                 offset: Offset(0, 4), // Shadow position
               ),
             ]),
@@ -178,7 +178,12 @@ class _DeviceChartState extends State<DeviceChart> {
                 ],
               ),
               SizedBox(height: 10),
-              HistoryChart(records: valueHistory, intervalType: chartPeriod, chartType: widget.chartType, historyType: widget.historyType,)
+              HistoryChart(
+                records: valueHistory,
+                intervalType: chartPeriod,
+                chartType: widget.chartType,
+                historyType: widget.historyType,
+              )
             ],
           ),
         ));
@@ -208,13 +213,8 @@ class PeriodWidget extends StatelessWidget {
       child: Container(
           decoration: BoxDecoration(
               color: selected
-                  ? Theme
-                  .of(context)
-                  .primaryColor
-                  : Theme
-                  .of(context)
-                  .colorScheme
-                  .onPrimary,
+                  ? Theme.of(context).colorScheme.tertiary
+                  : Theme.of(context).colorScheme.primary,
               borderRadius: const BorderRadius.all(
                 Radius.circular(10),
               )),
@@ -223,13 +223,8 @@ class PeriodWidget extends StatelessWidget {
             child: Text(title,
                 style: TextStyle(
                     color: selected
-                        ? Theme
-                        .of(context)
-                        .colorScheme
-                        .onPrimary
-                        : Theme
-                        .of(context)
-                        .primaryColor)),
+                        ? Theme.of(context).colorScheme.onTertiary
+                        : Theme.of(context).colorScheme.onPrimary)),
           )),
     );
   }

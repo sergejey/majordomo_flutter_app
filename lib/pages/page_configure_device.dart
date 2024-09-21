@@ -38,14 +38,14 @@ class _ConfigureDevicePageState extends State<PageConfigureDevice> {
                 padding: const EdgeInsets.all(16.0),
                 child: Container(
                   decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.primary,
                       borderRadius: const BorderRadius.all(
                         Radius.circular(20),
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xffb9cbe8).withOpacity(0.6),
-                          blurRadius: 11,
+                          color: Theme.of(context).colorScheme.secondary.withOpacity(0.2),
+                          blurRadius: 6,
                           offset: Offset(0, 4), // Shadow position
                         ),
                       ]),
@@ -59,6 +59,7 @@ class _ConfigureDevicePageState extends State<PageConfigureDevice> {
                             stateManager.deviceEditClicked(context);
                           },
                           style: ElevatedButton.styleFrom(
+                            backgroundColor: Theme.of(context).colorScheme.onPrimary,
                             minimumSize: Size(double.infinity,
                                 50), // Set minimum width and height
                           ),
@@ -72,6 +73,7 @@ class _ConfigureDevicePageState extends State<PageConfigureDevice> {
                             stateManager.deviceScheduleClicked(context);
                           },
                           style: ElevatedButton.styleFrom(
+                            backgroundColor: Theme.of(context).colorScheme.onPrimary,
                             minimumSize: Size(double.infinity,
                                 50), // Set minimum width and height
                           ),
@@ -93,6 +95,7 @@ class _ConfigureDevicePageState extends State<PageConfigureDevice> {
                             stateManager.deviceAutomationClicked(context);
                           },
                           style: ElevatedButton.styleFrom(
+                            backgroundColor: Theme.of(context).colorScheme.onPrimary,
                             minimumSize: Size(double.infinity,
                                 50), // Set minimum width and height
                           ),
@@ -115,6 +118,7 @@ class _ConfigureDevicePageState extends State<PageConfigureDevice> {
                             stateManager.deviceAdvancedConfigClicked();
                           },
                           style: ElevatedButton.styleFrom(
+                            backgroundColor: Theme.of(context).colorScheme.onPrimary,
                             minimumSize: Size(double.infinity,
                                 50), // Set minimum width and height
                           ),

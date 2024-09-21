@@ -19,14 +19,14 @@ class LinkItem extends StatelessWidget {
           margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
           width: double.infinity,
           decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.primary,
               borderRadius: const BorderRadius.all(
                 Radius.circular(20),
               ),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xffb9cbe8).withOpacity(0.6),
-                  blurRadius: 11,
+                  color: Theme.of(context).colorScheme.secondary.withOpacity(0.2),
+                  blurRadius: 6,
                   offset: Offset(0, 4), // Shadow position
                 ),
               ]),

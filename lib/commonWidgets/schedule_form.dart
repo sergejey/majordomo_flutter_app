@@ -145,8 +145,8 @@ class _ScheduleFormState extends State<ScheduleForm> {
                         margin: const EdgeInsets.fromLTRB(0, 0, 3, 0),
                         decoration: BoxDecoration(
                           color: weekDaysSelected.contains(entry.key.toString())
-                              ? Theme.of(context).colorScheme.primary
-                              : Theme.of(context).colorScheme.onPrimary,
+                              ? Theme.of(context).colorScheme.tertiary
+                              : Theme.of(context).colorScheme.primary,
                           border:
                               Border.all(color: Theme.of(context).primaryColor),
                           borderRadius: const BorderRadius.all(
@@ -155,8 +155,8 @@ class _ScheduleFormState extends State<ScheduleForm> {
                         ),
                         child: Text(entry.value,style: TextStyle(
                           color: weekDaysSelected.contains(entry.key.toString())
-                              ? Theme.of(context).colorScheme.onPrimary
-                              : Theme.of(context).colorScheme.primary,
+                              ? Theme.of(context).colorScheme.onTertiary
+                              : Theme.of(context).colorScheme.onPrimary,
                         ),),
                       ),
                     ))

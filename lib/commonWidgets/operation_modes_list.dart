@@ -16,11 +16,11 @@ class OperationalModesList extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.primary,
             borderRadius: BorderRadius.all(Radius.circular(20)),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xffb9cbe8).withOpacity(0.6),
+                color: Theme.of(context).colorScheme.secondary.withOpacity(0.2),
                 blurRadius: 5,
                 offset: Offset(0, 4), // Shadow position
               ),
@@ -34,55 +34,55 @@ class OperationalModesList extends StatelessWidget {
                     spacing: 0,
                     children: List.generate(modes.length, (index) {
                       Icon modeIcon = Icon(Icons.question_mark,
-                          color: Theme.of(context).colorScheme.secondary);
+                          color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.3));
                       if (modes[index].object == 'EconomMode') {
                         modeIcon = modes[index].active
                             ? Icon(Icons.eco,
-                                color: Theme.of(context).primaryColor)
+                                color: Theme.of(context).colorScheme.tertiary)
                             : Icon(Icons.eco_outlined,
-                                color: Theme.of(context).colorScheme.secondary);
+                                color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.3));
                       } else if (modes[index].object == 'NobodyHomeMode') {
                         modeIcon = modes[index].active
                             ? Icon(Icons.person_off_outlined,
                                 color: Colors.green)
                             : Icon(Icons.person,
-                                color: Theme.of(context).colorScheme.secondary);
+                                color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.3));
                       } else if (modes[index].object == 'SecurityArmedMode') {
                         modeIcon = modes[index].active
                             ? Icon(Icons.security,
-                                color: Theme.of(context).primaryColor)
+                                color: Theme.of(context).colorScheme.tertiary)
                             : Icon(Icons.security,
-                                color: Theme.of(context).colorScheme.secondary);
+                                color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.3));
                       } else if (modes[index].object == 'GuestsMode') {
                         modeIcon = modes[index].active
                             ? Icon(Icons.people_outline,
-                                color: Theme.of(context).primaryColor)
+                                color: Theme.of(context).colorScheme.tertiary)
                             : Icon(Icons.people_outline,
-                                color: Theme.of(context).colorScheme.secondary);
+                                color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.3));
                       } else if (modes[index].object == 'DarknessMode') {
                         modeIcon = modes[index].active
                             ? Icon(Icons.nightlight,
-                                color: Theme.of(context).primaryColor)
+                                color: Theme.of(context).colorScheme.tertiary)
                             : Icon(Icons.sunny,
-                                color: Theme.of(context).colorScheme.secondary);
+                                color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.3));
                       } else if (modes[index].object == 'NightMode') {
                         modeIcon = modes[index].active
                             ? Icon(Icons.bed,
-                                color: Theme.of(context).primaryColor)
+                                color: Theme.of(context).colorScheme.tertiary)
                             : Icon(Icons.bed,
-                                color: Theme.of(context).colorScheme.secondary);
+                                color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.3));
                       } else if (modes[index].object == 'connectionLocal') {
                         modeIcon = modes[index].active
                             ? Icon(Icons.wifi,
-                                color: Theme.of(context).primaryColor)
+                                color: Theme.of(context).colorScheme.tertiary)
                             : Icon(Icons.wifi,
-                                color: Theme.of(context).colorScheme.secondary);
+                                color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.3));
                       } else if (modes[index].object == 'connectionRemote') {
                         modeIcon = modes[index].active
                             ? Icon(Icons.network_cell,
-                                color: Theme.of(context).primaryColor)
+                                color: Theme.of(context).colorScheme.tertiary)
                             : Icon(Icons.network_cell,
-                                color: Theme.of(context).colorScheme.secondary);
+                                color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.3));
                       }
                       return GestureDetector(
                           onTap: () {

@@ -30,13 +30,13 @@ class DeviceMotion extends StatelessWidget {
           child: Container(
               decoration: BoxDecoration(
                 color:
-                    properties["status"] == "1" ? Theme.of(context).primaryColor : Colors.white,
+                    properties["status"] == "1" ? Theme.of(context).colorScheme.tertiary : Theme.of(context).colorScheme.primary,
                 borderRadius: const BorderRadius.all(
                   Radius.circular(6),
                 ),
               ),
               child: DefaultTextStyle(
-                style: TextStyle(color:properties["status"] == "1" ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).primaryColor),
+                style: TextStyle(color:properties["status"] == "1" ? Theme.of(context).colorScheme.onTertiary : Theme.of(context).colorScheme.onPrimary),
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
                   child: TextUpdated(updated: properties["updated"] ?? ""),

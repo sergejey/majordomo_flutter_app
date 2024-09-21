@@ -43,7 +43,7 @@ class _HistoryChartState extends State<HistoryChart> {
     double width = 22,
     List<int> showTooltips = const [],
   }) {
-    barColor ??= Theme.of(context).primaryColor;
+    barColor ??= Theme.of(context).colorScheme.onPrimary;
     return BarChartGroupData(
       x: x,
       barRods: [
@@ -117,31 +117,32 @@ class _HistoryChartState extends State<HistoryChart> {
                                     style: TextStyle(
                                         inherit: true,
                                         color: Theme.of(context)
-                                            .primaryColor
+                                            .colorScheme
+                                            .onPrimary
                                             .withOpacity(0.8),
                                         shadows: [
                                           Shadow(
                                               // bottomLeft
                                               offset: Offset(-1, -1),
-                                              color: Colors.white),
+                                              color: Theme.of(context).colorScheme.primary),
                                           Shadow(
                                               // bottomRight
                                               offset: Offset(1, -1),
-                                              color: Colors.white),
+                                              color: Theme.of(context).colorScheme.primary),
                                           Shadow(
                                               // topRight
                                               offset: Offset(1, 1),
-                                              color: Colors.white),
+                                              color: Theme.of(context).colorScheme.primary),
                                           Shadow(
                                               // topLeft
                                               offset: Offset(-1, 1),
-                                              color: Colors.white),
+                                              color: Theme.of(context).colorScheme.primary),
                                         ]),
                                     show: true,
                                     alignment: Alignment.topRight,
                                     labelResolver: (line) =>
                                         "Avg: ${avgValue} / Min: ${minValue} / Max: ${maxValue}"),
-                                color: Theme.of(context).primaryColor.withOpacity(0.8),
+                                color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.8),
                                 dashArray: [10, 10])
                           ]),
                           barGroups: barData,
@@ -154,9 +155,9 @@ class _HistoryChartState extends State<HistoryChart> {
                           ),
                           barTouchData: BarTouchData(
                               touchTooltipData: BarTouchTooltipData(
+                                  getTooltipColor: (_) => Theme.of(context).primaryColor,
                                   tooltipBorder: BorderSide(
-                                      color: Theme.of(context).primaryColor),
-                                  getTooltipColor: (_) => Colors.white,
+                                      color: Theme.of(context).colorScheme.onPrimary),
                                   getTooltipItem: (
                                     BarChartGroupData group,
                                     int groupIndex,
@@ -189,29 +190,29 @@ class _HistoryChartState extends State<HistoryChart> {
                               style: TextStyle(
                                   inherit: true,
                                   color: Theme.of(context)
-                                      .primaryColor
+                                      .colorScheme.onPrimary
                                       .withOpacity(0.8),
                                   shadows: [
                                     Shadow(
                                         // bottomLeft
                                         offset: Offset(-1, -1),
-                                        color: Colors.white),
+                                        color: Theme.of(context).colorScheme.primary),
                                     Shadow(
                                         // bottomRight
                                         offset: Offset(1, -1),
-                                        color: Colors.white),
+                                        color: Theme.of(context).colorScheme.primary),
                                     Shadow(
                                         // topRight
                                         offset: Offset(1, 1),
-                                        color: Colors.white),
+                                        color: Theme.of(context).colorScheme.primary),
                                     Shadow(
                                         // topLeft
                                         offset: Offset(-1, 1),
-                                        color: Colors.white),
+                                        color: Theme.of(context).colorScheme.primary),
                                   ]),
                               labelResolver: (line) =>
                                   "Avg: ${avgValue} / Min: ${minValue} / Max: ${maxValue}"),
-                          color: Theme.of(context).primaryColor.withOpacity(0.8),
+                          color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.8),
                           dashArray: [10, 10])
                     ]),
                     gridData: FlGridData(show: true),
@@ -229,9 +230,9 @@ class _HistoryChartState extends State<HistoryChart> {
                         touchTooltipData: LineTouchTooltipData(
                             fitInsideHorizontally: true,
                             fitInsideVertically: true,
-                            getTooltipColor: (_) => Colors.white,
+                            getTooltipColor: (_) => Theme.of(context).primaryColor,
                             tooltipBorder: BorderSide(
-                                color: Theme.of(context).primaryColor),
+                                color: Theme.of(context).colorScheme.onPrimary),
                             getTooltipItems: (touchedSpots) {
                               return touchedSpots.map((touchedSpot) {
                                 return LineTooltipItem(
@@ -259,7 +260,7 @@ class _HistoryChartState extends State<HistoryChart> {
                     lineBarsData: [
                       LineChartBarData(
                           isCurved: true,
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           barWidth: 2,
                           isStrokeCapRound: true,
                           dotData: const FlDotData(show: false),

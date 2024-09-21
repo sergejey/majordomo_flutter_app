@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:home_app/pages/page_chat.dart';
 import 'package:home_app/services/service_locator.dart';
 import 'package:home_app/pages/page_main_logic.dart';
@@ -15,6 +16,13 @@ AppBar MainAppBar(context) {
     appBarTitle = stateManager.pageMainDevicesNotifier.currentProfileTitle;
   }
   return AppBar(
+    systemOverlayStyle: SystemUiOverlayStyle(
+        systemNavigationBarColor: Theme.of(context).colorScheme.surface,
+        statusBarColor: Theme.of(context).colorScheme.surface,
+        systemNavigationBarDividerColor: Theme.of(context).colorScheme.surface,
+        systemNavigationBarContrastEnforced: true,
+        systemStatusBarContrastEnforced: true
+    ),
     title: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
@@ -51,11 +59,11 @@ AppBar MainAppBar(context) {
         padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
         child: Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.primary,
               borderRadius: BorderRadius.all(Radius.circular(20)),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xffb9cbe8).withOpacity(0.6),
+                  color: Theme.of(context).colorScheme.secondary.withOpacity(0.2),
                   blurRadius: 5,
                   offset: Offset(0, 4), // Shadow position
                 ),
@@ -84,8 +92,8 @@ AppBar MainAppBar(context) {
                       color: stateManager.pageMainDevicesNotifier
                                   .myOperationalModesFiltered.length >
                               1
-                          ? Theme.of(context).primaryColor
-                          : Theme.of(context).colorScheme.secondary)),
+                          ? Theme.of(context).colorScheme.onPrimary
+                          : Theme.of(context).colorScheme.onPrimary)),
             )),
       ),
     ],

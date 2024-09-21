@@ -44,6 +44,7 @@ class _ModesPageState extends State<PageModes> {
                 title: Text("nav_work_modes".i18n()),
                 bottom: TabBar(
                   isScrollable: true,
+                  labelColor: Theme.of(context).colorScheme.tertiary,
                   tabs: List.generate(
                       stateManager.pageModesNotifier.opModes.length, (index) {
                     OperationalMode opMode =
@@ -182,7 +183,7 @@ class OpModeView extends StatelessWidget {
           Container(
               decoration: BoxDecoration(
                   border: Border.all(
-                    color: opMode.active ? Colors.green : Colors.grey,
+                    color: opMode.active ? Theme.of(context).colorScheme.tertiary : Theme.of(context).colorScheme.onPrimary,
                   ),
                   borderRadius: BorderRadius.all(Radius.circular(20))),
               child: Padding(
@@ -204,10 +205,10 @@ class OpModeView extends StatelessWidget {
                       }
                     : null,
                 style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(Colors.white),
+                  backgroundColor: WidgetStateProperty.all(Theme.of(context).colorScheme.primary),
                 ),
                 child: Text("mode_activate".i18n(),
-                    style: TextStyle(color: Colors.black)),
+                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
               ),
               const SizedBox(width: 15),
               ElevatedButton(
@@ -219,10 +220,10 @@ class OpModeView extends StatelessWidget {
                       }
                     : null,
                 style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(Colors.white),
+                  backgroundColor: WidgetStateProperty.all(Theme.of(context).colorScheme.primary),
                 ),
                 child: Text("mode_deactivate".i18n(),
-                    style: TextStyle(color: Colors.black)),
+                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
               ),
             ],
           ),

@@ -36,8 +36,9 @@ class DeviceRGB extends StatelessWidget {
           width: 40,
           height: 20,
           toggleSize: 15.0,
-          activeColor: Theme.of(context).primaryColor,
-          inactiveColor: Theme.of(context).colorScheme.secondary,
+          toggleColor:  Theme.of(context).colorScheme.primary,
+          activeColor: Theme.of(context).colorScheme.tertiary,
+          inactiveColor: Theme.of(context).colorScheme.onPrimary.withOpacity(0.3),
           borderRadius: 20.0,
           padding: 2.0,
           onToggle: (value) {

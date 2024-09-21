@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:home_app/pages/page_main.dart';
 import 'package:home_app/services/push_notifications.dart';
 import 'package:home_app/services/service_locator.dart';
+import 'package:home_app/services/preferences_service.dart';
 import 'package:localization/localization.dart';
 import 'package:oauth_webauth/oauth_webauth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,11 +28,47 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   Locale? _locale;
+  ThemeMode? _selectedThemeMode;
   final PushNotificationService _notificationService = PushNotificationService();
+
+  Future<void> loadSettings() async {
+    final _preferencesService = getIt<PreferencesService>();
+    await _preferencesService.readAllPreferences();
+    String localeSetting = _preferencesService.getPreference('language')??''; // russian, english
+    if (localeSetting!='') {
+      if (localeSetting == 'russian') {
+        changeLocale(const Locale('ru', 'RU'));
+      }
+      if (localeSetting == 'english') {
+        changeLocale(const Locale('en', 'US'));
+      }
+    }
+    String themeSetting = _preferencesService.getPreference('theme')??''; // dark, light, auto
+    if (themeSetting!='') {
+      if (themeSetting == 'theme_dark') {
+        changeThemeMode(ThemeMode.dark);
+      }
+      if (themeSetting == 'theme_light') {
+        changeThemeMode(ThemeMode.light);
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadSettings();
+  }
 
   changeLocale(Locale locale) {
     setState(() {
       _locale = locale;
+    });
+  }
+
+  changeThemeMode(ThemeMode newThemeMode) {
+    setState(() {
+      _selectedThemeMode = newThemeMode;
     });
   }
 
@@ -40,7 +77,6 @@ class MyAppState extends State<MyApp> {
     LocalJsonLocalization.delegate.directories = ['assets/lang'];
     _notificationService.initialize();
     return MaterialApp(
-
       title: 'MajorDoMo NG',
       locale: _locale,
       localeResolutionCallback: (locale, supportedLocales) {
@@ -64,6 +100,8 @@ class MyAppState extends State<MyApp> {
       ],
       debugShowCheckedModeBanner: false,
       theme: lightAppTheme,
+      darkTheme: darkAppTheme,
+      themeMode: _selectedThemeMode??ThemeMode.system,
       home: const PageMain(title: 'MajorDoMo NG'),
     );
   }

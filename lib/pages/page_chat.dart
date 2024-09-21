@@ -50,8 +50,8 @@ class _ChatPageState extends State<PageChat> {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xffb9cbe8).withOpacity(0.6),
-                          blurRadius: 11,
+                          color: Theme.of(context).colorScheme.secondary.withOpacity(0.2),
+                          blurRadius: 6,
                           offset: Offset(0, 4), // Shadow position
                         ),
                       ]),

@@ -65,16 +65,16 @@ class _DevicePageState extends State<PageDevice> {
                         radius: 20,
                         backgroundColor:
                             stateManager.pageDeviceNotifier.myDevice.favorite
-                                ? Theme.of(context).primaryColor
-                                : Theme.of(context).colorScheme.onPrimary,
+                                ? Theme.of(context).colorScheme.tertiary
+                                : Theme.of(context).colorScheme.primary,
                         child: IconButton(
                           icon: SvgPicture.asset(
                               'assets/navigation/nav_favorite.svg',
                               colorFilter: ColorFilter.mode(
                                   stateManager
                                           .pageDeviceNotifier.myDevice.favorite
-                                      ? Theme.of(context).colorScheme.onPrimary
-                                      : Theme.of(context).primaryColor,
+                                      ? Theme.of(context).colorScheme.onTertiary
+                                      : Theme.of(context).colorScheme.onPrimary,
                                   BlendMode.srcIn)),
                           tooltip: 'Favorite',
                           onPressed: () {
@@ -87,12 +87,12 @@ class _DevicePageState extends State<PageDevice> {
                       child: CircleAvatar(
                         radius: 20,
                         backgroundColor:
-                            Theme.of(context).colorScheme.onPrimary,
+                            Theme.of(context).colorScheme.primary,
                         child: IconButton(
                           icon: SvgPicture.asset(
                               'assets/navigation/nav_settings.svg',
                               colorFilter: ColorFilter.mode(
-                                  Theme.of(context).primaryColor,
+                                  Theme.of(context).colorScheme.onPrimary,
                                   BlendMode.srcIn)),
                           tooltip: 'Configuration',
                           onPressed: () {

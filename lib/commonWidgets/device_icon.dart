@@ -51,6 +51,8 @@ class DeviceIcon extends StatelessWidget {
       svg_filename = 'counter';
     } else if (this.deviceType == 'ac') {
       svg_filename = this.deviceState == '1' ? 'ac_on' : 'ac_off';
+    } else if (this.deviceType == 'thermostat' && this.deviceSubType == 'cooling') {
+      svg_filename = 'thermostat_cooling';
     } else if (this.deviceType == 'thermostat') {
       svg_filename = this.deviceState == '1' ? 'thermostat_on' : 'thermostat_off';
     } else if (this.deviceType == 'sensor_light') {
@@ -104,11 +106,11 @@ class DeviceIcon extends StatelessWidget {
         width: iconSize,
         height: iconSize,
         colorFilter:
-            ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn),
+            ColorFilter.mode(Theme.of(context).colorScheme.onPrimary, BlendMode.srcIn),
       );
     } else {
       return Icon(imgIcon,
-          size: iconSize, color: Theme.of(context).primaryColor);
+          size: iconSize, color: Theme.of(context).colorScheme.onPrimary);
     }
   }
 }

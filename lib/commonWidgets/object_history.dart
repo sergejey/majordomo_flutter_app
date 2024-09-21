@@ -22,10 +22,10 @@ class ObjectHistory extends StatelessWidget {
           : SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: DataTable(
-                border: TableBorder.all(width: 1, color: Theme.of(context).primaryColor),
+                border: TableBorder.all(width: 1, color: Theme.of(context).colorScheme.onPrimary),
                 headingRowHeight: 30,
-                headingTextStyle: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor),
-                dataTextStyle: TextStyle(color: Theme.of(context).primaryColor),
+                headingTextStyle: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onPrimary),
+                dataTextStyle: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
                 dataRowMinHeight: 30,
                 dataRowMaxHeight: 40,
                 columns: <DataColumn>[

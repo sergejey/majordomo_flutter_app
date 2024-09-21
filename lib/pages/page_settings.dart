@@ -73,22 +73,25 @@ class _SettingsPageState extends State<PageSettings> {
               body: SettingsList(
                   platform: DevicePlatform.android,
                   lightTheme: SettingsThemeData(
-                      dividerColor: Theme.of(context).colorScheme.onPrimary,
-                      tileDescriptionTextColor: Theme.of(context).primaryColor,
-                      leadingIconsColor: Theme.of(context).primaryColor,
-                      settingsListBackground:  Theme.of(context).colorScheme.onPrimary,
-                      settingsSectionBackground:  Theme.of(context).colorScheme.onPrimary,
-                      settingsTileTextColor: Theme.of(context).primaryColor,
-                      tileHighlightColor: Theme.of(context).primaryColor,
-                      titleTextColor: Theme.of(context).primaryColor,
-                      trailingTextColor:  Theme.of(context).colorScheme.onPrimary,),
+                    dividerColor: Theme.of(context).colorScheme.onSurface,
+                    tileDescriptionTextColor: Theme.of(context).colorScheme.onSurface,
+                    leadingIconsColor: Theme.of(context).colorScheme.onSurface,
+                    settingsListBackground:
+                        Theme.of(context).colorScheme.surface,
+                    settingsSectionBackground:
+                        Theme.of(context).colorScheme.surface,
+                    settingsTileTextColor: Theme.of(context).colorScheme.onSurface,
+                    tileHighlightColor: Theme.of(context).colorScheme.onSurface,
+                    titleTextColor: Theme.of(context).colorScheme.onSurface,
+                    trailingTextColor: Theme.of(context).colorScheme.onSurface,
+                  ),
                   sections: [
                     SettingsSection(tiles: [
                       SettingsTile.navigation(
                         title: Text('profiles'.i18n()),
                         value: Text(stateManager
                             .pageSettingsNotifier.currentProfileTitle),
-                        leading: const Icon(Icons.house_rounded),
+                        leading: Icon(Icons.house_rounded),
                         onPressed: (context) {
                           Navigator.of(context)
                               .push(
@@ -103,7 +106,7 @@ class _SettingsPageState extends State<PageSettings> {
                       ),
                       SettingsTile(
                           title: Text("connect".i18n()),
-                          leading: const Icon(Icons.verified_user),
+                          leading: Icon(Icons.verified_user),
                           value: connectAccessToken == ''
                               ? Text("not-authorized".i18n())
                               : Text('authorized'.i18n()),
@@ -146,7 +149,7 @@ class _SettingsPageState extends State<PageSettings> {
                           }),
                       SettingsTile(
                         title: Text('mode'.i18n()),
-                        leading: const Icon(Icons.find_in_page_outlined),
+                        leading: Icon(Icons.find_in_page_outlined),
                         value: Text(
                             stateManager.getAppSetting("serverMode")?.i18n() ??
                                 "auto"),
@@ -189,7 +192,7 @@ class _SettingsPageState extends State<PageSettings> {
                       ),
                       SettingsTile(
                         title: Text('local-address'.i18n()),
-                        leading: const Icon(Icons.wifi),
+                        leading: Icon(Icons.wifi),
                         value: Text(
                             stateManager.getAppSetting("serverAddressLocal") ??
                                 "n/a"),
@@ -206,7 +209,7 @@ class _SettingsPageState extends State<PageSettings> {
                       ),
                       SettingsTile(
                         title: Text('remote-address'.i18n()),
-                        leading: const Icon(Icons.network_cell),
+                        leading: Icon(Icons.network_cell),
                         value: Text(
                             stateManager.getAppSetting("serverAddressRemote") ??
                                 "n/a"),
@@ -223,7 +226,7 @@ class _SettingsPageState extends State<PageSettings> {
                       ),
                       SettingsTile(
                         title: Text('local-wifi-ssid'.i18n()),
-                        leading: const Icon(Icons.wifi),
+                        leading: Icon(Icons.wifi),
                         value: Text(
                             stateManager.getAppSetting("localWifiSSID") ??
                                 "n/a"),
@@ -256,7 +259,7 @@ class _SettingsPageState extends State<PageSettings> {
                       ),
                       SettingsTile(
                         title: Text('reset-wifi-ssid'.i18n()),
-                        leading: const Icon(Icons.wifi_protected_setup),
+                        leading: Icon(Icons.wifi_protected_setup),
                         onPressed: (context) async {
                           String currentWifiSSID = "";
                           if (await Permission.locationWhenInUse
@@ -276,7 +279,7 @@ class _SettingsPageState extends State<PageSettings> {
                       ),
                       SettingsTile(
                         title: Text('username'.i18n()),
-                        leading: const Icon(Icons.man),
+                        leading: Icon(Icons.man),
                         value: Text(
                             stateManager.getAppSetting("serverUsername") ??
                                 "n/a"),
@@ -293,7 +296,7 @@ class _SettingsPageState extends State<PageSettings> {
                       ),
                       SettingsTile(
                         title: Text('password'.i18n()),
-                        leading: const Icon(Icons.password),
+                        leading: Icon(Icons.password),
                         value: Text(
                             (stateManager.getAppSetting("serverPassword") ??
                                         "") !=
@@ -313,10 +316,10 @@ class _SettingsPageState extends State<PageSettings> {
                       ),
                       SettingsTile(
                         title: Text('language'.i18n()),
-                        leading: const Icon(Icons.language),
+                        leading: Icon(Icons.language),
                         value: Text(
                             stateManager.getAppSetting("language")?.i18n() ??
-                                "Русский"),
+                                'auto'.i18n()),
                         onPressed: (context) async {
                           showDialog(
                             context: context,
@@ -355,8 +358,63 @@ class _SettingsPageState extends State<PageSettings> {
                         },
                       ),
                       SettingsTile(
+                        title: Text('Тема'.i18n()),
+                        leading: Icon(Icons.color_lens_outlined),
+                        value: Text(
+                            stateManager.getAppSetting("theme")?.i18n() ??
+                                'theme_auto'.i18n()),
+                        onPressed: (context) async {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return SimpleDialog(
+                                title: Text("theme".i18n()),
+                                children: [
+                                  SimpleDialogOption(
+                                    child: Text("theme_auto".i18n()),
+                                    onPressed: () {
+                                      stateManager.setAppSetting(
+                                          "theme", "theme_auto");
+                                      final myApp =
+                                          context.findAncestorStateOfType<
+                                              MyAppState>()!;
+                                      myApp.changeThemeMode(ThemeMode.system);
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  SimpleDialogOption(
+                                    child: Text("theme_light".i18n()),
+                                    onPressed: () {
+                                      stateManager.setAppSetting(
+                                          "theme", "theme_light");
+                                      final myApp =
+                                          context.findAncestorStateOfType<
+                                              MyAppState>()!;
+                                      myApp.changeThemeMode(ThemeMode.light);
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  SimpleDialogOption(
+                                    child: Text("theme_dark".i18n()),
+                                    onPressed: () {
+                                      stateManager.setAppSetting(
+                                          "theme", "theme_dark");
+                                      final myApp =
+                                          context.findAncestorStateOfType<
+                                              MyAppState>()!;
+                                      myApp.changeThemeMode(ThemeMode.dark);
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                      ),
+                      SettingsTile(
                           title: Text('about_app'.i18n()),
-                          leading: const Icon(Icons.info_outline),
+                          leading: Icon(Icons.info_outline),
                           value: Text('app_version'.i18n() +
                               ' ' +
                               _packageInfo.version +
@@ -368,6 +426,4 @@ class _SettingsPageState extends State<PageSettings> {
                   ]));
         });
   }
-
-
 }

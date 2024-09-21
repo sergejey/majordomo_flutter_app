@@ -208,12 +208,12 @@ class PageMainDevicesNotifier extends ValueNotifier<String> {
               roomDevices[iD].properties['updated'];
           foundMotionUpdated = true;
         }
-        if (roomDevices[iD].type == 'sensor_temp') {
+        if (roomDevices[iD].type == 'sensor_temp' && roomDevices[iD].properties['value']!='') {
           myRooms[i].properties['temperature'] =
               roomDevices[iD].properties['value'];
           foundTemperature = true;
         }
-        if (roomDevices[iD].type == 'sensor_temphum') {
+        if (roomDevices[iD].type == 'sensor_temphum' && roomDevices[iD].properties['value']!='') {
           myRooms[i].properties['temperature'] =
               roomDevices[iD].properties['value'];
           foundTemperature = true;

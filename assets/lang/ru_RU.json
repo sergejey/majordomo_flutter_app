@@ -129,5 +129,9 @@
   "new_device": "Новое устройство",
   "new_devices_available": "Доступны новые устройства",
   "chat": "Сообщения",
-  "chat_placeholder": "Сообщение..."
+  "chat_placeholder": "Сообщение...",
+  "theme": "Тема",
+  "theme_auto": "Авто",
+  "theme_light": "Светлая",
+  "theme_dark": "Тёмная"
 }

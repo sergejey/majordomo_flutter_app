@@ -45,11 +45,11 @@ class RoomIcon extends StatelessWidget {
       return SvgPicture.asset(
         'assets/rooms/' + svg_filename + '.svg',
         colorFilter:
-            ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn),
+            ColorFilter.mode(Theme.of(context).colorScheme.onPrimary, BlendMode.srcIn),
       );
     } else {
       return Icon(imgIcon,
-          size: iconSize, color: Theme.of(context).primaryColor);
+          size: iconSize, color: Theme.of(context).colorScheme.onPrimary);
     }
   }
 }

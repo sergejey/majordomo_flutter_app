@@ -67,7 +67,7 @@ class _MyHomePageState extends State<PageMain> {
                   }
                 },
                 child: Scaffold(
-                    backgroundColor: const Color(0xffe3eeff),
+                    backgroundColor: Theme.of(context).colorScheme.surface,
                     appBar: MainAppBar(context),
                     bottomNavigationBar: bottomAppBar(context),
                     body: stateManager.pageMainDevicesNotifier.roomView
@@ -120,10 +120,9 @@ class _MyHomePageState extends State<PageMain> {
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(
-                                    0xffb9cbe8)
+                                color: Theme.of(context).colorScheme.secondary
                                     .withOpacity(0.6),
-                                blurRadius: 11,
+                                blurRadius: 6,
                                 offset: Offset(0,
                                     4), // Shadow position
                               ),
@@ -152,10 +151,9 @@ class _MyHomePageState extends State<PageMain> {
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(
-                                    0xffb9cbe8)
+                                color: Theme.of(context).colorScheme.secondary
                                     .withOpacity(0.6),
-                                blurRadius: 11,
+                                blurRadius: 6,
                                 offset: Offset(0,
                                     4), // Shadow position
                               ),
@@ -183,10 +181,9 @@ class _MyHomePageState extends State<PageMain> {
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(
-                                    0xffb9cbe8)
+                                color: Theme.of(context).colorScheme.secondary
                                     .withOpacity(0.6),
-                                blurRadius: 11,
+                                blurRadius: 6,
                                 offset: Offset(0,
                                     4), // Shadow position
                               ),

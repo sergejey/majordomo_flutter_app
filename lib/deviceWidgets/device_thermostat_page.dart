@@ -34,8 +34,8 @@ class DeviceThermostatPage extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               color: properties["relay_status"] == "1"
-                  ? Colors.yellow
-                  : Colors.white,
+                  ? Theme.of(context).colorScheme.tertiary
+                  : Theme.of(context).colorScheme.primary,
               borderRadius: const BorderRadius.all(
                 Radius.circular(10),
               ),
@@ -113,11 +113,13 @@ class DeviceThermostatPage extends StatelessWidget {
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all(
                       properties['disabled'] == '1'
-                          ? Colors.yellow
+                          ? Theme.of(context).colorScheme.tertiary
                           : Colors.white),
                 ),
                 child: Text('is_off'.i18n(),
-                    style: TextStyle(color: Colors.black)),
+                    style: TextStyle(color: properties['disabled'] == '1'
+                        ? Theme.of(context).colorScheme.onTertiary
+                        : Colors.black)),
               ),
               const SizedBox(width: 15),
               ElevatedButton(
@@ -129,11 +131,14 @@ class DeviceThermostatPage extends StatelessWidget {
                   backgroundColor: WidgetStateProperty.all(
                       (properties['disabled'] != '1' &&
                               properties['status'] == '1')
-                          ? Colors.yellow
+                          ? Theme.of(context).colorScheme.tertiary
                           : Colors.white),
                 ),
                 child: Text("device_mode_normal".i18n(),
-                    style: TextStyle(color: Colors.black)),
+                    style: TextStyle(color: (properties['disabled'] != '1' &&
+                        properties['status'] == '1')
+                        ? Theme.of(context).colorScheme.onTertiary
+                        : Colors.black)),
               ),
               const SizedBox(width: 15),
               ElevatedButton(
@@ -145,11 +150,14 @@ class DeviceThermostatPage extends StatelessWidget {
                   backgroundColor: WidgetStateProperty.all(
                       (properties['disabled'] != '1' &&
                               properties['status'] != '1')
-                          ? Colors.yellow
+                          ? Theme.of(context).colorScheme.tertiary
                           : Colors.white),
                 ),
                 child: Text("device_mode_eco".i18n(),
-                    style: TextStyle(color: Colors.black)),
+                    style: TextStyle(color: (properties['disabled'] != '1' &&
+                        properties['status'] != '1')
+                        ? Theme.of(context).colorScheme.onTertiary
+                        : Colors.black)),
               ),
             ],
           ),

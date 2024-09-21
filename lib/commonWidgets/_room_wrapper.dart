@@ -27,14 +27,14 @@ class RoomWrapper extends StatelessWidget {
         child: Container(
           height: 102,
           decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.primary,
               borderRadius: const BorderRadius.all(
                 Radius.circular(20),
               ),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xffb9cbe8).withOpacity(0.6),
-                  blurRadius: 11,
+                  color: Theme.of(context).colorScheme.secondary.withOpacity(0.2),
+                  blurRadius: 6,
                   offset: Offset(0, 4), // Shadow position
                 ),
               ]),
@@ -51,7 +51,7 @@ class RoomWrapper extends StatelessWidget {
                     Container(
                         decoration: BoxDecoration(
                           border:
-                              Border.all(color: const Color(0xffb9cbe8).withOpacity(0.6)),
+                              Border.all(color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.6)),
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
                         child: RoomIcon(roomTitle: title)),
@@ -94,6 +94,7 @@ class RoomWrapper extends StatelessWidget {
                                     padding: const EdgeInsets.all(3.0),
                                     child: DeviceIcon(
                                       deviceType: 'motion',
+                                      deviceState: '1',
                                       iconSize: 32,
                                     ),
                                   ),
@@ -112,6 +113,7 @@ class RoomWrapper extends StatelessWidget {
                                     padding: const EdgeInsets.all(3.0),
                                     child: DeviceIcon(
                                       deviceType: 'relay',
+                                      deviceState: '1',
                                       iconSize: 32,
                                     ),
                                   ),
