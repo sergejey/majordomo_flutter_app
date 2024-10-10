@@ -21,6 +21,7 @@
   "remote": "Remote",
   "local-wifi-ssid": "Local WiFi SSID",
   "reset-wifi-ssid": "Reset WiFi SSID",
+  "add-wifi-ssid": "Add WiFi SSID",
   "language": "Language",
   "select-language": "Select language",
   "english": "English",

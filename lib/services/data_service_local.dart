@@ -143,14 +143,10 @@ class DataServiceLocal extends DataService {
       String objectName, String property,
       [String? period]) async {
     final baseURL = getBaseURL();
-
-    if (period == null) period = '1month';
-
-    if (baseURL == "") {
-      dprint("Base URL is not set");
+    if (!checkBaseURL(baseURL)) {
       return [];
     }
-
+    if (period == null) period = '1month';
     final apiURL = '$baseURL/api.php/history/$objectName.$property/$period';
     try {
       final response = await getURL(apiURL);
@@ -170,8 +166,7 @@ class DataServiceLocal extends DataService {
   @override
   Future<List<SystemState>> fetchSystemStates() async {
     final baseURL = getBaseURL();
-    if (baseURL == "") {
-      dprint("Base URL is not set");
+    if (!checkBaseURL(baseURL)) {
       return [];
     }
     final apiURL = '$baseURL/api.php/objects/SystemStates';
@@ -193,8 +188,7 @@ class DataServiceLocal extends DataService {
   @override
   Future<List<OperationalMode>> fetchOperationalModes() async {
     final baseURL = getBaseURL();
-    if (baseURL == "") {
-      dprint("Base URL is not set");
+    if (!checkBaseURL(baseURL)) {
       return [];
     }
     final apiURL = '$baseURL/api.php/objects/OperationalModes';
@@ -216,8 +210,7 @@ class DataServiceLocal extends DataService {
   @override
   Future<List<Room>> fetchRooms() async {
     final baseURL = getBaseURL();
-    if (baseURL == "") {
-      dprint("Base URL is not set");
+    if (!checkBaseURL(baseURL)) {
       return [];
     }
     final apiURL = '$baseURL/api.php/rooms';
@@ -339,8 +332,7 @@ class DataServiceLocal extends DataService {
         linksTotal: 0,
         scheduleTotal: 0);
     final baseURL = getBaseURL();
-    if (baseURL == "") {
-      dprint("Base URL is not set");
+    if (!checkBaseURL(baseURL)) {
       return emptyDevice;
     }
     final apiURL = '$baseURL/api.php/devices/$deviceId';
@@ -367,8 +359,7 @@ class DataServiceLocal extends DataService {
   Future<List<SimpleDevice>> fetchMyDevices() async {
     List<String> _favorites = getFavorites();
     final baseURL = getBaseURL();
-    if (baseURL == "") {
-      dprint("Base URL is not set");
+    if (!checkBaseURL(baseURL)) {
       return [];
     }
     final apiURL = '$baseURL/api.php/devices';

@@ -11,6 +11,7 @@ import 'package:home_app/models/chat_message.dart';
 
 import 'package:home_app/services/preferences_service.dart';
 import 'package:home_app/services/service_locator.dart';
+import 'package:home_app/utils/web_module.dart';
 
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -50,15 +51,22 @@ abstract class DataService {
 
   Future<void> updateDevice(String deviceId, [Map<String, dynamic>? params]);
 
-  Future<(List<DeviceSchedulePoint>,List<DeviceScheduleMethod>)> fetchDeviceSchedule(String deviceId);
+  Future<(List<DeviceSchedulePoint>, List<DeviceScheduleMethod>)>
+      fetchDeviceSchedule(String deviceId);
+
   Future<bool?> deleteScheduleItem(String deviceId, DeviceSchedulePoint item);
+
   Future<bool?> updateScheduleItem(String deviceId, DeviceSchedulePoint item);
 
-  Future<(List<DeviceLink>,List<DeviceAvailableLink>)> fetchDeviceLinks(String deviceId);
+  Future<(List<DeviceLink>, List<DeviceAvailableLink>)> fetchDeviceLinks(
+      String deviceId);
+
   Future<bool?> deleteLinkItem(String deviceId, DeviceLink item);
+
   Future<bool?> updateLinkItem(String deviceId, DeviceLink item);
 
   Future<(List<ChatMessage>, ChatUser)> fetchMessages();
+
   Future<bool?> postMessage(String message);
 
   Future<List<HistoryRecord>> getPropertyHistory(
@@ -169,13 +177,24 @@ abstract class DataService {
     _baseURL = url;
   }
 
+  bool checkBaseURL(String baseURL) {
+    if (baseURL == "" && !isMJDModule()) {
+      dprint("Base URL is not set");
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   String getBaseURL() {
     String url = _baseURL;
     if (url == '') return url;
-    if (url == 'connect.smartliving.ru')
-      return 'https://connect.smartliving.ru';
-    if (!url.startsWith('http:') && !url.startsWith('https:'))
-      url = 'http://$url';
+    if (!isMJDModule()) {
+      if (url == 'connect.smartliving.ru')
+        return 'https://connect.smartliving.ru';
+      if (!url.startsWith('http:') && !url.startsWith('https:'))
+        url = 'http://$url';
+    }
     return url;
   }
 
@@ -194,13 +213,14 @@ abstract class DataService {
       _connectionStatus = await _connectivity.checkConnectivity();
 
       if (!_connectionStatus.contains(ConnectivityResult.wifi)) {
-        //dprint('(auto) No WiFi. Loading remote URL');
         currentMode = 'remote';
         currentWifiSSID = '';
         setBaseURL(remoteURL);
       } else {
         String localWifiSSID =
             _preferencesService.getPreference("localWifiSSID") ?? "";
+        List<String> localWifis =
+            localWifiSSID.split(",").map((entry) => entry.trim()).toList();
 
         String loadURL = localURL;
         if (localWifiSSID != "" &&
@@ -212,7 +232,7 @@ abstract class DataService {
 
           if (newWifiSSID != currentWifiSSID) {
             currentWifiSSID = newWifiSSID;
-            if (localWifiSSID != currentWifiSSID) {
+            if (!localWifis.contains(currentWifiSSID)) {
               loadURL = remoteURL;
               currentMode = 'remote';
             } else {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_app/utils/web_module.dart';
 import 'package:localization/localization.dart';
 import 'package:settings_ui/settings_ui.dart';
 import '../main.dart';
@@ -74,122 +75,128 @@ class _SettingsPageState extends State<PageSettings> {
                   platform: DevicePlatform.android,
                   lightTheme: SettingsThemeData(
                     dividerColor: Theme.of(context).colorScheme.onSurface,
-                    tileDescriptionTextColor: Theme.of(context).colorScheme.onSurface,
+                    tileDescriptionTextColor:
+                        Theme.of(context).colorScheme.onSurface,
                     leadingIconsColor: Theme.of(context).colorScheme.onSurface,
                     settingsListBackground:
                         Theme.of(context).colorScheme.surface,
                     settingsSectionBackground:
                         Theme.of(context).colorScheme.surface,
-                    settingsTileTextColor: Theme.of(context).colorScheme.onSurface,
+                    settingsTileTextColor:
+                        Theme.of(context).colorScheme.onSurface,
                     tileHighlightColor: Theme.of(context).colorScheme.onSurface,
                     titleTextColor: Theme.of(context).colorScheme.onSurface,
                     trailingTextColor: Theme.of(context).colorScheme.onSurface,
                   ),
                   sections: [
                     SettingsSection(tiles: [
-                      SettingsTile.navigation(
-                        title: Text('profiles'.i18n()),
-                        value: Text(stateManager
-                            .pageSettingsNotifier.currentProfileTitle),
-                        leading: Icon(Icons.house_rounded),
-                        onPressed: (context) {
-                          Navigator.of(context)
-                              .push(
-                            MaterialPageRoute(
-                              builder: (context) => const PageProfiles(),
-                            ),
-                          )
-                              .then((value) {
-                            stateManager.initSettingsPageState();
-                          });
-                        },
-                      ),
-                      SettingsTile(
-                          title: Text("connect".i18n()),
-                          leading: Icon(Icons.verified_user),
-                          value: connectAccessToken == ''
-                              ? Text("not-authorized".i18n())
-                              : Text('authorized'.i18n()),
+                      if (!isMJDModule())
+                        SettingsTile.navigation(
+                          title: Text('profiles'.i18n()),
+                          value: Text(stateManager
+                              .pageSettingsNotifier.currentProfileTitle),
+                          leading: Icon(Icons.house_rounded),
+                          onPressed: (context) {
+                            Navigator.of(context)
+                                .push(
+                              MaterialPageRoute(
+                                builder: (context) => const PageProfiles(),
+                              ),
+                            )
+                                .then((value) {
+                              stateManager.initSettingsPageState();
+                            });
+                          },
+                        ),
+                      if (!isMJDModule())
+                        SettingsTile(
+                            title: Text("connect".i18n()),
+                            leading: Icon(Icons.verified_user),
+                            value: connectAccessToken == ''
+                                ? Text("not-authorized".i18n())
+                                : Text('authorized'.i18n()),
+                            onPressed: (context) async {
+                              if (connectAccessToken == '') {
+                                stateManager.loginV2(context);
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return SimpleDialog(
+                                      title: Text("connect".i18n()),
+                                      children: [
+                                        SimpleDialogOption(
+                                          child: Text("Re-login"),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                            stateManager.loginV2(context);
+                                          },
+                                        ),
+                                        SimpleDialogOption(
+                                          child: Text("Logoff"),
+                                          onPressed: () {
+                                            stateManager.setAppSetting(
+                                                "connectAccessToken", "");
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                        SimpleDialogOption(
+                                          child: Text("Cancel"),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
+                            }),
+                      if (!isMJDModule())
+                        SettingsTile(
+                          title: Text('mode'.i18n()),
+                          leading: Icon(Icons.find_in_page_outlined),
+                          value: Text(stateManager
+                                  .getAppSetting("serverMode")
+                                  ?.i18n() ??
+                              "auto"),
                           onPressed: (context) async {
-                            if (connectAccessToken == '') {
-                              stateManager.loginV2(context);
-                            } else {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return SimpleDialog(
-                                    title: Text("connect".i18n()),
-                                    children: [
-                                      SimpleDialogOption(
-                                        child: Text("Re-login"),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                          stateManager.loginV2(context);
-                                        },
-                                      ),
-                                      SimpleDialogOption(
-                                        child: Text("Logoff"),
-                                        onPressed: () {
-                                          stateManager.setAppSetting(
-                                              "connectAccessToken", "");
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                      SimpleDialogOption(
-                                        child: Text("Cancel"),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            }
-                          }),
-                      SettingsTile(
-                        title: Text('mode'.i18n()),
-                        leading: Icon(Icons.find_in_page_outlined),
-                        value: Text(
-                            stateManager.getAppSetting("serverMode")?.i18n() ??
-                                "auto"),
-                        onPressed: (context) async {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return SimpleDialog(
-                                title: Text("select-profile".i18n()),
-                                children: [
-                                  SimpleDialogOption(
-                                    child: Text("auto".i18n()),
-                                    onPressed: () {
-                                      stateManager.setAppSetting(
-                                          "serverMode", "auto");
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  SimpleDialogOption(
-                                    child: Text("local".i18n()),
-                                    onPressed: () {
-                                      stateManager.setAppSetting(
-                                          "serverMode", "local");
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  SimpleDialogOption(
-                                    child: Text("remote".i18n()),
-                                    onPressed: () {
-                                      stateManager.setAppSetting(
-                                          "serverMode", "remote");
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                      ),
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SimpleDialog(
+                                  title: Text("select-profile".i18n()),
+                                  children: [
+                                    SimpleDialogOption(
+                                      child: Text("auto".i18n()),
+                                      onPressed: () {
+                                        stateManager.setAppSetting(
+                                            "serverMode", "auto");
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                    SimpleDialogOption(
+                                      child: Text("local".i18n()),
+                                      onPressed: () {
+                                        stateManager.setAppSetting(
+                                            "serverMode", "local");
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                    SimpleDialogOption(
+                                      child: Text("remote".i18n()),
+                                      onPressed: () {
+                                        stateManager.setAppSetting(
+                                            "serverMode", "remote");
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                        ),
                       SettingsTile(
                         title: Text('local-address'.i18n()),
                         leading: Icon(Icons.wifi),
@@ -207,76 +214,125 @@ class _SettingsPageState extends State<PageSettings> {
                           }
                         },
                       ),
-                      SettingsTile(
-                        title: Text('remote-address'.i18n()),
-                        leading: Icon(Icons.network_cell),
-                        value: Text(
-                            stateManager.getAppSetting("serverAddressRemote") ??
-                                "n/a"),
-                        onPressed: (context) async {
-                          String? newValue = await prompt(context,
-                              initialValue: stateManager
-                                      .getAppSetting("serverAddressRemote") ??
-                                  "");
-                          if (newValue != null) {
-                            stateManager.setAppSetting(
-                                "serverAddressRemote", newValue.toString());
-                          }
-                        },
-                      ),
-                      SettingsTile(
-                        title: Text('local-wifi-ssid'.i18n()),
-                        leading: Icon(Icons.wifi),
-                        value: Text(
-                            stateManager.getAppSetting("localWifiSSID") ??
-                                "n/a"),
-                        onPressed: (context) async {
-                          String oldValue =
-                              stateManager.getAppSetting("localWifiSSID") ?? "";
+                      if (!isMJDModule())
+                        SettingsTile(
+                          title: Text('remote-address'.i18n()),
+                          leading: Icon(Icons.network_cell),
+                          value: Text(stateManager
+                                  .getAppSetting("serverAddressRemote") ??
+                              "n/a"),
+                          onPressed: (context) async {
+                            String? newValue = await prompt(context,
+                                initialValue: stateManager
+                                        .getAppSetting("serverAddressRemote") ??
+                                    "");
+                            if (newValue != null) {
+                              stateManager.setAppSetting(
+                                  "serverAddressRemote", newValue.toString());
+                            }
+                          },
+                        ),
+                      if (!isMJDModule())
+                        SettingsTile(
+                          title: Text('local-wifi-ssid'.i18n()),
+                          leading: Icon(Icons.wifi),
+                          value: Text(
+                              stateManager.getAppSetting("localWifiSSID") ??
+                                  "n/a"),
+                          onPressed: (context) async {
+                            String oldValue =
+                                stateManager.getAppSetting("localWifiSSID") ??
+                                    "";
 
-                          String currentWifiSSID = "";
+                            String currentWifiSSID = "";
 
-                          if (await Permission.locationWhenInUse
-                              .request()
-                              .isGranted) {
-                            final info = NetworkInfo();
-                            currentWifiSSID = await info.getWifiName() ?? "";
-                            currentWifiSSID =
-                                currentWifiSSID.replaceAll('"', '');
-                          }
+                            if (await Permission.locationWhenInUse
+                                .request()
+                                .isGranted) {
+                              final info = NetworkInfo();
+                              currentWifiSSID = await info.getWifiName() ?? "";
+                              currentWifiSSID =
+                                  currentWifiSSID.replaceAll('"', '');
+                            }
 
-                          if (oldValue == "" && currentWifiSSID != "") {
-                            oldValue = currentWifiSSID;
-                          }
+                            if (oldValue == "" && currentWifiSSID != "") {
+                              oldValue = currentWifiSSID;
+                            }
 
-                          String? newValue =
-                              await prompt(context, initialValue: oldValue);
-                          if (newValue != null) {
-                            stateManager.setAppSetting(
-                                "localWifiSSID", newValue.toString());
-                          }
-                        },
-                      ),
-                      SettingsTile(
-                        title: Text('reset-wifi-ssid'.i18n()),
-                        leading: Icon(Icons.wifi_protected_setup),
-                        onPressed: (context) async {
-                          String currentWifiSSID = "";
-                          if (await Permission.locationWhenInUse
-                              .request()
-                              .isGranted) {
-                            final info = NetworkInfo();
-                            currentWifiSSID = await info.getWifiName() ?? "";
-                            currentWifiSSID =
-                                currentWifiSSID.replaceAll('"', '');
-                            stateManager.setAppSetting(
-                                "localWifiSSID", currentWifiSSID);
-                          } else {
-                            Fluttertoast.showToast(
-                                msg: 'Cannot get current WiFi name...');
-                          }
-                        },
-                      ),
+                            String? newValue =
+                                await prompt(context, initialValue: oldValue);
+                            if (newValue != null) {
+                              stateManager.setAppSetting(
+                                  "localWifiSSID", newValue.toString());
+                            }
+                          },
+                        ),
+                      if (!isMJDModule())
+                        SettingsTile(
+                          title: Text('add-wifi-ssid'.i18n()),
+                          leading: const Icon(Icons.wifi_find_outlined),
+                          onPressed: (context) async {
+                            String currentWifiSSID = "";
+                            String oldWifiSSID =
+                                stateManager.getAppSetting("localWifiSSID") ??
+                                    "";
+                            if (await Permission.locationWhenInUse
+                                .request()
+                                .isGranted) {
+                              final info = NetworkInfo();
+                              currentWifiSSID = await info.getWifiName() ?? "";
+                              currentWifiSSID =
+                                  currentWifiSSID.replaceAll('"', '');
+                              if (oldWifiSSID == "") {
+                                stateManager.setAppSetting(
+                                    "localWifiSSID", currentWifiSSID);
+                              } else {
+                                List<String> wifis = oldWifiSSID
+                                    .split(",")
+                                    .map((entry) => entry.trim())
+                                    .toList();
+                                if (!wifis.contains(currentWifiSSID)) {
+                                  wifis.add(currentWifiSSID);
+                                  stateManager.setAppSetting(
+                                      "localWifiSSID", wifis.join(", "));
+                                } else {
+                                  String newValue = (await prompt(context,
+                                          initialValue: "")) ??
+                                      "";
+                                  if (newValue != "") {
+                                    wifis.add(newValue);
+                                    stateManager.setAppSetting(
+                                        "localWifiSSID", wifis.join(", "));
+                                  }
+                                }
+                              }
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: 'Cannot get current WiFi name...');
+                            }
+                          },
+                        ),
+                      if (!isMJDModule())
+                        SettingsTile(
+                          title: Text('reset-wifi-ssid'.i18n()),
+                          leading: Icon(Icons.wifi_protected_setup),
+                          onPressed: (context) async {
+                            String currentWifiSSID = "";
+                            if (await Permission.locationWhenInUse
+                                .request()
+                                .isGranted) {
+                              final info = NetworkInfo();
+                              currentWifiSSID = await info.getWifiName() ?? "";
+                              currentWifiSSID =
+                                  currentWifiSSID.replaceAll('"', '');
+                              stateManager.setAppSetting(
+                                  "localWifiSSID", currentWifiSSID);
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: 'Cannot get current WiFi name...');
+                            }
+                          },
+                        ),
                       SettingsTile(
                         title: Text('username'.i18n()),
                         leading: Icon(Icons.man),

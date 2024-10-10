@@ -21,6 +21,7 @@
   "remote": "Удаленный",
   "local-wifi-ssid": "Локальный WiFi SSID",
   "reset-wifi-ssid": "Сброс WiFi SSID",
+  "add-wifi-ssid": "Добавить WiFi SSID",
   "language": "Язык",
   "select-language": "Выбор языка",
   "english": "Английский",

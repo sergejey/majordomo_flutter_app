@@ -1,14 +1,14 @@
 import "dart:async";
 import 'package:home_app/utils/logging.dart';
+import 'package:home_app/utils/web_module.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:localization/localization.dart';
 import '../models/profile.dart';
 
 class PreferencesService {
-
   String _profileId = '';
   String _profileTitle = '';
-  final _data = <String,dynamic>{};
+  final _data = <String, dynamic>{};
 
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
@@ -21,14 +21,16 @@ class PreferencesService {
     }
     _profileId = _data["profile_id"] ?? "";
     if (_profileId != "") {
-      _profileTitle = prefs.getString("prof_${_profileId}_profile_title")??"";
+      _profileTitle = prefs.getString("prof_${_profileId}_profile_title") ?? "";
     } else {
-      _profileTitle = prefs.getString("profile_title")??"";
+      _profileTitle = prefs.getString("profile_title") ?? "";
     }
   }
 
   bool isSetupRequired() {
-    if ((getPreference('serverAddressLocal')??'')=='' && (getPreference('serverAddressRemote')??'')=='') {
+    if (!isMJDModule() &&
+        (getPreference('serverAddressLocal') ?? '') == '' &&
+        (getPreference('serverAddressRemote') ?? '') == '') {
       return true;
     } else {
       return false;
@@ -49,9 +51,9 @@ class PreferencesService {
     _data["profile_id"] = Id;
     _profileId = Id;
     if (Id != "") {
-      _profileTitle = prefs.getString("prof_${Id}_profile_title")??"";
+      _profileTitle = prefs.getString("prof_${Id}_profile_title") ?? "";
     } else {
-      _profileTitle = prefs.getString("profile_title")??"";
+      _profileTitle = prefs.getString("profile_title") ?? "";
     }
   }
 
@@ -80,7 +82,8 @@ class PreferencesService {
   Future<List<Profile>> getProfiles() async {
     final SharedPreferences prefs = await _prefs;
     List<Profile> profiles = [];
-    profiles.add(Profile(id: '', title: _data["profile_title"] ?? 'profiles_default'.i18n()));
+    profiles.add(Profile(
+        id: '', title: _data["profile_title"] ?? 'profiles_default'.i18n()));
     String profileList = prefs.getString("list_of_profiles") ?? "";
     if (profileList != "") {
       List<String> profilesString = profileList.split(";");
@@ -118,7 +121,7 @@ class PreferencesService {
   }
 
   bool isAppKey(String key) {
-    List<String> appKeys = ['connectAccessToken','language'];
+    List<String> appKeys = ['connectAccessToken', 'language'];
     if (appKeys.contains(key)) return true;
     return false;
   }
